@@ -1,6 +1,12 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {takeWhile} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {IAppState} from './core/store/App/App.state';
+import {selectAuthState} from './core/store/auth/auth.selectors';
+import {IAuthState} from './core/store/auth/auth.state';
+import {Observable} from 'rxjs';
+import {User} from './core/models';
 
 export enum EWidthModes {
   Small = 'small',
@@ -16,9 +22,10 @@ export enum EOrientationModes {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: false }) sidenav;
   private alive = true;
+  private authState: Observable<IAuthState>;
   /**
    * !! BreakPoints Reference Table :
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
@@ -29,14 +36,26 @@ export class AppComponent implements OnDestroy {
   public orientationMode: EOrientationModes = null;
   public readonly TOOLBAR_HEIGHT: number = 50;
 
+  public isAuthenticated = false;
+  public authenticatedUser: User = null;
 
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
 
   constructor(
-    public breakpointObserver: BreakpointObserver
+    public breakpointObserver: BreakpointObserver,
+    private store: Store<IAppState>,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
+
+    this.authState = this.store.select(selectAuthState);
+  }
+
+  ngOnInit(): void {
+    this.authState.subscribe(state => {
+      this.isAuthenticated = state.isAuthenticated;
+      this.authenticatedUser = state.user;
+    });
   }
 
   private mediaWidthObserver() {
