@@ -14,7 +14,8 @@ import {MatInputModule} from '@angular/material/input';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {storeDevtoolsModules} from './core/utils/functions/storeDevtoolsModule';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import {storeDevtoolsModules} from './core/utils/functions/storeDevtoolsModule';
     MatInputModule,
     MatSnackBarModule,
     CoreModule.forRoot(),
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
