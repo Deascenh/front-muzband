@@ -28,7 +28,7 @@ export class AppComponent implements OnDestroy {
   public widthMode: EWidthModes = null;
   public orientationMode: EOrientationModes = null;
   public readonly TOOLBAR_HEIGHT: number = 50;
-  public readonly TOOLBAR_HEIGHT_PX: string = this.TOOLBAR_HEIGHT + 'px';
+
 
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
 
