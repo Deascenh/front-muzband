@@ -16,21 +16,30 @@
   position: fixed;
   z-index: 2;
 
-  h1.app-name {
-    margin-left: 8px;
-  }
-
-  .user-name {
-    font-weight: 400;
-    font-size: 14px
-  }
-
   .spacer {
     flex: 1 1 auto;
   }
 
-  .logout-button {
-    margin-left: 16px;
+  h1.app-name {
+    margin-left: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .authenticated-area {
+    display: flex;
+    flex-direction: inherit;
+    align-items: center;
+
+    .user-name {
+      font-weight: 400;
+      font-size: 14px
+    }
+
+    .logout-button {
+      margin-left: 16px;
+    }
   }
 }
 

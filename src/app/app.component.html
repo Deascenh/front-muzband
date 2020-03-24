@@ -4,24 +4,27 @@
 
   <mat-toolbar color="primary" class="top-toolbar"
                [style.height.px]="TOOLBAR_HEIGHT">
-    <button mat-icon-button
+    <button *ngIf="isAuthenticated" mat-icon-button
             (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="app-name">MuzBand</h1>
+    <h1 class="app-name" (click)="goHome()">MuzBand</h1>
     <span class="spacer"></span>
-    <mat-icon aria-hidden="false" aria-label="Icône utilisateur vérifié">verified_user</mat-icon>
-    <span class="user-name">{{ authenticatedUser?.email }}</span>
-    <button mat-icon-button mat-raised-button
-            class="logout-button"
-            matTooltip="Déconnexion">
-      <mat-icon aria-hidden="false" aria-label="Déconnexion">logout</mat-icon>
-    </button>
+    <div *ngIf="isAuthenticated" class="authenticated-area">
+      <mat-icon aria-hidden="false" aria-label="Icône utilisateur vérifié">verified_user</mat-icon>
+      <span class="user-name">{{ authenticatedUser?.email }}</span>
+      <button mat-icon-button mat-raised-button
+              class="logout-button"
+              matTooltip="Déconnexion"
+              (click)="logOut()">
+        <mat-icon aria-hidden="false" aria-label="Déconnexion">logout</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="TOOLBAR_HEIGHT">
-    <mat-sidenav #sidenav
+    <mat-sidenav *ngIf="isAuthenticated" #sidenav
                  [mode]="widthMode === 'small' ? 'over' : 'side'"
                  position="start"
                  class="sidenav"

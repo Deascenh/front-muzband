@@ -7,6 +7,8 @@ import {selectAuthState} from './core/store/auth/auth.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
 import {Observable} from 'rxjs';
 import {User} from './core/models';
+import {Logout} from './core/store/auth/auth.actions';
+import {Router} from '@angular/router';
 
 export enum EWidthModes {
   Small = 'small',
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public breakpointObserver: BreakpointObserver,
     private store: Store<IAppState>,
+    private router: Router,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
@@ -58,7 +61,15 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  private mediaWidthObserver() {
+  logOut(): void {
+    this.store.dispatch(new Logout());
+  }
+
+  goHome(): void {
+    this.router.navigateByUrl('/home');
+  }
+
+  private mediaWidthObserver(): void {
     this.breakpointObserver
       .observe([
         `(min-width: ${this.largeHandsetPortrait})`
@@ -75,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  private mediaOrientationObserver() {
+  private mediaOrientationObserver(): void {
     this.breakpointObserver
       .observe([
         '(orientation: portrait)',
