@@ -18,8 +18,10 @@ import {ConfigService} from './data/config.service';
 import {UserService} from './data/user.service';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {AuthEffects} from './store/auth/auth.effects';
+import {AuthGuard} from './guard/auth-guard';
 
 export const CORE_PROVIDERS = [
+  AuthGuard,
   ApiService,
   ConfigService,
   UserService,

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {LandingComponent} from './middleware/landing/landing.component';
 import {LoginComponent} from './middleware/login/login.component';
 import {HomeComponent} from './home/home.component';
+import {AuthGuard} from './core/guard/auth-guard';
 
 export const ROUTED_COMPONENTS = [
   LandingComponent,
@@ -12,16 +13,18 @@ export const ROUTED_COMPONENTS = [
 
 const routes: Routes = [
   {
-    path: '',
-    component: LandingComponent,
-  },
-  {
     path: 'login',
     component: LoginComponent,
   },
   {
+    path: '',
+    component: LandingComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
   },
   { path: '', component: LandingComponent },
   { path: '**', redirectTo: '/' }
