@@ -11,12 +11,16 @@
 .top-toolbar {
   position: fixed;
   z-index: 2;
-}
 
-h1.app-name {
-  margin-left: 8px;
+  h1.app-name {
+    margin-left: 8px;
+  }
 }
 
 .sidenav-container {
   flex: 1 0 auto;
+
+  .sidenav {
+    width: 222px;
+  }
 }
