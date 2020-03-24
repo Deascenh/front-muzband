@@ -16,7 +16,7 @@ export const authReducers = (
     case EAuthActions.LoginFailure: {
       return {
         ...state,
-        errorMessage: 'Incorrect email and/or password'
+        errorMessage: 'Oups ! Erreur d\'email et/ou de mot de passe.'
       };
     }
     case EAuthActions.FetchAuthenticatedUserSuccess: {
