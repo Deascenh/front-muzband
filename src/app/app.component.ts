@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public isAuthenticated = false;
   public authenticatedUser: User = null;
 
-  fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
+  fillerNav = Array.from({length: 20}, (_, i) => `Nav Item ${i + 1}`);
 
   constructor(
     public breakpointObserver: BreakpointObserver,

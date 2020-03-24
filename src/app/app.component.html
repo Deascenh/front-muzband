@@ -34,6 +34,10 @@
         <mat-list-item *ngFor="let nav of fillerNav">
           <a routerLink="home">{{nav}}</a>
         </mat-list-item>
+        <mat-list-item class="add-button" matTooltip="Ajouter une musique">
+          <mat-icon class="add-icon" aria-hidden="false" aria-label="Ajouter une nouvelle musique">add_circle_outline</mat-icon>
+          <mat-divider [inset]="true"></mat-divider>
+        </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
 
