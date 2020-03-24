@@ -25,6 +25,9 @@ export const authReducers = (
         user: action.payload
       };
     }
+    case EAuthActions.Logout: {
+      return initialAuthState;
+    }
     default: {
       return state;
     }
