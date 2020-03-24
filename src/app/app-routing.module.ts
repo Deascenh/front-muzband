@@ -4,11 +4,13 @@ import {LandingComponent} from './middleware/landing/landing.component';
 import {LoginComponent} from './middleware/login/login.component';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './core/guard/auth-guard';
+import {MusicComponent} from './music/music.component';
 
 export const ROUTED_COMPONENTS = [
   LandingComponent,
   LoginComponent,
   HomeComponent,
+  MusicComponent,
 ];
 
 const routes: Routes = [
@@ -23,6 +25,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'music',
+    component: MusicComponent,
     canActivate: [AuthGuard],
   },
   { path: '', component: LandingComponent },

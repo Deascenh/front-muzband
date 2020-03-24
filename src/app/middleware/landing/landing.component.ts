@@ -3,10 +3,10 @@ import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
 import {FetchAuthenticatedUser, Logout} from '../../core/store/auth/auth.actions';
 import {selectAuthState} from '../../core/store/auth/auth.selectors';
-import {Observable, timer} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {delay, takeWhile, timeout} from 'rxjs/operators';
+import {delay, takeWhile} from 'rxjs/operators';
 import {User} from '../../core/models';
 
 @Component({
