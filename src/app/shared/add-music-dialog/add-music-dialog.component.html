@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Créez un nouveau morceau</h1>
+<div mat-dialog-content>
+  <p>C'est le {{ incrMusicCount }}ème. Bravo !</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Retour</button>
+  <button mat-button [mat-dialog-close]="incrMusicCount" cdkFocusInitial>Ok</button>
+</div>

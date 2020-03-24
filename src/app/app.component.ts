@@ -9,6 +9,8 @@ import {Observable} from 'rxjs';
 import {User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 
 export enum EWidthModes {
   Small = 'small',
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public breakpointObserver: BreakpointObserver,
     private store: Store<IAppState>,
     private router: Router,
+    private dialog: MatDialog
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
@@ -67,6 +70,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   goHome(): void {
     this.router.navigateByUrl('/home');
+  }
+
+  openAddMusicDialog(): void {
+    const dialogRef = this.dialog.open(AddMusicDialogComponent, {
+      width: this.largeHandsetPortrait,
+      data: { musicCount: this.fillerNav.length }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.info('The new music count is : ', result);
+      }
+    });
   }
 
   private mediaWidthObserver(): void {

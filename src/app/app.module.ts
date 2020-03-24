@@ -17,6 +17,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
+import {SharedModule} from './shared/shared.module';
+import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,12 +40,17 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     MatInputModule,
     MatSnackBarModule,
-    CoreModule.forRoot(),
+    MatDialogModule,
     MatSidenavModule,
     MatListModule,
     MatTooltipModule,
+    CoreModule.forRoot(),
+    SharedModule,
   ],
   providers: [],
+  entryComponents: [
+    AddMusicDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
