@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {environment} from '../../../environments/environment';
@@ -32,18 +32,22 @@ export class ApiService {
     private snackBar: MatSnackBar,
   ) { }
 
+  private static makePath(path: string): string {
+    return environment.paired_api_base_url + path.replace(/\/api\//, '');
+  }
+
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     this.httpOptions.params = params;
 
     return this.http.get(
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       this.httpOptions,
     ).pipe(catchError(this.handleErrors.bind(this)));
   }
 
   put(path: string, body: object = {}): Observable<any> {
     return this.http.put(
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       JSON.stringify(body),
       this.httpOptions,
     ).pipe(catchError(this.handleErrors.bind(this)));
@@ -51,7 +55,7 @@ export class ApiService {
 
   post(path: string, body: object = {}): Observable<any> {
     return this.http.post(
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       JSON.stringify(body),
       this.httpOptions,
     ).pipe(catchError(this.handleErrors.bind(this)));
@@ -62,7 +66,7 @@ export class ApiService {
     this.httpOptions.responseType = 'blob';
 
     return this.http.get(
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       this.httpOptions,
     ).pipe(catchError(this.handleErrors.bind(this)));
   }
@@ -72,7 +76,7 @@ export class ApiService {
     this.httpOptions.reportProgress = true;
 
     return this.http.post(
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       body,
       this.httpOptions,
     ).pipe(catchError(this.handleErrors.bind(this)));

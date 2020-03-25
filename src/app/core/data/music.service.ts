@@ -6,32 +6,35 @@ import {map} from 'rxjs/operators';
 
 @Injectable()
 export class MusicService {
+  public static readonly path: string = 'musics';
 
-  public readonly path: string = 'musics';
+  private static makePath(id: string): string {
+    return id.includes(MusicService.path) ? id : `${MusicService.path}/${id}`;
+  }
 
   constructor(private api: ApiService) { }
 
-  get(title: string): Observable<User> {
-    // TODO title to slug transformation
-    const slug = title;
-
-    return this.api.get(`${this.path}/${slug}`).pipe(
-      map(data => data as Music),
+  get(id: string): Observable<Music> {
+    return this.api.get(MusicService.makePath(id)).pipe(
+      map(data => new Music(data)),
     );
   }
 
-  getAll(): Observable<User[]> {
-    return this.api.get(this.path).pipe(
-      map(data => data['hydra:member'] as Music[])
+  getAll(): Observable<Music[]> {
+    return this.api.get(MusicService.path).pipe(
+      map(data => {
+        data['hydra:member'] = data['hydra:member'].map(music => new Music(music));
+        return data;
+      })
     );
   }
 
   save(music: Music) {
-    if (music.id) {
-      return this.api.put(`${this.path}/${music.id}`, music)
+    if (music['@id']) {
+      return this.api.put(music['@id'], music)
         .pipe(map(data => data));
     } else {
-      return this.api.post(this.path, music)
+      return this.api.post(MusicService.path, music)
         .pipe(map(data => data));
     }
   }
