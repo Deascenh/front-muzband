@@ -1,6 +1,6 @@
 import {LdResource} from './LdResource.model';
 
-export class User extends LdResource implements Serializable<User>{
+export class User extends LdResource implements Serializable<User> {
   id?: string;
   email: string;
   username?: string;
@@ -21,5 +21,9 @@ export class User extends LdResource implements Serializable<User>{
     }
 
     return this;
+  }
+
+  toString(): string {
+    return this.email;
   }
 }

@@ -22,4 +22,8 @@ export class Music extends LdResource implements Serializable<Music> {
 
     return this;
   }
+
+  toString(): string {
+    return this.title;
+  }
 }
