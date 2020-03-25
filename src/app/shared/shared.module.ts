@@ -20,10 +20,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatIconModule,
   ],
   declarations: [
-    AddMusicDialogComponent
+    AddMusicDialogComponent,
   ],
   exports: [
-    AddMusicDialogComponent
+    AddMusicDialogComponent,
   ],
 })
 export class SharedModule { }

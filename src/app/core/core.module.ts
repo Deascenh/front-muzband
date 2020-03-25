@@ -20,6 +20,7 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {AuthEffects} from './store/auth/auth.effects';
 import {AuthGuard} from './guard/auth-guard';
 import {MusicService} from './data/music.service';
+import {SavingSuccessInterceptor} from './interceptors/saving-success.interceptor';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
@@ -33,6 +34,11 @@ export const CORE_INTERCEPTOR_PROVIDERS = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: SavingSuccessInterceptor,
     multi: true
   }
 ];

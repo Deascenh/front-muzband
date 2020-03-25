@@ -49,7 +49,7 @@ import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialo
   ],
   providers: [],
   entryComponents: [
-    AddMusicDialogComponent
+    AddMusicDialogComponent,
   ],
   bootstrap: [AppComponent]
 })
