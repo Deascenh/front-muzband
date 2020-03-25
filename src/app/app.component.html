@@ -10,7 +10,7 @@
     </button>
     <h1 class="app-name" (click)="goHome()">MuzBand</h1>
     <span class="spacer"></span>
-    <div *ngIf="isAuthenticated" class="authenticated-area">
+    <div *ngIf="authenticatedUser" class="authenticated-area">
       <mat-icon aria-hidden="false" aria-label="Icône utilisateur vérifié">verified_user</mat-icon>
       <span class="user-name">{{ authenticatedUser?.email }}</span>
       <button mat-icon-button mat-raised-button
@@ -24,7 +24,7 @@
 
   <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="TOOLBAR_HEIGHT">
-    <mat-sidenav *ngIf="isAuthenticated" #sidenav
+    <mat-sidenav *ngIf="authenticatedUser" #sidenav
                  [mode]="widthMode === 'small' ? 'over' : 'side'"
                  position="start"
                  class="sidenav"

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
-import {takeWhile} from 'rxjs/operators';
+import {takeWhile, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
@@ -59,11 +59,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authState.subscribe(state => {
-      this.isAuthenticated = state.isAuthenticated;
-      this.authenticatedUser = state.user;
-    });
-    this.fetchMusics();
+    this.authState.pipe(
+      tap(state => {
+        this.isAuthenticated = state.isAuthenticated;
+        this.authenticatedUser = state.user;
+      })
+    ).subscribe(() => this.fetchMusics());
   }
 
   logOut(): void {
@@ -90,10 +91,15 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * TODO For the future, this loading must to be done with NGRX
+   */
   private fetchMusics(): void {
-    this.musicService.getAll().subscribe(result => {
-      this.musics = result['hydra:member'];
-    });
+    if (this.authenticatedUser) {
+      this.musicService.getAll().subscribe(result => {
+        this.musics = result['hydra:member'];
+      });
+    }
   }
 
   private mediaWidthObserver(): void {
