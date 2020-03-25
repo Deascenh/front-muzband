@@ -18,9 +18,7 @@ export interface HttpOptions {
   withCredentials?: boolean;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiService {
   private httpOptions: HttpOptions = {
     headers: new HttpHeaders({
@@ -97,7 +95,7 @@ export class ApiService {
    * This function Handles an error received from the server and caught,
    * it describes it in the DOM then throws a native error
    *
-   * @param { any }error
+   * @param { any } error
    */
   private handleErrors(error: any) {
     const action = 'Http';

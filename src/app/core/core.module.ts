@@ -19,12 +19,17 @@ import {UserService} from './data/user.service';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {AuthEffects} from './store/auth/auth.effects';
 import {AuthGuard} from './guard/auth-guard';
+import {MusicService} from './data/music.service';
 
-export const CORE_PROVIDERS = [
+export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
   ApiService,
   ConfigService,
   UserService,
+  MusicService,
+];
+
+export const CORE_INTERCEPTOR_PROVIDERS = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
@@ -67,7 +72,8 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        ...CORE_PROVIDERS,
+        ...CORE_SERVICE_PROVIDERS,
+        ...CORE_INTERCEPTOR_PROVIDERS,
       ],
     } as ModuleWithProviders;
   }
