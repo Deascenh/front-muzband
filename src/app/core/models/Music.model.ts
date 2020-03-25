@@ -17,7 +17,7 @@ export class Music extends LdResource implements Serializable<Music> {
     if (typeof input === 'object') {
       if (input.id) { this.id = input.id; }
       this.title = input.title || null;
-      this.creator = input.creator instanceof String ? input.creator : new User(input.creator);
+      this.creator = typeof input.creator === 'string' ? input.creator : new User(input.creator);
     }
 
     return this;

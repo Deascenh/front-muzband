@@ -6,11 +6,12 @@ import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
 import {Observable} from 'rxjs';
-import {User} from './core/models';
+import {Music, User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
+import {MusicService} from './core/data/music.service';
 
 export enum EWidthModes {
   Small = 'small',
@@ -42,14 +43,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public isAuthenticated = false;
   public authenticatedUser: User = null;
-
-  fillerNav = Array.from({length: 20}, (_, i) => `Nav Item ${i + 1}`);
+  public musics: Music[] = [];
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     private store: Store<IAppState>,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private musicService: MusicService,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
@@ -62,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isAuthenticated = state.isAuthenticated;
       this.authenticatedUser = state.user;
     });
+    this.fetchMusics();
   }
 
   logOut(): void {
@@ -77,14 +79,20 @@ export class AppComponent implements OnInit, OnDestroy {
       width: this.largeHandsetPortrait,
       data: {
         creator: this.authenticatedUser,
-        musicCount: this.fillerNav.length,
+        musicCount: this.musics.length,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.info('The new music count is : ', result);
+        console.info('The new music is : ', result);
       }
+    });
+  }
+
+  private fetchMusics(): void {
+    this.musicService.getAll().subscribe(result => {
+      this.musics = result['hydra:member'];
     });
   }
 
