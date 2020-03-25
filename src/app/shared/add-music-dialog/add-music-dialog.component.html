@@ -1,8 +1,25 @@
-<h1 mat-dialog-title>Créez un nouveau morceau</h1>
-<div mat-dialog-content>
-  <p>C'est le {{ incrMusicCount }}ème. Bravo !</p>
+<div class="header">
+  <h1 mat-dialog-title>Créez un nouveau morceau</h1>
+  <mat-icon aria-hidden="false"
+            aria-label="Fermer la fenêtre"
+            class="close-icon"
+            (click)="leave()">close</mat-icon>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Retour</button>
-  <button mat-button [mat-dialog-close]="incrMusicCount" cdkFocusInitial>Ok</button>
-</div>
+<form [formGroup]="musicForm" (ngSubmit)="saveMusic()">
+  <mat-dialog-content>
+    <p>C'est le {{ incrMusicCount }}ème. Bravo !</p>
+      <mat-form-field>
+        <mat-label for="title">Titre</mat-label>
+        <input id="title" matInput formControlName="title">
+      </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="footer">
+    <button mat-button
+            type="reset"
+            cdkFocusInitial
+            (click)="leave()">Retour</button>
+    <button mat-button
+            type="submit"
+            [disabled]="!musicForm.valid">Ok</button>
+  </mat-dialog-actions>
+</form>

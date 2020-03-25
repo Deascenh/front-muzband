@@ -75,7 +75,10 @@ export class AppComponent implements OnInit, OnDestroy {
   openAddMusicDialog(): void {
     const dialogRef = this.dialog.open(AddMusicDialogComponent, {
       width: this.largeHandsetPortrait,
-      data: { musicCount: this.fillerNav.length }
+      data: {
+        creator: this.authenticatedUser,
+        musicCount: this.fillerNav.length,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
