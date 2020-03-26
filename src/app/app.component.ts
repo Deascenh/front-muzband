@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: false }) sidenav;
   private alive = true;
   private authState: Observable<IAuthState>;
-  private sidenavState: Observable<Music[]>;
+  private sidenavMusicsState$: Observable<Music[]>;
   /**
    * !! BreakPoints Reference Table :
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
@@ -45,7 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public isAuthenticated = false;
   public authenticatedUser: User = null;
-  public musics: Music[] = [];
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -57,12 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mediaOrientationObserver();
 
     this.authState = this.store.select(selectAuthState);
-    this.sidenavState = this.store.select(selectSidenavMusics);
+    this.sidenavMusicsState$ = this.store.select(selectSidenavMusics);
   }
 
   ngOnInit(): void {
     this.initAuthStream();
-    this.initSidenavStream();
   }
 
   private initAuthStream(): void {
@@ -79,12 +77,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  private initSidenavStream(): void {
-    this.sidenavState.pipe(
-      takeWhile(() => !!this.authenticatedUser)
-    ).subscribe((musics: Music[]) => this.musics = musics);
-  }
-
   logOut(): void {
     this.store.dispatch(new Logout());
   }
@@ -96,10 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
   openAddMusicDialog(): void {
     this.dialog.open(AddMusicDialogComponent, {
       width: this.largeHandsetPortrait,
-      data: {
-        creator: this.authenticatedUser,
-        musicCount: this.musics.length,
-      }
+      data: { creator: this.authenticatedUser }
     });
   }
 

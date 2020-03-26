@@ -41,6 +41,13 @@ export class MusicEffects {
     switchMap((music: Music) => of (new AddMusicSuccess(music)))
   );
 
+  @Effect()
+  addMucicSuccess$ = this.actions$.pipe(
+    ofType<AddMusicSuccess>(EMusicActions.AddMusicSuccess),
+    map(action => action.payload),
+    tap(music => this.router.navigate(['music', music.id]))
+  );
+
   constructor(
     private musicService: MusicService,
     private router: Router,

@@ -1,12 +1,13 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../core/models';
-import {MusicService} from '../../core/data/music.service';
-import {timer} from 'rxjs';
+import {Music, User} from '../../core/models';
+import {Observable, timer} from 'rxjs';
 import {IAppState} from '../../core/store/App/App.state';
 import {Store} from '@ngrx/store';
 import {AddMusic} from '../../core/store/music/music.actions';
+import {selectSidenavMusics} from '../../core/store/music/music.selectors';
+import {takeWhile} from 'rxjs/operators';
 
 export interface DialogData {
   musicCount: number;
@@ -19,22 +20,32 @@ export interface DialogData {
   styleUrls: ['./add-music-dialog.component.scss']
 })
 export class AddMusicDialogComponent implements OnInit, OnDestroy {
+  private alive = true;
   saving = false;
-  incrMusicCount = 0;
+  musicScore: number;
   musicForm: FormGroup;
+  musicsState$: Observable<Music[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<AddMusicDialogComponent>,
     private formBuilder: FormBuilder,
-    private musicService: MusicService,
     private store: Store<IAppState>,
   ) {
-    this.incrMusicCount = this.data.musicCount + 1;
+    this.musicsState$ = this.store.select(selectSidenavMusics);
   }
 
   ngOnInit(): void {
+    this.fetchMusicScore();
     this.initMusicForm();
+  }
+
+  private fetchMusicScore(): void {
+    this.musicsState$.pipe(
+      takeWhile(() => this.alive),
+    ).subscribe(musics => {
+      this.musicScore = musics.length + 1;
+    });
   }
 
   private initMusicForm(): void {
@@ -62,6 +73,6 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.saving = false;
+    this.saving = this.alive = false;
   }
 }

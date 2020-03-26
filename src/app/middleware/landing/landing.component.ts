@@ -6,7 +6,7 @@ import {selectAuthState} from '../../core/store/auth/auth.selectors';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {delay, first, takeWhile} from 'rxjs/operators';
+import {delay, takeWhile} from 'rxjs/operators';
 import {User} from '../../core/models';
 
 @Component({
@@ -15,8 +15,8 @@ import {User} from '../../core/models';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit, OnDestroy {
+  private alive = true;
   getState: Observable<any>;
-  alive = true;
 
   isAuthenticated = false;
   user: User = null;

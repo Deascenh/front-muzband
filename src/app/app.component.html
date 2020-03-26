@@ -31,8 +31,9 @@
                  [fixedInViewport]="true"
                  [fixedTopGap]="TOOLBAR_HEIGHT">
       <mat-nav-list>
-        <mat-list-item *ngFor="let music of musics">
-          <a routerLink="home">{{ music.title }}</a>
+        <mat-list-item *ngFor="let music of sidenavMusicsState$ | async"
+                       [routerLink]="['/music', music.id]">
+          {{ music.title }}
         </mat-list-item>
         <mat-list-item class="add-button"
                        matTooltip="Ajouter une musique"
