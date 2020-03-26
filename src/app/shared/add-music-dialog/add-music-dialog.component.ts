@@ -43,9 +43,14 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
 
   saveMusic() {
     if (this.musicForm.valid) {
+      this.saving = true;
       this.musicService.save(this.musicForm.value)
         .subscribe(result => {
-          timer(300).subscribe(() => this.dialogRef.close(result));
+          timer(300).subscribe(
+            () => this.dialogRef.close(result),
+            (err) => console.error(err),
+            () => this.saving = false,
+          );
         }
       );
     }
