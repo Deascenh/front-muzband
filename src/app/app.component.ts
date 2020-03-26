@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
-import {takeWhile, tap} from 'rxjs/operators';
+import {distinctUntilChanged, takeWhile, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
@@ -11,7 +11,8 @@ import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
-import {MusicService} from './core/data/music.service';
+import {selectSidenavMusics} from './core/store/music/music.selectors';
+import {GetSidenavMusics} from './core/store/music/music.actions';
 
 export enum EWidthModes {
   Small = 'small',
@@ -31,15 +32,16 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: false }) sidenav;
   private alive = true;
   private authState: Observable<IAuthState>;
+  private sidenavState: Observable<Music[]>;
   /**
    * !! BreakPoints Reference Table :
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
    */
   private readonly largeHandsetPortrait = '599px';
+  public readonly TOOLBAR_HEIGHT: number = 50;
 
   public widthMode: EWidthModes = null;
   public orientationMode: EOrientationModes = null;
-  public readonly TOOLBAR_HEIGHT: number = 50;
 
   public isAuthenticated = false;
   public authenticatedUser: User = null;
@@ -50,21 +52,37 @@ export class AppComponent implements OnInit, OnDestroy {
     private store: Store<IAppState>,
     private router: Router,
     private dialog: MatDialog,
-    private musicService: MusicService,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
 
     this.authState = this.store.select(selectAuthState);
+    this.sidenavState = this.store.select(selectSidenavMusics);
   }
 
   ngOnInit(): void {
+    this.initAuthStream();
+    this.initSidenavStream();
+  }
+
+  private initAuthStream(): void {
     this.authState.pipe(
+      distinctUntilChanged(),
       tap(state => {
         this.isAuthenticated = state.isAuthenticated;
         this.authenticatedUser = state.user;
       })
-    ).subscribe(() => this.fetchMusics());
+    ).subscribe(() => {
+      if (this.authenticatedUser) {
+        this.store.dispatch(new GetSidenavMusics());
+      }
+    });
+  }
+
+  private initSidenavStream(): void {
+    this.sidenavState.pipe(
+      takeWhile(() => !!this.authenticatedUser)
+    ).subscribe((musics: Music[]) => this.musics = musics);
   }
 
   logOut(): void {
@@ -76,30 +94,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openAddMusicDialog(): void {
-    const dialogRef = this.dialog.open(AddMusicDialogComponent, {
+    this.dialog.open(AddMusicDialogComponent, {
       width: this.largeHandsetPortrait,
       data: {
         creator: this.authenticatedUser,
         musicCount: this.musics.length,
       }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.info('The new music is : ', result);
-      }
-    });
-  }
-
-  /**
-   * TODO For the future, this loading must to be done with NGRX
-   */
-  private fetchMusics(): void {
-    if (this.authenticatedUser) {
-      this.musicService.getAll().subscribe(result => {
-        this.musics = result['hydra:member'];
-      });
-    }
   }
 
   private mediaWidthObserver(): void {

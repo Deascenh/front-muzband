@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../core/models';
 import {MusicService} from '../../core/data/music.service';
 import {timer} from 'rxjs';
+import {IAppState} from '../../core/store/App/App.state';
+import {Store} from '@ngrx/store';
+import {AddMusic} from '../../core/store/music/music.actions';
 
 export interface DialogData {
   musicCount: number;
@@ -25,6 +28,7 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AddMusicDialogComponent>,
     private formBuilder: FormBuilder,
     private musicService: MusicService,
+    private store: Store<IAppState>,
   ) {
     this.incrMusicCount = this.data.musicCount + 1;
   }
@@ -44,14 +48,11 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
   saveMusic() {
     if (this.musicForm.valid) {
       this.saving = true;
-      this.musicService.save(this.musicForm.value)
-        .subscribe(result => {
-          timer(300).subscribe(
-            () => this.dialogRef.close(result),
-            (err) => console.error(err),
-            () => this.saving = false,
-          );
-        }
+      timer(300).subscribe(
+        () => {
+          this.store.dispatch(new AddMusic(this.musicForm.value));
+          this.dialogRef.close();
+        },
       );
     }
   }
@@ -61,6 +62,6 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.info(`${this.dialogRef._containerInstance._id} is destroyed.`);
+    this.saving = false;
   }
 }

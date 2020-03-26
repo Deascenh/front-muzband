@@ -6,7 +6,7 @@ import {selectAuthState} from '../../core/store/auth/auth.selectors';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {delay, takeWhile} from 'rxjs/operators';
+import {delay, first, takeWhile} from 'rxjs/operators';
 import {User} from '../../core/models';
 
 @Component({
@@ -46,6 +46,8 @@ export class LandingComponent implements OnInit, OnDestroy {
     this.errorMessage = state.errorMessage;
     this.token = this.jwtService.tokenGetter();
 
+    // TODO Refactor this part, Trigger a double User / Musics
+    //  call AT CONNECTION TIME only
     if (!this.user && !this.jwtService.isTokenExpired()) {
       const id = this.jwtService.decodeToken().id;
       this.store.dispatch(new FetchAuthenticatedUser(id));

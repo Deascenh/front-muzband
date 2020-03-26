@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../utils/api.service';
 import {Observable} from 'rxjs';
-import {Music, User} from '../models';
+import {Music} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
 export class MusicService {
   public static readonly path: string = 'musics';
 
-  private static makePath(id: string): string {
-    return id.includes(MusicService.path) ? id : `${MusicService.path}/${id}`;
+  private static makePath(id: number | string): string {
+    return id.toString().includes(MusicService.path) ? id.toString() : `${MusicService.path}/${id}`;
   }
 
   constructor(private api: ApiService) { }
 
-  get(id: string): Observable<Music> {
+  get(id: number | string): Observable<Music> {
     return this.api.get(MusicService.makePath(id)).pipe(
       map(data => new Music(data)),
     );

@@ -2,7 +2,7 @@ import {User} from './User.model';
 import {LdResource} from './LdResource.model';
 
 export class Music extends LdResource implements Serializable<Music> {
-  id?: string;
+  id?: number;
   title: string;
   creator: string | User;
   createdAt?: string;

@@ -21,6 +21,7 @@ import {AuthEffects} from './store/auth/auth.effects';
 import {AuthGuard} from './guard/auth-guard';
 import {MusicService} from './data/music.service';
 import {SavingSuccessInterceptor} from './interceptors/saving-success.interceptor';
+import {MusicEffects} from './store/music/music.effects';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
@@ -47,6 +48,7 @@ export const APP_EFFECTS = [
   AuthEffects,
   ConfigEffects,
   UserEffects,
+  MusicEffects,
 ];
 
 @NgModule({
