@@ -41,7 +41,7 @@ export class MusicEffects {
     switchMap((music: Music) => of (new AddMusicSuccess(music)))
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   addMucicSuccess$ = this.actions$.pipe(
     ofType<AddMusicSuccess>(EMusicActions.AddMusicSuccess),
     map(action => action.payload),
