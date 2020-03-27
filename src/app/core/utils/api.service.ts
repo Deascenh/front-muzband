@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {catchError} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
+import {SimpleSnackBar} from '@angular/material/snack-bar/typings/simple-snack-bar';
 
 export interface HttpOptions {
   headers?: HttpHeaders | {
@@ -20,6 +21,8 @@ export interface HttpOptions {
 
 @Injectable()
 export class ApiService {
+  private errorShown: MatSnackBarRef<SimpleSnackBar> = null;
+
   private httpOptions: HttpOptions = {
     headers: new HttpHeaders({
       'Content-type': 'application/json',
@@ -34,6 +37,18 @@ export class ApiService {
 
   private static makePath(path: string): string {
     return environment.paired_api_base_url + path.replace(/\/api\//, '');
+  }
+
+  private static getErrorMessageToShowOrNull(error: any): string | null {
+    let message = null;
+
+    if (error.status >= 500 || error.status === 0) {
+      message = 'Erreur serveur';
+    } else if (error.status === 404) {
+      message = 'Ressource introuvable';
+    }
+
+    return message;
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -102,20 +117,27 @@ export class ApiService {
    * @param { any } error
    */
   private handleErrors(error: any) {
-    const action = 'Http';
-    let message = '';
+    const messageToShow = ApiService.getErrorMessageToShowOrNull(error);
 
-    if (error.status >= 500 || error.status === 0) {
-      message = 'Server error';
-    } else if (error.status === 401) {
-      message = 'Authentication issue';
+    if (this.errorShown === null && messageToShow !== null) {
+      this.showError(messageToShow)
+        .afterDismissed()
+        .subscribe(() => this.errorShown = null);
     }
 
-    this.snackBar.open(message, action, {
-      duration: 3000,
+    return throwError(!environment.production ? null : error);
+  }
+
+  /**
+   * Show to the user the error message within a Material Snackbar
+   *
+   * @param { string } message
+   * @return { MatSnackBarRef<SimpleSnackBar> }
+   */
+  private showError(message: string): MatSnackBarRef<SimpleSnackBar> {
+    return this.errorShown = this.snackBar.open(message, 'API', {
+      duration: 5000,
       verticalPosition: 'top',
     });
-
-    return of(error);
   }
 }
