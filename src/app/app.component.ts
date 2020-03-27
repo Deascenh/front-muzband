@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
-import {FocusMusic, GetSidenavMusics} from './core/store/music/music.actions';
+import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {selectAppRouter} from './core/store/App/App.selectors';
 
 export enum EWidthModes {
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const matches = state.url.match(/^\/?music\/\d+$/g);
 
         if (matches && state.path.includes('music/:id')) {
-          this.store.dispatch(new FocusMusic(state.params.id));
+          this.store.dispatch(new GetFocusedMusic(state.params.id));
         }
       }
     });

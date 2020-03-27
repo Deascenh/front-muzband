@@ -1,5 +1,6 @@
 import {IMusicState, initialMusicState} from './music.state';
 import {EMusicActions, MusicActions} from './music.actions';
+import {Music, Musician} from '../../models';
 
 export const musicReducers = (
   state: IMusicState = initialMusicState,
@@ -13,21 +14,18 @@ export const musicReducers = (
       };
     }
     case EMusicActions.GetFocusedMusicSuccess: {
+      const focus = { ...action.payload.music } as Music;
+      focus.musicians = { ...action.payload.musicians } as Musician[];
+
       return {
         ...state,
-        focus: action.payload,
+        focus,
       };
     }
     case EMusicActions.AddMusicSuccess: {
       return {
         ...state,
         sidenavMusics: [...state.sidenavMusics, action.payload],
-        focus: action.payload,
-      };
-    }
-    case EMusicActions.FocusMusicSuccess: {
-      return {
-        ...state,
         focus: action.payload,
       };
     }

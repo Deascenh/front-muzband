@@ -4,12 +4,12 @@ import {Store} from '@ngrx/store';
 import {IAppState} from '../App/App.state';
 import {
   AddMusic, AddMusicSuccess,
-  EMusicActions, FocusMusic, GetFocusedMusic,
+  EMusicActions, GetFocusedMusic,
   GetFocusedMusicSuccess,
   GetSidenavMusics, GetSidenavMusicsSuccess,
 } from './music.actions';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {concat, forkJoin, of} from 'rxjs';
 import {Music} from '../../models';
 import {MusicService} from '../../data/music.service';
 import {Router} from '@angular/router';
@@ -29,8 +29,15 @@ export class MusicEffects {
   getFocusedMusic$ = this.actions$.pipe(
     ofType<GetFocusedMusic>(EMusicActions.GetFocusedMusic),
     map(action => action.payload),
-    switchMap((id: number | string) => this.musicService.get(id)),
-    switchMap((music: Music) => of(new GetFocusedMusicSuccess(music)))
+    // TODO Find a configuration to stream both observables in async instead forkJoin
+    switchMap(id => forkJoin(
+      this.musicService.get(id),
+      this.musicService.getMusicians(id),
+    )),
+    switchMap(([music, musicians]) => of(new GetFocusedMusicSuccess({
+      music,
+      musicians,
+    })))
   );
 
   @Effect()
@@ -46,14 +53,6 @@ export class MusicEffects {
     ofType<AddMusicSuccess>(EMusicActions.AddMusicSuccess),
     map(action => action.payload),
     tap(music => this.router.navigate(['music', music.id]))
-  );
-
-  @Effect()
-  focusMusic$ = this.actions$.pipe(
-    ofType<FocusMusic>(EMusicActions.FocusMusic),
-    map(action => action.payload),
-    switchMap(id => (this.musicService.get(id))),
-    switchMap((music: Music) => of(new GetFocusedMusicSuccess(music)))
   );
 
   constructor(

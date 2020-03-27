@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Music} from '../../models';
+import {Music, Musician} from '../../models';
 
 export enum EMusicActions {
   GetSidenavMusics = '[Music] Get Sidenav Musics',
@@ -28,7 +28,10 @@ export class GetFocusedMusic implements Action {
 
 export class GetFocusedMusicSuccess implements Action {
   public readonly type = EMusicActions.GetFocusedMusicSuccess;
-  constructor(public payload: Music) {}
+  constructor(public payload: {
+    music: Music,
+    musicians: Musician[],
+  }) {}
 }
 
 export class AddMusic implements Action {
@@ -41,22 +44,10 @@ export class AddMusicSuccess implements Action {
   constructor(public payload: Music) {}
 }
 
-export class FocusMusic implements Action {
-  public readonly type = EMusicActions.FocusMusic;
-  constructor(public payload: number) {}
-}
-
-export class FocusMusicSuccess implements Action {
-  public readonly type = EMusicActions.FocusMusicSuccess;
-  constructor(public payload: Music) {}
-}
-
 export type MusicActions =
   | GetSidenavMusics
   | GetSidenavMusicsSuccess
   | GetFocusedMusic
   | GetFocusedMusicSuccess
   | AddMusic
-  | AddMusicSuccess
-  | FocusMusic
-  | FocusMusicSuccess;
+  | AddMusicSuccess;
