@@ -6,7 +6,7 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './core/guard/auth-guard';
 import {MusicComponent} from './music/music.component';
 
-export const ROUTED_COMPONENTS = [
+export const ROUTED_APP_COMPONENTS = [
   LandingComponent,
   LoginComponent,
   HomeComponent,

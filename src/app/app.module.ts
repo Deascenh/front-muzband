@@ -5,7 +5,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import {AppRoutingModule, ROUTED_COMPONENTS} from './app-routing.module';
+import {AppRoutingModule, ROUTED_APP_COMPONENTS} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
@@ -20,11 +20,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {SharedModule} from './shared/shared.module';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
+import { GeneralWorksheetComponent } from './music/general-worksheet/general-worksheet.component';
+import {GeneralWorksheetComponent} from './music/general-worksheet/general-worksheet.component';
 
 @NgModule({
   declarations: [
+    ROUTED_APP_COMPONENTS,
     AppComponent,
-    ROUTED_COMPONENTS,
+    GeneralWorksheetComponent,
   ],
   imports: [
     BrowserModule,
