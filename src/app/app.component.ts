@@ -13,6 +13,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
 import {GetSidenavMusics} from './core/store/music/music.actions';
+import {selectAppRouter} from './core/store/App/App.selectors';
 
 export enum EWidthModes {
   Small = 'small',
@@ -56,11 +57,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mediaOrientationObserver();
 
     this.authState = this.store.select(selectAuthState);
+    this.routerState = this.store.select(selectAppRouter);
     this.sidenavMusicsState$ = this.store.select(selectSidenavMusics);
   }
 
   ngOnInit(): void {
     this.initAuthStream();
+    this.initRouterStream();
   }
 
   private initAuthStream(): void {
@@ -77,6 +80,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  private initRouterStream() {
+    this.routerState.subscribe(state => {
+    });
+  }
   logOut(): void {
     this.store.dispatch(new Logout());
   }
