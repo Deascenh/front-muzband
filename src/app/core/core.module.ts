@@ -22,6 +22,7 @@ import {AuthGuard} from './guard/auth-guard';
 import {MusicService} from './data/music.service';
 import {SavingSuccessInterceptor} from './interceptors/saving-success.interceptor';
 import {MusicEffects} from './store/music/music.effects';
+import {MusicianService} from './data/musicians.service';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
@@ -29,6 +30,7 @@ export const CORE_SERVICE_PROVIDERS = [
   ConfigService,
   UserService,
   MusicService,
+  MusicianService,
 ];
 
 export const CORE_INTERCEPTOR_PROVIDERS = [
