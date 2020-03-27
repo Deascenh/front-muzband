@@ -23,6 +23,8 @@ import {MusicService} from './data/music.service';
 import {SavingSuccessInterceptor} from './interceptors/saving-success.interceptor';
 import {MusicEffects} from './store/music/music.effects';
 import {MusicianService} from './data/musicians.service';
+import {InstrumentService} from './data/instrument.service';
+import {InstrumentEffects} from './store/instrument/instrument.effects';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
@@ -31,6 +33,7 @@ export const CORE_SERVICE_PROVIDERS = [
   UserService,
   MusicService,
   MusicianService,
+  InstrumentService,
 ];
 
 export const CORE_INTERCEPTOR_PROVIDERS = [
@@ -51,6 +54,7 @@ export const APP_EFFECTS = [
   ConfigEffects,
   UserEffects,
   MusicEffects,
+  InstrumentEffects,
 ];
 
 @NgModule({

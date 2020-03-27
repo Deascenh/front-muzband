@@ -27,6 +27,7 @@ export class UserEffects {
   getUsers$ = this.actions$.pipe(
     ofType<GetUsers>(EUserActions.GetUsers),
     switchMap(() => this.userService.getAll()),
+    map(data => data['hydra:member']),
     switchMap((users: User[]) => of(new GetUsersSuccess(users)))
   );
 

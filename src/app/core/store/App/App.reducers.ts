@@ -5,6 +5,7 @@ import {configReducers} from '../Config/Config.reducers';
 import {routerReducer} from '@ngrx/router-store';
 import {authReducers} from '../auth/auth.reducers';
 import {musicReducers} from '../music/music.reducers';
+import {instrumentReducers} from '../instrument/instrument.reducers';
 
 export const appReducers: ActionReducerMap<IAppState, any> = {
   config: configReducers,
@@ -12,5 +13,6 @@ export const appReducers: ActionReducerMap<IAppState, any> = {
   auth: authReducers,
   users: userReducers,
   musics: musicReducers,
+  instruments: instrumentReducers,
 };
 

@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {Store} from '@ngrx/store';
-import {IAppState} from '../App/App.state';
 import {
   AddMusic, AddMusicSuccess,
   EMusicActions, GetFocusedMusic,
@@ -59,6 +57,5 @@ export class MusicEffects {
     private musicService: MusicService,
     private router: Router,
     private actions$: Actions,
-    private store: Store<IAppState>
   ) {}
 }

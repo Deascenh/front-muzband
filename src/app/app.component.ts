@@ -14,6 +14,8 @@ import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialo
 import {selectSidenavMusics} from './core/store/music/music.selectors';
 import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {selectAppRouter} from './core/store/App/App.selectors';
+import {GetUsers} from './core/store/user/user.actions';
+import {GetInstruments} from './core/store/instrument/instrument.actions';
 
 export enum EWidthModes {
   Small = 'small',
@@ -64,22 +66,23 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initAuthStream();
     this.initRouterStream();
+    this.initAuthStream()
+      .subscribe(() => {
+        if (this.authenticatedUser) {
+          this.loadAppGlobalData();
+        }
+      });
   }
 
-  private initAuthStream(): void {
-    this.authState.pipe(
+  private initAuthStream(): Observable<IAuthState> {
+    return this.authState.pipe(
       distinctUntilChanged(),
       tap(state => {
         this.isAuthenticated = state.isAuthenticated;
         this.authenticatedUser = state.user;
       })
-    ).subscribe(() => {
-      if (this.authenticatedUser) {
-        this.store.dispatch(new GetSidenavMusics());
-      }
-    });
+    );
   }
 
   private initRouterStream() {
@@ -92,6 +95,12 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  private loadAppGlobalData() {
+    this.store.dispatch(new GetSidenavMusics());
+    this.store.dispatch(new GetUsers());
+    this.store.dispatch(new GetInstruments());
   }
 
   logOut(): void {

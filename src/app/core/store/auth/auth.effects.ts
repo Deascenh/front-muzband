@@ -69,7 +69,4 @@ export class AuthEffects {
     private jwtService: JwtHelperService,
     private router: Router,
   ) {}
-
-  // effects go here
-
 }
