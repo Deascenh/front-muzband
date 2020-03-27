@@ -125,7 +125,7 @@ export class ApiService {
         .subscribe(() => this.errorShown = null);
     }
 
-    return throwError(!environment.production ? null : error);
+    return throwError(environment.production ? null : error);
   }
 
   /**
