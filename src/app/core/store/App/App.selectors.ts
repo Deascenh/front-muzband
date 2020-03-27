@@ -12,8 +12,8 @@ export const selectAppRouter = createSelector(
   routerState,
   (state) => state ? {
     url: state.state.url,
-    path: state.state.root.firstChild.routeConfig.path,
-    params: state.state.root.firstChild.params,
+    path: state.state.root.firstChild ? state.state.root.firstChild.routeConfig.path : null,
+    params: state.state.root.firstChild ? state.state.root.firstChild.params : null,
   } : undefined,
 );
 
