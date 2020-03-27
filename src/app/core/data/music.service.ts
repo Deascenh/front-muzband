@@ -5,7 +5,7 @@ import {Music} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
-export class MusicService {
+export class MusicService implements DataService<Music> {
   public static readonly path: string = 'musics';
 
   private static makePath(id: number | string): string {
@@ -22,10 +22,7 @@ export class MusicService {
 
   getAll(): Observable<Music[]> {
     return this.api.get(MusicService.path).pipe(
-      map(data => {
-        data['hydra:member'] = data['hydra:member'].map(music => new Music(music));
-        return data;
-      })
+      map(data => this.deserializeHydraMember(data))
     );
   }
 
@@ -37,5 +34,10 @@ export class MusicService {
       return this.api.post(MusicService.path, music)
         .pipe(map(data => data));
     }
+  }
+
+  deserializeHydraMember(data: any): Music[] {
+    data['hydra:member'] = data['hydra:member'].map(music => new Music(music));
+    return data;
   }
 }

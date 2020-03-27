@@ -5,7 +5,7 @@ import {User} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
-export class UserService {
+export class UserService implements DataService<User> {
   public static readonly path: string = 'users';
 
   private static makePath(uuid: string): string {
@@ -22,10 +22,12 @@ export class UserService {
 
   getAll(): Observable<User[]> {
     return this.api.get(UserService.path).pipe(
-      map(data => {
-        data['hydra:member'] = data['hydra:member'].map(user => new User(user));
-        return data;
-      })
+      map(data => this.deserializeHydraMember(data))
     );
+  }
+
+  deserializeHydraMember(data: any): User[] {
+    data['hydra:member'] = data['hydra:member'].map(user => new User(user));
+    return data;
   }
 }
