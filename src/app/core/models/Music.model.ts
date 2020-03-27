@@ -1,12 +1,16 @@
 import {User} from './User.model';
 import {LdResource} from './LdResource.model';
+import {Musician} from './Musician.model';
+import {Moment} from 'moment';
+import * as moment from 'moment';
 
 export class Music extends LdResource implements Serializable<Music> {
   id?: number;
   title: string;
   creator: string | User;
-  createdAt?: string;
-  updatedAt?: string;
+  musicians?: string[] | Musician[];
+  createdAt?: Moment;
+  updatedAt?: Moment;
 
   constructor(obj?: any) {
     super(obj);
@@ -18,6 +22,13 @@ export class Music extends LdResource implements Serializable<Music> {
       if (input.id) { this.id = input.id; }
       this.title = input.title || null;
       this.creator = typeof input.creator === 'string' ? input.creator : new User(input.creator);
+      if (input.musicians && input.musicians.length) {
+        this.musicians = typeof input.musicians[0] === 'string'
+        ? input.musicians
+        : input.musicians.map(musician => new Musician(musician));
+      }
+      if (input.createdAt) { this.createdAt = moment(input.createdAt); }
+      if (input.updateAt) { this.updatedAt = moment(input.updatedAt); }
     }
 
     return this;
