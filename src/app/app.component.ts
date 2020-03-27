@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
    */
   private readonly largeHandsetPortrait = '599px';
+  private readonly pagesWithoutAuthGuard = ['', '/', '/login'];
   public readonly TOOLBAR_HEIGHT: number = 50;
 
   public widthMode: EWidthModes = null;
@@ -92,6 +93,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
         if (matches && state.path.includes('music/:id')) {
           this.store.dispatch(new GetFocusedMusic(state.params.id));
+        }
+        if (!this.pagesWithoutAuthGuard.includes(state.url) && !this.authenticatedUser) {
+          this.router.navigateByUrl('/');
         }
       }
     });

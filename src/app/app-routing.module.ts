@@ -32,8 +32,7 @@ const routes: Routes = [
     component: MusicComponent,
     canActivate: [AuthGuard],
   },
-  { path: '', component: LandingComponent },
-  { path: '**', redirectTo: '/' }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

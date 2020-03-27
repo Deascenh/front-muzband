@@ -28,15 +28,13 @@ export class AuthEffects {
     switchMap(result => result.token ? of(new LoginSuccess(result)) : of(new LoginFailure(result)))
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   LoginSuccess$ = this.actions$.pipe(
     ofType<LoginSuccess>(EAuthActions.LoginSuccess),
     map(action => action.payload),
-    switchMap(payload => {
+    tap(payload => {
       localStorage.setItem('access_token', payload.token);
-      const id = this.jwtService.decodeToken().id;
       this.router.navigateByUrl('/');
-      return of(new FetchAuthenticatedUser(id));
     })
   );
 
