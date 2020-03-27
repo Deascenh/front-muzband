@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.component';
 
 @NgModule({
   imports: [
@@ -23,9 +24,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   ],
   declarations: [
     AddMusicDialogComponent,
+    AddMusicianFormComponent,
   ],
   exports: [
     AddMusicDialogComponent,
+    AddMusicianFormComponent,
   ],
 })
 export class SharedModule { }
