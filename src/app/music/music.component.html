@@ -6,7 +6,10 @@
       <ng-template mat-tab-label>
         Global
       </ng-template>
-      Global sheet
+      <app-general-worksheet></app-general-worksheet>
+    </mat-tab>
+    <mat-tab *ngFor="let musician of musicianTabs">
+
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
@@ -22,8 +25,9 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon>add_library</mat-icon>
+        <mat-icon matTooltip="Associer un nouvel instrument">add_library</mat-icon>
       </ng-template>
+      <app-add-musician-form></app-add-musician-form>
     </mat-tab>
   </mat-tab-group>
 </div>
