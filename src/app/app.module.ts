@@ -20,7 +20,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {SharedModule} from './shared/shared.module';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
-import { GeneralWorksheetComponent } from './music/general-worksheet/general-worksheet.component';
+import {MatTabsModule} from '@angular/material/tabs';
 import {GeneralWorksheetComponent} from './music/general-worksheet/general-worksheet.component';
 
 @NgModule({
@@ -47,6 +47,7 @@ import {GeneralWorksheetComponent} from './music/general-worksheet/general-works
     MatSidenavModule,
     MatListModule,
     MatTooltipModule,
+    MatTabsModule,
     CoreModule.forRoot(),
     SharedModule,
   ],

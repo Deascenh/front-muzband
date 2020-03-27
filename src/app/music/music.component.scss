@@ -1,7 +1,38 @@
+@import "src/app/styles/variables";
+
+$small-margin: 0.5rem;
+
 mat-spinner {
   position: absolute;
   z-index: 2;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.music-piece-container {
+  #music-title {
+    margin: $small-margin 0;
+  }
+}
+
+.placeholder-mode {
+  &--h1 {
+    height: 3rem;
+    background: $placeholder-color;
+    width: $sidenav-width-px * 2; // random width choice
+    border-radius: 4px
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .music-piece-container {
+    margin: 0 $small-margin;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .music-piece-container {
+    margin: 0 2.5rem;
+  }
 }
