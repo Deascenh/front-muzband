@@ -1,19 +1,20 @@
-# BaseFront
-Readme last update 2020-03-23
+# MuzBand
+Readme last update 2020-03-27
 
-## What Official technologies are in it? ?
+## What technologies are in it?
+- **Angular V8** framework and some of its official features
 - @angular/material as base Theme
-- NgRx (Redux pattern) :
-    - Used by the built-in security system
+- NgRx (Redux pattern for Angular) :
+    >@ngrx/{store, effects, router-store, store-devtool}
+    - Used by the **built-in security system**
+    - Used to manage central application resources
+- 
 - @auth0/angular-jwt :
     - Provide an Http Token Interceptor
     - Provide jwtHelperService
+- ngrx-store-localstorage
 - moment
 - bootstrap
-
-## What Custom systems are in it?
-- User authentication management
-- Communication interface with external APIs
 
 ## Build
 
