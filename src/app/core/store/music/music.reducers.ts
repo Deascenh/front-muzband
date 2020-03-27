@@ -25,6 +25,12 @@ export const musicReducers = (
         focus: action.payload,
       };
     }
+    case EMusicActions.FocusMusicSuccess: {
+      return {
+        ...state,
+        focus: action.payload,
+      };
+    }
     default: {
       return state;
     }

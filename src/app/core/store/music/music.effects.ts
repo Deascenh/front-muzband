@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {IAppState} from '../App/App.state';
 import {
   AddMusic, AddMusicSuccess,
-  EMusicActions, GetFocusedMusic,
+  EMusicActions, FocusMusic, GetFocusedMusic,
   GetFocusedMusicSuccess,
   GetSidenavMusics, GetSidenavMusicsSuccess,
 } from './music.actions';
@@ -38,7 +38,7 @@ export class MusicEffects {
     ofType<AddMusic>(EMusicActions.AddMusic),
     map(action => action.payload),
     switchMap(submit => this.musicService.save(submit)),
-    switchMap((music: Music) => of (new AddMusicSuccess(music)))
+    switchMap((music: Music) => of(new AddMusicSuccess(music)))
   );
 
   @Effect({dispatch: false})
@@ -46,6 +46,14 @@ export class MusicEffects {
     ofType<AddMusicSuccess>(EMusicActions.AddMusicSuccess),
     map(action => action.payload),
     tap(music => this.router.navigate(['music', music.id]))
+  );
+
+  @Effect()
+  focusMusic$ = this.actions$.pipe(
+    ofType<FocusMusic>(EMusicActions.FocusMusic),
+    map(action => action.payload),
+    switchMap(id => (this.musicService.get(id))),
+    switchMap((music: Music) => of(new GetFocusedMusicSuccess(music)))
   );
 
   constructor(

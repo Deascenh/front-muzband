@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
-import {GetSidenavMusics} from './core/store/music/music.actions';
+import {FocusMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {selectAppRouter} from './core/store/App/App.selectors';
 
 export enum EWidthModes {
@@ -24,6 +24,7 @@ export enum EOrientationModes {
   Landscape = 'landscape',
 }
 
+// TODO Most part of the sidnav logic can be transfer in a new component
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: false }) sidenav;
   private alive = true;
   private authState: Observable<IAuthState>;
+  private routerState: Observable<any>;
   private sidenavMusicsState$: Observable<Music[]>;
   /**
    * !! BreakPoints Reference Table :
@@ -82,8 +84,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private initRouterStream() {
     this.routerState.subscribe(state => {
+      if (state) {
+        const matches = state.url.match(/^\/?music\/\d+$/g);
+
+        if (matches && state.path.includes('music/:id')) {
+          this.store.dispatch(new FocusMusic(state.params.id));
+        }
+      }
     });
   }
+
   logOut(): void {
     this.store.dispatch(new Logout());
   }
