@@ -22,6 +22,7 @@ export const authReducers = (
     case EAuthActions.FetchAuthenticatedUserSuccess: {
       return {
         ...state,
+        isAuthenticated: true,
         user: action.payload
       };
     }

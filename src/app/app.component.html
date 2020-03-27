@@ -31,7 +31,7 @@
                  [fixedInViewport]="true"
                  [fixedTopGap]="TOOLBAR_HEIGHT">
       <mat-nav-list>
-        <mat-list-item *ngFor="let music of sidenavMusicsState$ | async"
+        <mat-list-item *ngFor="let music of (sidenavMusicsState$ | async)"
                        [routerLink]="['/music', music.id]">
           {{ music.title }}
         </mat-list-item>
