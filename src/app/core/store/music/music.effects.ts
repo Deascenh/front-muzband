@@ -7,7 +7,7 @@ import {
   GetSidenavMusics, GetSidenavMusicsSuccess,
 } from './music.actions';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {concat, forkJoin, of} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
 import {Music} from '../../models';
 import {MusicService} from '../../data/music.service';
 import {Router} from '@angular/router';

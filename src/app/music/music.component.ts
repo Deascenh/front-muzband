@@ -19,17 +19,17 @@ export interface MusicianTab {
   styleUrls: ['./music.component.scss']
 })
 export class MusicComponent implements OnInit {
+  private static byHeaderLabel = ((
+    a: MusicianTab,
+    b: MusicianTab
+  ) => a.headerLabel.localeCompare(b.headerLabel));
+
   private focusedMusicState$: Observable<Music>;
   private instrumentsListState$: Observable<Instrument[]>;
 
   music: Music;
   instruments: Instrument[] = [];
   musicianTabs: MusicianTab[] = [];
-
-  private static byHeaderLabel = (
-    a: MusicianTab,
-    b: MusicianTab
-  ) => a.headerLabel.localeCompare(b.headerLabel);
 
   constructor(private store: Store<IAppState>) {
     this.focusedMusicState$ = this.store.select(selectFocusedMusic);

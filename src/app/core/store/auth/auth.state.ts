@@ -2,7 +2,7 @@ import {User} from '../../models';
 
 export interface IAuthState {
   isAuthenticated: boolean;
-  sessionTimeout: Date;
+  sessionTimeout: string;
   user: User | null;
   errorMessage: string | null;
 }

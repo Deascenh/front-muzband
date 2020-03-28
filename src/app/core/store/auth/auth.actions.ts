@@ -42,7 +42,7 @@ export class Logout implements Action {
 
 export class StoreSessionTimeout implements Action {
   readonly type = EAuthActions.StoreSessionTimeout;
-  constructor(public payload: Date) {}
+  constructor(public payload: string) {}
 }
 
 export type AuthActions =

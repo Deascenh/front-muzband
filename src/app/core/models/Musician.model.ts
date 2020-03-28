@@ -1,6 +1,5 @@
 import {User} from './User.model';
 import {LdResource} from './LdResource.model';
-import {Music} from './Music.model';
 import {Instrument} from './Instrument.model';
 import {Moment} from 'moment';
 import * as moment from 'moment';
