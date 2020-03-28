@@ -13,6 +13,12 @@ export const authReducers = (
         errorMessage: null
       };
     }
+    case EAuthActions.StoreSessionTimeout: {
+      return {
+        ...state,
+        sessionTimeout: action.payload,
+      };
+    }
     case EAuthActions.LoginFailure: {
       return {
         ...state,

@@ -9,7 +9,7 @@ import {
   FetchAuthenticatedUserSuccess,
   Login,
   LoginFailure,
-  LoginSuccess
+  LoginSuccess, StoreSessionTimeout
 } from './auth.actions';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {ApiService} from '../../utils/api.service';
@@ -28,14 +28,15 @@ export class AuthEffects {
     switchMap(result => result.token ? of(new LoginSuccess(result)) : of(new LoginFailure(result)))
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   LoginSuccess$ = this.actions$.pipe(
     ofType<LoginSuccess>(EAuthActions.LoginSuccess),
     map(action => action.payload),
     tap(payload => {
       localStorage.setItem('access_token', payload.token);
       this.router.navigateByUrl('/');
-    })
+    }),
+    switchMap(() => of(new StoreSessionTimeout(this.jwtService.getTokenExpirationDate()))),
   );
 
   @Effect({ dispatch: false })

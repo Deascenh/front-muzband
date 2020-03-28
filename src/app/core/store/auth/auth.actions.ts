@@ -7,7 +7,8 @@ export enum EAuthActions {
   LoginFailure = '[Auth] Login Failure',
   FetchAuthenticatedUser = '[Auth] Fetch Authenticated User',
   FetchAuthenticatedUserSuccess = '[Auth] Fetch Authenticated User Success',
-  Logout = '[Auth] Logout'
+  Logout = '[Auth] Logout',
+  StoreSessionTimeout = '[Auth] Store Session Timeout'
 }
 
 export class Login implements Action {
@@ -39,10 +40,16 @@ export class Logout implements Action {
   readonly type = EAuthActions.Logout;
 }
 
+export class StoreSessionTimeout implements Action {
+  readonly type = EAuthActions.StoreSessionTimeout;
+  constructor(public payload: Date) {}
+}
+
 export type AuthActions =
   | Login
   | LoginSuccess
   | LoginFailure
   | FetchAuthenticatedUser
   | FetchAuthenticatedUserSuccess
-  | Logout;
+  | Logout
+  | StoreSessionTimeout;
