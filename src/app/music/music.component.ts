@@ -26,7 +26,10 @@ export class MusicComponent implements OnInit {
   instruments: Instrument[] = [];
   musicianTabs: MusicianTab[] = [];
 
-  private static byTabTitle = (a: MusicianTab, b: MusicianTab) => a.headerLabel.localeCompare(b.headerLabel);
+  private static byHeaderLabel = (
+    a: MusicianTab,
+    b: MusicianTab
+  ) => a.headerLabel.localeCompare(b.headerLabel);
 
   constructor(private store: Store<IAppState>) {
     this.focusedMusicState$ = this.store.select(selectFocusedMusic);
@@ -58,14 +61,14 @@ export class MusicComponent implements OnInit {
             instrument: mInstrument,
             user: musician.user as User,
           });
-          this.updateTabsTitle(musicianTabsLength - 1);
+          this.patchTabsLabel(musicianTabsLength - 1);
         }
       }
-      this.musicianTabs.sort(MusicComponent.byTabTitle);
+      this.musicianTabs.sort(MusicComponent.byHeaderLabel);
     }
   }
 
-  private updateTabsTitle(newEntryPosition: number) {
+  private patchTabsLabel(newEntryPosition: number) {
     const newEntry = this.musicianTabs[newEntryPosition];
 
     const nestedInstrument: Instrument = this.instruments.find(
@@ -76,7 +79,7 @@ export class MusicComponent implements OnInit {
     );
 
     if (tabsEqualInstrument.length > 1) {
-      this.patchTabsTitle(tabsEqualInstrument, nestedInstrument);
+      this.updateTabsLabel(tabsEqualInstrument, nestedInstrument);
     } else {
       newEntry.headerLabel = nestedInstrument.name;
     }
@@ -87,7 +90,7 @@ export class MusicComponent implements OnInit {
    * @param { Musician[] } toRetitle Tabs with the same instrument which need to be retitled
    * @param { Instrument } instrument Entity which gives its name to the tabs
    */
-  private patchTabsTitle(toRetitle: MusicianTab[], instrument: Instrument) {
+  private updateTabsLabel(toRetitle: MusicianTab[], instrument: Instrument) {
     let theSameTotal = toRetitle.length;
     this.musicianTabs.forEach(tab => {
       if (toRetitle.includes(tab)) {
