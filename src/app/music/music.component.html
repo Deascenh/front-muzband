@@ -8,20 +8,11 @@
       </ng-template>
       <app-general-worksheet></app-general-worksheet>
     </mat-tab>
-    <mat-tab *ngFor="let musician of musicianTabs">
-
-    </mat-tab>
-    <mat-tab>
+    <mat-tab *ngFor="let tab of musicianTabs">
       <ng-template mat-tab-label>
-        Guitare
+        {{ tab.headerLabel }}
       </ng-template>
-      All Guitare Content
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        Batterie
-      </ng-template>
-      Some elements to practice on drums part of this music
+      <pre>{{ tab | json }}</pre>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
