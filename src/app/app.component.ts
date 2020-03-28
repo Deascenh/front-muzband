@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Music, User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
@@ -16,6 +16,7 @@ import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.action
 import {selectAppRouter} from './core/store/App/App.selectors';
 import {GetUsers} from './core/store/user/user.actions';
 import {GetInstruments} from './core/store/instrument/instrument.actions';
+import {ClockCountdownService} from './core/utils/clock-countdown.service';
 
 export enum EWidthModes {
   Small = 'small',
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private alive = true;
   private authState: Observable<IAuthState>;
   private routerState: Observable<any>;
-  private sidenavMusicsState$: Observable<Music[]>;
+  private sessionCountdownSub: Subscription = null;
   /**
    * !! BreakPoints Reference Table :
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
@@ -45,18 +46,20 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly largeHandsetPortrait = '599px';
   private readonly pagesWithoutAuthGuard = ['', '/', '/login'];
   public readonly TOOLBAR_HEIGHT: number = 50;
-
   public widthMode: EWidthModes = null;
   public orientationMode: EOrientationModes = null;
 
+  public sidenavMusicsState$: Observable<Music[]>;
   public isAuthenticated = false;
   public authenticatedUser: User = null;
+  public sessionCountDown: string;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     private store: Store<IAppState>,
     private router: Router,
     private dialog: MatDialog,
+    private clockCountdown: ClockCountdownService,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
@@ -82,11 +85,15 @@ export class AppComponent implements OnInit, OnDestroy {
       tap(state => {
         this.isAuthenticated = state.isAuthenticated;
         this.authenticatedUser = state.user;
+
+        if (state.sessionTimeout !== null) {
+          this.startSessionCountdown(state.sessionTimeout);
+        }
       })
     );
   }
 
-  private initRouterStream() {
+  private initRouterStream(): void {
     this.routerState.subscribe(state => {
       if (state) {
         const matches = state.url.match(/^\/?music\/\d+$/g);
@@ -101,10 +108,21 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadAppGlobalData() {
+  /**
+   * Loads and stores global data shared between several components
+   */
+  private loadAppGlobalData(): void {
     this.store.dispatch(new GetSidenavMusics());
     this.store.dispatch(new GetUsers());
     this.store.dispatch(new GetInstruments());
+  }
+
+  private startSessionCountdown(untilTimeString: string): void {
+    if (this.sessionCountdownSub === null) {
+      this.sessionCountdownSub = this.clockCountdown.startUntil(untilTimeString)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe(formattedTime => this.sessionCountDown = formattedTime);
+    }
   }
 
   logOut(): void {

@@ -25,10 +25,12 @@ import {MusicEffects} from './store/music/music.effects';
 import {MusicianService} from './data/musicians.service';
 import {InstrumentService} from './data/instrument.service';
 import {InstrumentEffects} from './store/instrument/instrument.effects';
+import {ClockCountdownService} from './utils/clock-countdown.service';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
   ApiService,
+  ClockCountdownService,
   ConfigService,
   UserService,
   MusicService,

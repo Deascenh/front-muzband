@@ -36,7 +36,10 @@ export class AuthEffects {
       localStorage.setItem('access_token', payload.token);
       this.router.navigateByUrl('/');
     }),
-    switchMap(() => of(new StoreSessionTimeout(this.jwtService.getTokenExpirationDate()))),
+    switchMap(() => {
+      const tokenExpirationMoment = this.jwtService.getTokenExpirationDate().toISOString();
+      return of(new StoreSessionTimeout(tokenExpirationMoment));
+    }),
   );
 
   @Effect({ dispatch: false })
