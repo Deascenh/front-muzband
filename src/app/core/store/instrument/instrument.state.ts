@@ -5,5 +5,5 @@ export interface IInstrumentState {
 }
 
 export const initialInstrumentState: IInstrumentState = {
-  instruments: null,
+  instruments: [],
 };

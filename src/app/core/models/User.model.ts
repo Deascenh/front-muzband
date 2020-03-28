@@ -16,8 +16,8 @@ export class User extends LdResource implements Serializable<User> {
     if (typeof input === 'object') {
       if (input.id) { this.id = input.id; }
       if (input.username) { this.username = input.username; }
+      if (input.roles) { this.roles = input.roles; }
       this.email = input.email || null;
-      this.roles = input.roles || [];
     }
 
     return this;

@@ -6,6 +6,6 @@ export interface IUserState {
 }
 
 export const initialUserState: IUserState = {
-  users: null,
+  users: [],
   selectedUser: null,
 };

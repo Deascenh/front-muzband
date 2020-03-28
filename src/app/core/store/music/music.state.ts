@@ -6,6 +6,6 @@ export interface IMusicState {
 }
 
 export const initialMusicState: IMusicState = {
-  sidenavMusics: null,
+  sidenavMusics: [],
   focus: null,
 };

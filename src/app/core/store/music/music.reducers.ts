@@ -14,8 +14,8 @@ export const musicReducers = (
       };
     }
     case EMusicActions.GetFocusedMusicSuccess: {
-      const focus = { ...action.payload.music } as Music;
-      focus.musicians = { ...action.payload.musicians } as Musician[];
+      const focus = new Music(action.payload.music);
+      focus.musicians = [...action.payload.musicians] as Musician[];
 
       return {
         ...state,

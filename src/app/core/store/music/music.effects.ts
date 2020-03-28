@@ -27,15 +27,14 @@ export class MusicEffects {
   getFocusedMusic$ = this.actions$.pipe(
     ofType<GetFocusedMusic>(EMusicActions.GetFocusedMusic),
     map(action => action.payload),
-    // TODO Find a configuration to stream both observables in async instead forkJoin
     switchMap(id => forkJoin(
       this.musicService.get(id),
       this.musicService.getMusicians(id),
     )),
     switchMap(([music, musicians]) => of(new GetFocusedMusicSuccess({
       music,
-      musicians,
-    })))
+      musicians: musicians['hydra:member'],
+    }))),
   );
 
   @Effect()
