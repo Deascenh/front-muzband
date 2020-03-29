@@ -4,6 +4,10 @@ import {Instrument} from './Instrument.model';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
+/**
+ * Musician is a Music subresource;
+ * Can't deserialize associated Music from here (Causes circular dependency)
+ */
 export class Musician extends LdResource implements Serializable<Musician> {
   id?: number;
   music: string;
@@ -20,10 +24,8 @@ export class Musician extends LdResource implements Serializable<Musician> {
   deserialize(input: any): Musician {
     if (typeof input === 'object') {
       if (input.id) { this.id = input.id; }
-      // TODO Try to deserialize Music from here produce a Circular dependency with Music.model.
-      //  But read Music data from a Musician is an edge case we don't need. Find a way anyway
-      this.music = typeof input.music === 'string' ? input.music : null;
       this.user = typeof input.user === 'string' ? input.user : new User(input.user);
+      this.music = input.music || null;
       this.instruments = input.instruments || [];
       if (input.createdAt) { this.createdAt = moment(input.createdAt); }
       if (input.updateAt) { this.updatedAt = moment(input.updatedAt); }

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 export class Music extends LdResource implements Serializable<Music> {
   id?: number;
   title: string;
+  artist: string;
   creator: string | User;
   musicians?: string[] | Musician[];
   createdAt?: Moment;
@@ -21,6 +22,7 @@ export class Music extends LdResource implements Serializable<Music> {
     if (typeof input === 'object') {
       if (input.id) { this.id = input.id; }
       this.title = input.title || null;
+      this.artist = input.artist || null;
       this.creator = typeof input.creator === 'string' ? input.creator : new User(input.creator);
       if (input.musicians && input.musicians.length) {
         this.musicians = typeof input.musicians[0] === 'string'

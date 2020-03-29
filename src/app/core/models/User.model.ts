@@ -4,6 +4,7 @@ export class User extends LdResource implements Serializable<User> {
   id?: string;
   email: string;
   username?: string;
+  name: string;
   password?: string;
   roles?: string[];
 
@@ -18,6 +19,7 @@ export class User extends LdResource implements Serializable<User> {
       if (input.username) { this.username = input.username; }
       if (input.roles) { this.roles = input.roles; }
       this.email = input.email || null;
+      this.name = input.name || null;
     }
 
     return this;
