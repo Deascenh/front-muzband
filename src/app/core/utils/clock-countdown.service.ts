@@ -4,41 +4,64 @@ import {interval, Observable} from 'rxjs';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
-/**
- * Only composed of function returning Observables
- * of string in a "Clock format" as "hh:mm:ss"
- */
+export enum EMilliseconds {
+  Hour = 3600000,
+  Minute = 60000,
+  Second = 1000,
+}
+
 @Injectable()
 export class ClockCountdownService {
-  timer: number;
+  /**
+   * The function returns the result of the Euclidean division
+   * of the timestamp received in the unit of time passed as
+   * a parameter. Then it converts it into a character string
+   * always showing 2 digits and a time separator if needed.
+   *
+   * @param { number } timestamp
+   * @param { EMilliseconds } TimeUnit Format "nn[:]"
+   */
+  public static inClockDigitFormat(timestamp: number, TimeUnit: EMilliseconds): string {
+    return (Math.floor(timestamp / TimeUnit).toString().padStart(2, '0') || '00')
+      + (TimeUnit !== EMilliseconds.Second ? ':' : '');
+  }
 
-  constructor() { }
-
+  /**
+   * Returns a string type clock from the received timestamp
+   * in format "[hh:]mm:ss". Square brackets in the previous
+   * example indicate that if the timestamp is less than one
+   * hour, the time does not appear in the clock.
+   *
+   * @param { number } timestamp
+   * @return { string } Format "[hh:]mm:ss"
+   */
   public static inClockFormat(timestamp: number): string {
-    const HOUR = 3600000;
-    const MINUTE = 60000;
-    const SECOND = 1000;
     let clock = '';
-    if (timestamp > HOUR) {
-      clock += Math.round(timestamp / HOUR).toString().padStart(2, '0') + ':';
-      timestamp %= HOUR;
+    if (timestamp > EMilliseconds.Hour) {
+      clock += ClockCountdownService.inClockDigitFormat(timestamp, EMilliseconds.Hour);
+      timestamp %= EMilliseconds.Hour;
     }
-    if (timestamp > MINUTE) {
-      clock += Math.round(timestamp / MINUTE).toString().padStart(2, '0') + ':';
-      timestamp %= MINUTE;
+    if (timestamp > EMilliseconds.Minute) {
+      clock += ClockCountdownService.inClockDigitFormat(timestamp, EMilliseconds.Minute);
+      timestamp %= EMilliseconds.Minute;
     }
-    if (timestamp > SECOND) {
-      clock += Math.round(timestamp / SECOND).toString().padStart(2, '0');
-    }
+    clock += ClockCountdownService.inClockDigitFormat(timestamp, EMilliseconds.Second);
+
     return clock;
   }
 
-  startUntil(time: string): Observable<string> {
+  /**
+   * It returns every second a string type clock indicating the time
+   * remaining between the time passed in parameter and now.
+   *
+   * @param { any } time Any value that can instantiate a Moment object
+   * @return { Observable<string> }
+   */
+  startUntil(time: any): Observable<string> {
     const toMoment: Moment = moment(time);
     return interval(1000).pipe(
       map(() => {
-        const diff = toMoment.diff(moment());
-        return ClockCountdownService.inClockFormat(diff);
+        return ClockCountdownService.inClockFormat(toMoment.diff(moment()));
       }),
       share()
     );
