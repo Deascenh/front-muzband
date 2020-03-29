@@ -28,4 +28,10 @@ export class User extends LdResource implements Serializable<User> {
   toString(): string {
     return this.email;
   }
+
+  useName(): string {
+    return this.name
+      ? this.name.split(' ').map( w =>  w.substring(0, 1).toUpperCase() + w.substring(1)).join(' ')
+      : this.email;
+  }
 }

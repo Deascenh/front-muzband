@@ -4,16 +4,18 @@ import {distinctUntilChanged, takeWhile, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
+import {selectAppRouter} from './core/store/App/App.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
 import {Observable, Subscription} from 'rxjs';
-import {Music, User} from './core/models';
+import {Instrument, Music, User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
+import {selectInstrumentList} from './core/store/instrument/instrument.selectors';
+import {selectUserList} from './core/store/user/user.selectors';
 import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
-import {selectAppRouter} from './core/store/App/App.selectors';
 import {GetUsers} from './core/store/user/user.actions';
 import {GetInstruments} from './core/store/instrument/instrument.actions';
 import {ClockCountdownService} from './core/utils/clock-countdown.service';
@@ -50,6 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public orientationMode: EOrientationModes = null;
 
   public sidenavMusicsState$: Observable<Music[]>;
+  public menuInstrumentsState$: Observable<Instrument[]>;
+  public menuMembersState$: Observable<User[]>;
   public isAuthenticated = false;
   public authenticatedUser: User = null;
   public sessionCountDown: string;
@@ -67,6 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authState = this.store.select(selectAuthState);
     this.routerState = this.store.select(selectAppRouter);
     this.sidenavMusicsState$ = this.store.select(selectSidenavMusics);
+    this.menuInstrumentsState$ = this.store.select(selectInstrumentList);
+    this.menuMembersState$ = this.store.select(selectUserList);
   }
 
   ngOnInit(): void {
@@ -84,7 +90,19 @@ export class AppComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       tap(state => {
         this.isAuthenticated = state.isAuthenticated;
-        this.authenticatedUser = state.user;
+
+        // /!\ Temporary fix /!\
+        // TODO Debug ngrx-store-localstorage which
+        //  don't want to deserialize authState.user in type User
+        //  causes bug when sync in done between Ngrx Store and the LocalStorage.
+        //  This sync is done when user lands on the app or at browser refreshes.
+        // The following treatment prevent this bug when state.user a generic object
+        if (!(state.user instanceof User) && state.user) {
+          console.warn('Current User was instantiate outsite data service');
+          this.authenticatedUser = new User(state.user);
+        } else {
+          this.authenticatedUser = state.user;
+        }
 
         if (state.sessionTimeout !== null) {
           this.startSessionCountdown(state.sessionTimeout);
