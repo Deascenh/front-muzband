@@ -1,1 +1,20 @@
-<p>add-musician-form works!</p>
+<form [formGroup]="musicianForm">
+  <mat-form-field class="example-full-width">
+    <mat-label>Instrument</mat-label>
+    <input type="text" matInput formControlName="instrument" [matAutocomplete]="autoInstr">
+    <mat-autocomplete #autoInstr="matAutocomplete" [displayWith]="instrumentDisplayFn">
+      <mat-option *ngFor="let instrument of filteredInstruments$ | async" [value]="instrument">
+        {{instrument.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field *ngIf="members$" class="example-full-width">
+    <mat-label>Joueur</mat-label>
+    <input type="text" matInput formControlName="user" [matAutocomplete]="autoMemb">
+    <mat-autocomplete #autoMemb="matAutocomplete" [displayWith]="memberDisplayFn">
+      <mat-option *ngFor="let member of members$ | async" [value]="member">
+        {{ member.useName() }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

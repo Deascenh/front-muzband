@@ -11,6 +11,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.component';
 import { UserSheetComponent } from './user-sheet/user-sheet.component';
 import { InstrumentSheetComponent } from './instrument-sheet/instrument-sheet.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { InstrumentSheetComponent } from './instrument-sheet/instrument-sheet.co
     MatInputModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
   ],
   declarations: [
     AddMusicDialogComponent,
