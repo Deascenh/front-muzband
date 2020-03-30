@@ -9,6 +9,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.component';
+import { UserSheetComponent } from './user-sheet/user-sheet.component';
+import { InstrumentSheetComponent } from './instrument-sheet/instrument-sheet.component';
 
 @NgModule({
   imports: [
@@ -25,10 +27,14 @@ import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.
   declarations: [
     AddMusicDialogComponent,
     AddMusicianFormComponent,
+    UserSheetComponent,
+    InstrumentSheetComponent,
   ],
   exports: [
     AddMusicDialogComponent,
     AddMusicianFormComponent,
+    UserSheetComponent,
+    InstrumentSheetComponent,
   ],
 })
 export class SharedModule { }

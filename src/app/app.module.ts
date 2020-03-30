@@ -22,6 +22,10 @@ import {SharedModule} from './shared/shared.module';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {GeneralWorksheetComponent} from './music/general-worksheet/general-worksheet.component';
+import { HeaderMenuComponent } from './layout/header-menu/header-menu.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {UserSheetComponent} from './shared/user-sheet/user-sheet.component';
+import {InstrumentSheetComponent} from './shared/instrument-sheet/instrument-sheet.component';
 
 @NgModule({
   declarations: [
@@ -49,12 +53,15 @@ import {GeneralWorksheetComponent} from './music/general-worksheet/general-works
     MatListModule,
     MatTooltipModule,
     MatTabsModule,
+    MatBottomSheetModule,
     CoreModule.forRoot(),
     SharedModule,
   ],
   providers: [],
   entryComponents: [
     AddMusicDialogComponent,
+    UserSheetComponent,
+    InstrumentSheetComponent,
   ],
   bootstrap: [AppComponent]
 })
