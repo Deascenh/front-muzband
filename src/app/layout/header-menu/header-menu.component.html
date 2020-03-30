@@ -1,0 +1,32 @@
+<button mat-button [matMenuTriggerFor]="instrumentMenu">Instruments</button>
+<mat-menu #instrumentMenu="matMenu">
+  <button *ngFor="let instrument of (menuInstrumentsState$ | async)"
+          mat-menu-item>
+    {{ instrument.name  }}
+  </button>
+  <button mat-menu-item
+          class="add-item"
+          matTooltip="Ajouter un nouvel instrument"
+          (click)="openItemSheet(menuSections.Instruments)">
+    <mat-icon aria-hidden="false"
+              aria-label="Ajouter un nouvel instrument">
+      add_circle_outline
+    </mat-icon>
+  </button>
+</mat-menu>
+<button mat-button [matMenuTriggerFor]="membersMenu">Membres</button>
+<mat-menu #membersMenu="matMenu">
+  <button *ngFor="let member of (menuMembersState$ | async)"
+          mat-menu-item>
+    {{ member.useName() }}
+  </button>
+  <button mat-menu-item
+          class="add-item"
+          matTooltip="Ajouter un nouvel utilisateur"
+          (click)="openItemSheet(menuSections.Users)">
+    <mat-icon aria-hidden="false"
+              aria-label="Ajouter un nouvel utilisateur">
+      add_circle_outline
+    </mat-icon>
+  </button>
+</mat-menu>

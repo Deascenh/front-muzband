@@ -7,14 +7,12 @@ import {selectAuthState} from './core/store/auth/auth.selectors';
 import {selectAppRouter} from './core/store/App/App.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
 import {Observable, Subscription} from 'rxjs';
-import {Instrument, Music, User} from './core/models';
+import {Music, User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
-import {selectInstrumentList} from './core/store/instrument/instrument.selectors';
-import {selectUserList} from './core/store/user/user.selectors';
 import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {GetUsers} from './core/store/user/user.actions';
 import {GetInstruments} from './core/store/instrument/instrument.actions';
@@ -52,8 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public orientationMode: EOrientationModes = null;
 
   public sidenavMusicsState$: Observable<Music[]>;
-  public menuInstrumentsState$: Observable<Instrument[]>;
-  public menuMembersState$: Observable<User[]>;
   public isAuthenticated = false;
   public authenticatedUser: User = null;
   public sessionCountDown: string;
@@ -71,8 +67,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authState = this.store.select(selectAuthState);
     this.routerState = this.store.select(selectAppRouter);
     this.sidenavMusicsState$ = this.store.select(selectSidenavMusics);
-    this.menuInstrumentsState$ = this.store.select(selectInstrumentList);
-    this.menuMembersState$ = this.store.select(selectUserList);
   }
 
   ngOnInit(): void {

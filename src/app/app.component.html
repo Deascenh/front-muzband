@@ -11,16 +11,7 @@
     <h1 class="app-name" (click)="goHome()">MuzBand</h1>
     <span class="spacer"></span>
     <div *ngIf="authenticatedUser" class="authenticated-area">
-      <button mat-button [matMenuTriggerFor]="instrumentMenu">Instruments</button>
-      <mat-menu #instrumentMenu="matMenu">
-        <button *ngFor="let instrument of (menuInstrumentsState$ | async)"
-                mat-menu-item>{{ instrument.name  }}</button>
-      </mat-menu>
-      <button mat-button [matMenuTriggerFor]="membersMenu">Membres</button>
-      <mat-menu #membersMenu="matMenu">
-        <button *ngFor="let members of (menuMembersState$ | async)"
-                mat-menu-item>Item 1</button>
-      </mat-menu>
+      <app-header-menu></app-header-menu>
       <mat-icon aria-hidden="false"
                 aria-label="Icône utilisateur vérifié"
                 [matTooltip]="sessionCountDown">

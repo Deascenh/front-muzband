@@ -28,6 +28,7 @@ import {GeneralWorksheetComponent} from './music/general-worksheet/general-works
     ROUTED_APP_COMPONENTS,
     AppComponent,
     GeneralWorksheetComponent,
+    HeaderMenuComponent,
   ],
   imports: [
     BrowserModule,
