@@ -1,0 +1,41 @@
+@import "../../styles/variables";
+
+$action-size: 40px;
+
+.add-musician-section {
+  min-width: 500px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.action {
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  color: currentColor;
+  width: $action-size;
+  height: $action-size;
+  line-height: $action-size;
+  justify-content: center;
+  vertical-align: center;
+  background: $placeholder-color;
+
+  &.valid {
+    border-color: $teal;
+    color: $teal;
+  }
+
+  &.invalid {
+    border-color: $amber;
+    color: $amber;
+  }
+
+  &.remove {
+    border-color: $red;
+    color: $red;
+  }
+}

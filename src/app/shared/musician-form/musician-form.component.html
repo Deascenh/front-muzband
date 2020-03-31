@@ -1,0 +1,36 @@
+<form [formGroup]="musicianForm" class="add-musician-section">
+  <mat-form-field class="example-full-width">
+    <mat-label>Instrument</mat-label>
+    <input type="text" matInput formControlName="instrument" [matAutocomplete]="autoInstr">
+    <mat-autocomplete #autoInstr="matAutocomplete"
+                      autoActiveFirstOption
+                      [displayWith]="instrumentDisplayFn">
+      <mat-option *ngFor="let instrument of (filteredInstruments$ | async) || instruments" [value]="instrument">
+        {{instrument.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-icon>double_arrow</mat-icon>
+  <mat-form-field class="example-full-width">
+    <mat-label>Joueur</mat-label>
+    <input type="text" matInput formControlName="user" [matAutocomplete]="autoMemb">
+    <mat-autocomplete #autoMemb="matAutocomplete"
+                      autoActiveFirstOption
+                      [displayWith]="memberDisplayFn">
+      <mat-option *ngFor="let member of (filteredMembers$ | async) || members" [value]="member">
+        {{ member.useName() }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button matRipple
+          class="action"
+          [ngClass]="{
+            valid: musicianForm.valid && !formHydrated,
+            remove: musicianForm.valid && formHydrated,
+            invalid: musicianForm.invalid
+          }"
+          [disabled]="musicianForm.invalid"
+          (click)="onClick()">
+    <mat-icon>{{ action() }}</mat-icon>
+  </button>
+</form>
