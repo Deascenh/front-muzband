@@ -24,7 +24,9 @@ export class Musician extends LdResource implements Serializable<Musician> {
   deserialize(input: any): Musician {
     if (typeof input === 'object') {
       if (input.id) { this.id = input.id; }
-      this.user = typeof input.user === 'string' ? input.user : new User(input.user);
+      if (input.user) {
+        this.user = typeof input.user === 'string' ? input.user : new User(input.user);
+      }
       this.music = input.music || null;
       this.instruments = input.instruments || [];
       if (input.createdAt) { this.createdAt = moment(input.createdAt); }

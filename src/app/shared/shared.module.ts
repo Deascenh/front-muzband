@@ -12,6 +12,12 @@ import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.
 import { UserSheetComponent } from './user-sheet/user-sheet.component';
 import { InstrumentSheetComponent } from './instrument-sheet/instrument-sheet.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+export const SHARED_COMPONENTS = [
+  AddMusicDialogComponent,
+  MusicianFormComponent,
+  UserSheetComponent,
+  InstrumentSheetComponent,
+];
 
 @NgModule({
   imports: [
@@ -27,13 +33,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatAutocompleteModule,
   ],
   declarations: [
-    AddMusicDialogComponent,
+    SHARED_COMPONENTS,
     AddMusicianFormComponent,
     UserSheetComponent,
     InstrumentSheetComponent,
   ],
   exports: [
-    AddMusicDialogComponent,
+    SHARED_COMPONENTS,
     AddMusicianFormComponent,
     UserSheetComponent,
     InstrumentSheetComponent,

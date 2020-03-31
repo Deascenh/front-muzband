@@ -75,9 +75,6 @@ export const APP_EFFECTS = [
       }
     })
   ],
-  exports: [
-  ],
-  declarations: [],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

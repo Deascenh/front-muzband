@@ -26,18 +26,18 @@ export class MusicianService implements DataService<Musician> {
     );
   }
 
-  save(music: Musician) {
-    if (music['@id']) {
-      return this.api.put(music['@id'], music)
+  save(musician: Musician) {
+    if (musician['@id']) {
+      return this.api.put(musician['@id'], musician)
         .pipe(map(data => data));
     } else {
-      return this.api.post(MusicianService.path, music)
+      return this.api.post(MusicianService.path, musician)
         .pipe(map(data => data));
     }
   }
 
   deserializeHydraMember(data: any): Musician[] {
-    data['hydra:member'] = data['hydra:member'].map(music => new Musician(music));
+    data['hydra:member'] = data['hydra:member'].map(musician => new Musician(musician));
     return data;
   }
 }
