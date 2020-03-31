@@ -8,15 +8,24 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { AddMusicianFormComponent } from './add-musician-form/add-musician-form.component';
-import { UserSheetComponent } from './user-sheet/user-sheet.component';
-import { InstrumentSheetComponent } from './instrument-sheet/instrument-sheet.component';
+import {MusicianFormComponent} from './musician-form/musician-form.component';
+import {UserSheetComponent} from './user-sheet/user-sheet.component';
+import {InstrumentSheetComponent} from './instrument-sheet/instrument-sheet.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatRippleModule} from '@angular/material/core';
+import {IsUserDirective} from './directives/validators/is-user.directive';
+import {IsInstrumentDirective} from './directives/validators/is-instrument.directive';
+
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
   MusicianFormComponent,
   UserSheetComponent,
   InstrumentSheetComponent,
+];
+
+export const SHARED_DIRECTIVES = [
+  IsUserDirective,
+  IsInstrumentDirective
 ];
 
 @NgModule({
@@ -31,18 +40,15 @@ export const SHARED_COMPONENTS = [
     MatIconModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
+    MatRippleModule,
   ],
   declarations: [
     SHARED_COMPONENTS,
-    AddMusicianFormComponent,
-    UserSheetComponent,
-    InstrumentSheetComponent,
+    SHARED_DIRECTIVES,
   ],
   exports: [
     SHARED_COMPONENTS,
-    AddMusicianFormComponent,
-    UserSheetComponent,
-    InstrumentSheetComponent,
+    SHARED_DIRECTIVES,
   ],
 })
 export class SharedModule { }
