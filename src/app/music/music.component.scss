@@ -14,6 +14,13 @@ mat-spinner {
   #music-title {
     margin: $small-margin 0;
   }
+
+  .add-musician-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+  }
 }
 
 .placeholder-mode {
