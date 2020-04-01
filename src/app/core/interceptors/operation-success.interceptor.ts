@@ -12,8 +12,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {Music, User} from '../models';
 
 @Injectable()
-export class SavingSuccessInterceptor implements HttpInterceptor {
-  private readonly GENERIC_MESSAGE = 'La sauvegarde est effectuée !';
+export class OperationSuccessInterceptor implements HttpInterceptor {
+  private readonly GENERIC_SAVE_MESSAGE = 'La sauvegarde est effectuée !';
+  private readonly GENERIC_DELETE_MESSAGE = 'La suppression est effectuée !';
+  private readonly SNACKBAR_PANEL_CLASS = 'operation-success-snackbar';
 
   constructor(private snackBar: MatSnackBar) {}
 
@@ -25,9 +27,22 @@ export class SavingSuccessInterceptor implements HttpInterceptor {
   }
 
   private handleSuccess(res: any) {
-    if (res instanceof HttpResponse && res.status === 201) {
-      this.displaySuccess(res.body);
+    if (res instanceof HttpResponse) {
+      if (res.status === 201) {
+        this.displaySaveSuccess(res.body);
+      }
+      if (res.status === 204) {
+        this.displayDeleteSuccess();
+      }
     }
+  }
+
+  private displayDeleteSuccess(): void {
+    this.snackBar.open(this.GENERIC_DELETE_MESSAGE, '', {
+      verticalPosition: 'top',
+      duration: 3000,
+      panelClass: [this.SNACKBAR_PANEL_CLASS],
+    });
   }
 
   /**
@@ -35,8 +50,10 @@ export class SavingSuccessInterceptor implements HttpInterceptor {
    * TODO Find a better way to display a related
    *  to the Entity saving success message. Because we
    *  are too early to be within the scope of class manipulation.
+   *  => The following getResource() function is too generic and
+   *  too dangerous to be declared and used here in this way.
    */
-  private displaySuccess(body: any) {
+  private displaySaveSuccess(body: any): void {
     const className = body['@type'] ? body['@type'] : null;
     let message = null;
 
@@ -48,7 +65,7 @@ export class SavingSuccessInterceptor implements HttpInterceptor {
     this.snackBar.open(message, '', {
       verticalPosition: 'top',
       duration: 3000,
-      panelClass: ['saving-success-snackbar'],
+      panelClass: [this.SNACKBAR_PANEL_CLASS],
     });
   }
 
@@ -69,8 +86,8 @@ export class SavingSuccessInterceptor implements HttpInterceptor {
   }
 
   private writeMessage(resource: any): string {
-    return typeof resource.toString === 'function'
+    return resource !== null && typeof resource.toString === 'function'
       ? 'La sauvegarde de \"' + resource.toString() + '" est effectuée !'
-      : this.GENERIC_MESSAGE;
+      : this.GENERIC_SAVE_MESSAGE;
   }
 }
