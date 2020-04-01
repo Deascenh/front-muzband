@@ -1,6 +1,7 @@
 <button mat-button [matMenuTriggerFor]="instrumentMenu">Instruments</button>
 <mat-menu #instrumentMenu="matMenu">
   <button *ngFor="let instrument of (menuInstrumentsState$ | async)"
+          (click)="openItemSheet(menuSections.Instruments, instrument)"
           mat-menu-item>
     {{ instrument.name  }}
   </button>
@@ -17,6 +18,7 @@
 <button mat-button [matMenuTriggerFor]="membersMenu">Membres</button>
 <mat-menu #membersMenu="matMenu">
   <button *ngFor="let member of (menuMembersState$ | async)"
+          (click)="openItemSheet(menuSections.Users, member)"
           mat-menu-item>
     {{ member.useName() }}
   </button>

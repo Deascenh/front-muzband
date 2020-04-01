@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
 import {selectUserList} from '../../core/store/user/user.selectors';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
 import {Observable} from 'rxjs';
 import {Instrument, User} from '../../core/models';
-import {InstrumentSheetComponent} from '../../shared/instrument-sheet/instrument-sheet.component';
-import {UserSheetComponent} from '../../shared/user-sheet/user-sheet.component';
+import {InstrumentSheetComponent, InstrumentSheetData} from '../../shared/instrument-sheet/instrument-sheet.component';
+import {UserSheetComponent, UserSheetData} from '../../shared/user-sheet/user-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 enum EMenuSections {
@@ -35,19 +35,22 @@ export class HeaderMenuComponent implements OnInit {
     this.menuMembersState$ = this.store.select(selectUserList);
   }
 
-  openItemSheet(section: EMenuSections) {
+  openItemSheet(section: EMenuSections, resource: Instrument | User = null) {
     let component = null;
+    let data: UserSheetData | InstrumentSheetData | {} = {};
     switch (section) {
       case EMenuSections.Instruments: {
         component = InstrumentSheetComponent;
+        data = { instrument: resource as Instrument };
         break;
       }
       case EMenuSections.Users: {
         component = UserSheetComponent;
+        data = { member: resource as User };
         break;
       }
     }
-    this.bottomSheet.open(component);
+    this.bottomSheet.open(component, { data });
   }
 
 }

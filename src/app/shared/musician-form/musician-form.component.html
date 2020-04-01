@@ -1,5 +1,5 @@
 <form [formGroup]="musicianForm" class="add-musician-section">
-  <mat-form-field class="example-full-width">
+  <mat-form-field>
     <mat-label>Instrument</mat-label>
     <input type="text" matInput formControlName="instrument" [matAutocomplete]="autoInstr">
     <mat-autocomplete #autoInstr="matAutocomplete"
@@ -11,7 +11,7 @@
     </mat-autocomplete>
   </mat-form-field>
   <mat-icon>double_arrow</mat-icon>
-  <mat-form-field class="example-full-width">
+  <mat-form-field>
     <mat-label>Joueur</mat-label>
     <input type="text" matInput formControlName="user" [matAutocomplete]="autoMemb">
     <mat-autocomplete #autoMemb="matAutocomplete"
