@@ -105,7 +105,7 @@ export class ApiService {
   delete(path: string, body: object = {}): Observable<any> {
     return this.http.request(
       'delete',
-      `${environment.paired_api_base_url}${path}`,
+      ApiService.makePath(path),
       { body },
     ).pipe(catchError(this.handleErrors.bind(this)));
   }
