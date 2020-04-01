@@ -50,22 +50,26 @@ export class MusicComponent implements OnInit {
           this.instruments = result;
         }
       })
-    ).subscribe(() => this.fillMusicianTabs());
+    ).subscribe(() => {
+      // TODO Change this! Not suitable condition when using rxjs/merge()
+      //  rxjs/tap() this way above is nonsense.
+      if (this.music && this.instruments.length > 0) {
+        this.fillMusicianTabs();
+      }
+    });
   }
 
   private fillMusicianTabs() {
-    if (this.music) {
-      for (const musician of (this.music.musicians as Musician[])) {
-        for (const mInstrument of (musician as Musician).instruments) {
-          const musicianTabsLength =  this.musicianTabs.push({
-            instrument: mInstrument,
-            user: musician.user as User,
-          });
-          this.patchTabsLabel(musicianTabsLength - 1);
-        }
+    for (const musician of (this.music.musicians as Musician[])) {
+      for (const mInstrument of (musician as Musician).instruments) {
+        const musicianTabsLength =  this.musicianTabs.push({
+          instrument: mInstrument,
+          user: musician.user as User,
+        });
+        this.patchTabsLabel(musicianTabsLength - 1);
       }
-      this.musicianTabs.sort(MusicComponent.byHeaderLabel);
     }
+    this.musicianTabs.sort(MusicComponent.byHeaderLabel);
   }
 
   private patchTabsLabel(newEntryPosition: number) {
