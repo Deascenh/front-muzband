@@ -19,7 +19,11 @@ mat-spinner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 1rem;
+    justify-content: center;
+
+    #add-musician-title {
+      margin: 2.1rem 0;
+    }
   }
 }
 
