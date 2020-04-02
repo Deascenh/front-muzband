@@ -1,15 +1,38 @@
 <div class="user-sheet-container">
-  <form [formGroup]="userForm" class="user-form">
+  <form [formGroup]="userForm" class="user-form" (ngSubmit)="onSubmit()">
     <mat-form-field [floatLabel]="member ? 'always' : 'auto'">
       <mat-label>Nom</mat-label>
-      <input [placeholder]="member ? 'Pas de nom' : ''"
-             type="text" matInput
+      <input type="text" matInput
+             [placeholder]="member ? 'Pas de nom' : ''"
+             [readonly]="readonly"
              formControlName="name">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input type="text" matInput
+             [readonly]="readonly"
              formControlName="email">
     </mat-form-field>
+    <form *ngIf="!readonly && !member" [formGroup]="passwordsForm" class="password-form">
+      <mat-form-field>
+        <mat-label>Mot de Passe</mat-label>
+        <input matInput formControlName="password" [required]="!readonly">
+        <mat-error *ngIf="passwordsForm.hasError('required', 'password')">
+          Entrez un mot de passe
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Précisez le mot de passe</mat-label>
+        <input matInput formControlName="confirmPassword" [errorStateMatcher]="passwordsMatcher">
+        <mat-error *ngIf="passwordsForm.hasError('notSame')">
+          Une seconde fois
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button *ngIf="!readonly"
+            type="submit"
+            [disabled]="userForm.invalid || !userForm.dirty"
+            mat-raised-button>Sauvegarder</button>
   </form>
 </div>

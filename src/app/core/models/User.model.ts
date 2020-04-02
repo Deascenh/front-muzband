@@ -6,6 +6,7 @@ export class User extends LdResource implements Serializable<User> {
   username?: string;
   name: string;
   password?: string;
+  plainPassword?: string;
   roles?: string[];
 
   constructor(obj?: any) {

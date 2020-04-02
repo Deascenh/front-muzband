@@ -1,15 +1,16 @@
 .user-sheet-container {
-  padding-top: 1rem;
+  padding: 1rem;
 
-  .user-form {
+  .user-form, .password-form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
+  }
 
-    mat-form-field {
-      width: 66%;
-      margin-bottom: 1rem;
-    }
+  mat-form-field {
+    width: 66%;
+    margin-bottom: 1rem;
   }
 }

@@ -26,6 +26,16 @@ export class UserService implements DataService<User> {
     );
   }
 
+  save(user: User) {
+    if (user.id) {
+      return this.api.put(UserService.makePath(user.id), user)
+        .pipe(map(data => data));
+    } else {
+      return this.api.post(UserService.path, user)
+        .pipe(map(data => data));
+    }
+  }
+
   deserializeHydraMember(data: any): User[] {
     data['hydra:member'] = data['hydra:member'].map(user => new User(user));
     return data;

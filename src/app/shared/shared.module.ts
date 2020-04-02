@@ -16,6 +16,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {IsUserDirective} from './directives/validators/is-user.directive';
 import {IsInstrumentDirective} from './directives/validators/is-instrument.directive';
 import {WorkInProgressComponent} from './work-in-progress/work-in-progress.component';
+import {SamePasswordsDirective} from './directives/validators/same-passwords.directive';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
@@ -47,6 +48,7 @@ export const SHARED_DIRECTIVES = [
   declarations: [
     SHARED_COMPONENTS,
     SHARED_DIRECTIVES,
+    SamePasswordsDirective,
   ],
   exports: [
     SHARED_COMPONENTS,
