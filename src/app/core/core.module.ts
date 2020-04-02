@@ -26,11 +26,13 @@ import {MusicianService} from './data/musicians.service';
 import {InstrumentService} from './data/instrument.service';
 import {InstrumentEffects} from './store/instrument/instrument.effects';
 import {ClockCountdownService} from './utils/clock-countdown.service';
+import {AppSnackbarService} from './utils/app-snackbar.service';
 
 export const CORE_SERVICE_PROVIDERS = [
   AuthGuard,
   ApiService,
   ClockCountdownService,
+  AppSnackbarService,
   ConfigService,
   UserService,
   MusicService,
