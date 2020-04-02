@@ -15,12 +15,14 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatRippleModule} from '@angular/material/core';
 import {IsUserDirective} from './directives/validators/is-user.directive';
 import {IsInstrumentDirective} from './directives/validators/is-instrument.directive';
+import {WorkInProgressComponent} from './work-in-progress/work-in-progress.component';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
   MusicianFormComponent,
   UserSheetComponent,
   InstrumentSheetComponent,
+  WorkInProgressComponent,
 ];
 
 export const SHARED_DIRECTIVES = [

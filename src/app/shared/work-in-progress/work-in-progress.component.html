@@ -1,0 +1,17 @@
+<div class="wip-container">
+  <div class="text-center">
+    <h2 id="wip-title">
+      <mat-icon>build</mat-icon>&nbsp;Travaux en cours !
+    </h2>
+    <p id="wip-description">{{ message }}</p>
+
+    <h3 id="wip-subtitle" *ngIf="todos">
+      Qu'y prépare t on ?&nbsp;<mat-icon>settings</mat-icon>
+    </h3>
+  </div>
+  <div class="wip-section" *ngIf="todos">
+    <ul>
+      <li *ngFor="let todo of todos">{{ todo }}</li>
+    </ul>
+  </div>
+</div>
