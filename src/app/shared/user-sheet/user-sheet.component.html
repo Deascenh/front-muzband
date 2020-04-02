@@ -1,13 +1,15 @@
-<form [formGroup]="userForm">
-  <mat-form-field floatLabel="always">
-    <mat-label>Nom</mat-label>
-    <input placeholder="Pas de nom"
-           type="text" matInput
-           formControlName="name">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input type="text" matInput
-           formControlName="email">
-  </mat-form-field>
-</form>
+<div class="user-sheet-container">
+  <form [formGroup]="userForm" class="user-form">
+    <mat-form-field [floatLabel]="member ? 'always' : 'auto'">
+      <mat-label>Nom</mat-label>
+      <input [placeholder]="member ? 'Pas de nom' : ''"
+             type="text" matInput
+             formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="text" matInput
+             formControlName="email">
+    </mat-form-field>
+  </form>
+</div>

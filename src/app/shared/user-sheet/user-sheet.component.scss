@@ -1,0 +1,15 @@
+.user-sheet-container {
+  padding-top: 1rem;
+
+  .user-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    mat-form-field {
+      width: 66%;
+      margin-bottom: 1rem;
+    }
+  }
+}

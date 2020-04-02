@@ -50,7 +50,10 @@ export class HeaderMenuComponent implements OnInit {
         break;
       }
     }
-    this.bottomSheet.open(component, { data });
+    this.bottomSheet.open(component, {
+      data,
+      panelClass: 'app-bottom-sheet',
+    });
   }
 
 }
