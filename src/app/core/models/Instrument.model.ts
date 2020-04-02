@@ -22,6 +22,6 @@ export class Instrument extends LdResource implements Serializable<Instrument> {
   }
 
   toString(): string {
-    return this.id.toString();
+    return this.name.toString();
   }
 }
