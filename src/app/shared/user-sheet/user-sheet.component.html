@@ -16,7 +16,14 @@
     <form *ngIf="!readonly && !member" [formGroup]="passwordsForm" class="password-form">
       <mat-form-field>
         <mat-label>Mot de Passe</mat-label>
-        <input matInput formControlName="password" [required]="!readonly">
+        <input matInput
+               formControlName="password"
+               [type]="passwordHidden ? 'password' : 'text'"
+               [required]="!readonly">
+        <button mat-icon-button matSuffix
+                (click)="passwordHidden = !passwordHidden">
+          <mat-icon>{{ passwordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="passwordsForm.hasError('required', 'password')">
           Entrez un mot de passe
         </mat-error>
@@ -24,7 +31,14 @@
 
       <mat-form-field>
         <mat-label>Précisez le mot de passe</mat-label>
-        <input matInput formControlName="confirmPassword" [errorStateMatcher]="passwordsMatcher">
+        <input matInput
+               formControlName="confirmPassword"
+               [type]="confirmPasswordHidden ? 'password' : 'text'"
+               [errorStateMatcher]="passwordsMatcher">
+        <button mat-icon-button matSuffix
+                (click)="confirmPasswordHidden = !confirmPasswordHidden">
+          <mat-icon>{{ confirmPasswordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="passwordsForm.hasError('notSame')">
           Une seconde fois
         </mat-error>
