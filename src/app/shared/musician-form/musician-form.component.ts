@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Instrument, Music, Musician, User} from '../../core/models';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
-import {combineLatest, forkJoin, merge, Observable} from 'rxjs';
+import {merge, Observable} from 'rxjs';
 import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
 import {selectUserList} from '../../core/store/user/user.selectors';
 import {map, startWith} from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class MusicianFormComponent implements OnInit {
     return this.musician ? EMusicianFormActions.Remove : EMusicianFormActions.Add;
   });
 
-  private pHydrated: Musician;
+  private pHydrated: Musician | null;
   private pMusic: Music;
 
   get musician(): Musician {
@@ -53,8 +53,9 @@ export class MusicianFormComponent implements OnInit {
   }
 
   @Input() set musician(value: Musician) {
-    if (value instanceof Musician) {
-      this.pHydrated = value;
+    const isMusician: boolean = value instanceof Musician;
+    this.pHydrated = (isMusician || value === null) ?  value : null;
+    if (isMusician) {
       this.patchMusicianForm(value);
     }
   }
@@ -70,7 +71,13 @@ export class MusicianFormComponent implements OnInit {
     }
   }
 
-  @Output() removeSuccess: EventEmitter<boolean> = new EventEmitter();
+  /**
+   * If true, the information after saving will continue to appear;
+   * If false, the component will reset to its initial state.
+   */
+  @Input() persistent = true;
+
+  @Output() removeSuccess: EventEmitter<Musician> = new EventEmitter();
   @Output() saveSuccess: EventEmitter<Musician> = new EventEmitter();
 
   private instruments$: Observable<Instrument[]>;
@@ -82,7 +89,6 @@ export class MusicianFormComponent implements OnInit {
   members: User[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private store: Store<IAppState>,
     private musicianService: MusicianService,
     private musicianFormService: MusicianFormService,
@@ -109,7 +115,7 @@ export class MusicianFormComponent implements OnInit {
   }
 
   instrumentDisplayFn(instrument: Instrument): string {
-    return instrument.name;
+    return instrument ? instrument.name : null;
   }
 
   memberDisplayFn(member: User): string {
@@ -134,17 +140,28 @@ export class MusicianFormComponent implements OnInit {
     const newMusician = MusicianFormService.getSavableMusician(this.musicianForm.value);
     this.musicianService.save(newMusician).subscribe(
       result => {
-        this.musician = new Musician(result);
-        this.saveSuccess.emit(this.musician);
+        if (result['@id']) {
+          this.saveSuccess.emit(result);
+        }
+        if (this.persistent) {
+          this.musician = new Musician(result);
+        } else {
+          this.reset();
+        }
       },
-      (err) => console.error(err)
+      err => console.error(err),
     );
   }
 
   private removeMusician(): void {
     this.musicianService.delete(this.musician).subscribe(
-      () => this.removeSuccess.emit(true),
-      (err) => console.error(err),
+      result => {
+         if (result === null) {
+           this.musician = null;
+           this.removeSuccess.emit(this.musician);
+         }
+      },
+      err => console.error(err)
     );
   }
 
@@ -172,7 +189,12 @@ export class MusicianFormComponent implements OnInit {
       );
   }
 
-  private patchMusicianForm(value: Musician) {
+  private reset() {
+    this.musician = null;
+    this.music = this.music;
+  }
+
+  private patchMusicianForm(value: Musician): void {
     if (value.user) {
       this.members$.subscribe(members => {
         this.musicianForm.patchValue({
@@ -180,10 +202,12 @@ export class MusicianFormComponent implements OnInit {
         });
       });
     }
-    this.instruments$.subscribe(instruments => {
-      this.musicianForm.patchValue({
-        instrument: instruments.find(instrument => instrument['@id'] === value.instruments[0]),
+    if (value.instruments.length > 0) {
+      this.instruments$.subscribe(instruments => {
+        this.musicianForm.patchValue({
+          instrument: instruments.find(instrument => instrument['@id'] === value.instruments[0]),
+        });
       });
-    });
+    }
   }
 }
