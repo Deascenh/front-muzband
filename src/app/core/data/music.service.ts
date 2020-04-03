@@ -46,10 +46,10 @@ export class MusicService implements DataService<Music> {
   save(music: Music) {
     if (music['@id']) {
       return this.api.put(music['@id'], music)
-        .pipe(map(data => data));
+        .pipe(map(data => new Music(data)));
     } else {
       return this.api.post(MusicService.path, music)
-        .pipe(map(data => data));
+        .pipe(map(data => new Music(data)));
     }
   }
 

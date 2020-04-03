@@ -29,10 +29,10 @@ export class UserService implements DataService<User> {
   save(user: User) {
     if (user.id) {
       return this.api.put(UserService.makePath(user.id), user)
-        .pipe(map(data => data));
+        .pipe(map(data => new User(data)));
     } else {
       return this.api.post(UserService.path, user)
-        .pipe(map(data => data));
+        .pipe(map(data => new User(data)));
     }
   }
 
