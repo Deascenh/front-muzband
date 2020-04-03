@@ -152,10 +152,9 @@ export class MusicianFormComponent implements OnInit {
     this.filteredInstruments$ = this.musicianForm.get('instrument').valueChanges
       .pipe(
         startWith(''),
-        map((value: string | Instrument) => typeof value === 'string' ? value : value.name),
-        map(name => {
-          return name
-            ? this.musicianFormService.instrumentFilter(name)
+        map(value => {
+          return value
+            ? this.musicianFormService.instrumentFilter(value)
             : this.instruments;
         })
       );

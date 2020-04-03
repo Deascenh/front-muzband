@@ -33,7 +33,6 @@ export class MusicEffects {
     withLatestFrom(this.store.pipe(select(manipulatedMusics))),
     switchMap(([id, manipulated]) => this.handleManipulatedMusics(id as number, manipulated)),
     switchMap(([music, musicians]) => {
-      console.log('To set as focused', [music, musicians]);
       return of(new GetFocusedMusicSuccess({
         music: music as Music,
         musicians: musicians['hydra:member'] ? musicians['hydra:member'] : musicians,

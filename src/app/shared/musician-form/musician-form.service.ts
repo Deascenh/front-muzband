@@ -40,10 +40,11 @@ export class MusicianFormService {
    * Returns the reference list of instruments
    * with the keyword in their name.
    *
-   * @param { string } name
+   * @param { string } value
    * @return { Instrument[] }
    */
-  instrumentFilter(name: string): Instrument[] {
+  instrumentFilter(value: string | Instrument): Instrument[] {
+    const name = typeof value === 'string' ? value : value.name;
     return this.instruments.filter(option => {
       return option.name.toLowerCase().indexOf(name.toLowerCase()) >= 0;
     });

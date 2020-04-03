@@ -10,8 +10,8 @@ import * as moment from 'moment';
  */
 export class Musician extends LdResource implements Serializable<Musician> {
   id?: number;
+  user?: string | User;
   music: string;
-  user: string | User = null;
   instruments: string[] | Instrument[] = [];
   createdAt?: Moment;
   updatedAt?: Moment;

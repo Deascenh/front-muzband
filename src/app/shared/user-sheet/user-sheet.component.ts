@@ -71,22 +71,20 @@ export class UserSheetComponent implements OnInit {
 
   onSubmit() {
     const submittedUser: User = this.userForm.value;
-
-    console.log(submittedUser);
     if (this.member) {
       submittedUser.id = this.member.id;
     } else {
       submittedUser.plainPassword = (submittedUser.password as any).password;
     }
 
-    // this.userService.save(submittedUser).subscribe(result => {
-    //   if (result['@id']) {
-    //     this.bottomSheetRef.dismiss();
-    //   }
-    //   if (this.member) {
-    //     this.snackBar.displaySaveSuccess(result);
-    //   }
-    // });
+    this.userService.save(submittedUser).subscribe(result => {
+      if (result['@id']) {
+        this.bottomSheetRef.dismiss();
+      }
+      if (this.member) {
+        this.snackBar.displaySaveSuccess(result);
+      }
+    });
   }
 
   private setReadonly() {

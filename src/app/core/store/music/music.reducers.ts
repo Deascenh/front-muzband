@@ -14,7 +14,6 @@ export const musicReducers = (
       };
     }
     case EMusicActions.GetFocusedMusicSuccess: {
-      console.log(state.focus);
       const previous = state.focus ? new Music(state.focus) : initialMusicState.previous;
       const focus = new Music(action.payload.music);
       focus.musicians = [...action.payload.musicians] as Musician[];
