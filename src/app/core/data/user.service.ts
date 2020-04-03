@@ -26,7 +26,7 @@ export class UserService implements DataService<User> {
     );
   }
 
-  save(user: User) {
+  save(user: User): Observable<User> {
     if (user.id) {
       return this.api.put(UserService.makePath(user.id), user)
         .pipe(map(data => new User(data)));

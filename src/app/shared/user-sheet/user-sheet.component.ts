@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 import {UserService} from '../../core/data/user.service';
 import {AppSnackbarService} from '../../core/utils/app-snackbar.service';
 import {samePasswords, SamePasswordsErrorStateMatcher} from '../directives/validators/same-passwords.directive';
+import {AppendToUsers} from '../../core/store/user/user.actions';
 
 export interface UserSheetData {
   member: User | null;
@@ -79,6 +80,7 @@ export class UserSheetComponent implements OnInit {
 
     this.userService.save(submittedUser).subscribe(result => {
       if (result['@id']) {
+        this.store.dispatch(new AppendToUsers(result));
         this.bottomSheetRef.dismiss();
       }
       if (this.member) {

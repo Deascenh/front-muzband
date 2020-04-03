@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
-import {selectUserList} from '../../core/store/user/user.selectors';
+import {selectMenuUserList} from '../../core/store/user/user.selectors';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
 import {Observable} from 'rxjs';
@@ -32,7 +32,7 @@ export class HeaderMenuComponent implements OnInit {
 
   ngOnInit() {
     this.menuInstrumentsState$ = this.store.select(selectInstrumentList);
-    this.menuMembersState$ = this.store.select(selectUserList);
+    this.menuMembersState$ = this.store.select(selectMenuUserList);
   }
 
   openItemSheet(section: EMenuSections, resource: Instrument | User = null) {
