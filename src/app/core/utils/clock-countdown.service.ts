@@ -37,6 +37,11 @@ export class ClockCountdownService {
    */
   public static inClockFormat(timestamp: number): string {
     let clock = '';
+
+    if (timestamp <= 0) {
+      return '00:00';
+    }
+
     if (timestamp > EMilliseconds.Hour) {
       clock += ClockCountdownService.inClockDigitFormat(timestamp, EMilliseconds.Hour);
       timestamp %= EMilliseconds.Hour;
