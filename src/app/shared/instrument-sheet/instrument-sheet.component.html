@@ -1,1 +1,14 @@
-<p>instrument-sheet works!</p>
+<div class="instrument-sheet-container">
+  <form [formGroup]="instrumentForm" class="instrument-form" (ngSubmit)="onSubmit()">
+    <h3>{{ !instrument ? 'Nouvel ' : '' }}Instrument</h3>
+    <mat-form-field floatLabel="always">
+      <mat-label>Nom</mat-label>
+      <input type="text" matInput
+             placeholder="Ex: Guitare, Steel-drum, Saxophone..."
+             formControlName="name">
+    </mat-form-field>
+    <button type="submit"
+            [disabled]="instrumentForm.invalid || !instrumentForm.dirty"
+            mat-raised-button>Sauvegarder</button>
+  </form>
+</div>

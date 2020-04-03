@@ -12,6 +12,15 @@ export const instrumentReducers = (
         instruments: action.payload
       };
     }
+    case EInstrumentActions.AppendToInstruments: {
+      const instruments = state.instruments.filter(
+        instrument => instrument['@id'] !== action.payload['@id']
+      );
+      return {
+        ...state,
+        instruments: [...instruments, action.payload],
+      };
+    }
     default: {
       return state;
     }

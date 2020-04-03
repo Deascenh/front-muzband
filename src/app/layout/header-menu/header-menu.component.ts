@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
+import {selectMenuInstrumentList} from '../../core/store/instrument/instrument.selectors';
 import {selectMenuUserList} from '../../core/store/user/user.selectors';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
@@ -31,7 +31,7 @@ export class HeaderMenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.menuInstrumentsState$ = this.store.select(selectInstrumentList);
+    this.menuInstrumentsState$ = this.store.select(selectMenuInstrumentList);
     this.menuMembersState$ = this.store.select(selectMenuUserList);
   }
 

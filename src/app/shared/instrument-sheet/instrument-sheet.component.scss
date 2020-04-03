@@ -1,0 +1,16 @@
+.instrument-sheet-container {
+  padding: 1rem;
+
+  .instrument-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 66%;
+    margin-bottom: 1rem;
+  }
+}

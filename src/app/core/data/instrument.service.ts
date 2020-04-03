@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../utils/api.service';
 import {Observable} from 'rxjs';
-import {Instrument} from '../models';
+import {Instrument, Music} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
@@ -24,6 +24,16 @@ export class InstrumentService implements DataService<Instrument> {
     return this.api.get(InstrumentService.path).pipe(
       map(data => this.deserializeHydraMember(data))
     );
+  }
+
+  save(instrument: Instrument): Observable<Instrument> {
+    if (instrument.id) {
+      return this.api.put(InstrumentService.makePath(instrument.id), instrument)
+        .pipe(map(data => new Instrument(data)));
+    } else {
+      return this.api.post(InstrumentService.path, instrument)
+        .pipe(map(data => new Instrument(data)));
+    }
   }
 
   deserializeHydraMember(data: any): Instrument[] {

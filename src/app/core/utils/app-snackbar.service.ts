@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Music, User} from '../models';
+import {Instrument, Music, User} from '../models';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable()
@@ -24,6 +24,9 @@ export class AppSnackbarService {
         break;
       case 'Music':
         resource = new Music(body);
+        break;
+      case 'Instrument':
+        resource = new Instrument(body);
         break;
       default:
         resource = null;
