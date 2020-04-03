@@ -31,6 +31,23 @@ export const musicReducers = (
         focus: action.payload,
       };
     }
+    case EMusicActions.AttachMusician: {
+      const focus = new Music(state.focus);
+      (focus.musicians as Musician[]).push(action.payload);
+      return {
+        ...state,
+        focus,
+      };
+    }
+    case EMusicActions.DetachMusician: {
+      const focus = new Music(state.focus);
+      focus.musicians = (focus.musicians as Musician[])
+        .filter((musician: Musician) => musician !== action.payload);
+      return {
+        ...state,
+        focus,
+      };
+    }
     default: {
       return state;
     }

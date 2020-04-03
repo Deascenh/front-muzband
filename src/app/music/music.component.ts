@@ -6,6 +6,7 @@ import { Instrument, Music, Musician, User } from '../core/models';
 import {focusedMusic} from '../core/store/music/music.selectors';
 import {selectInstrumentList} from '../core/store/instrument/instrument.selectors';
 import { tap } from 'rxjs/operators';
+import {AttachMusician} from '../core/store/music/music.actions';
 
 export interface MusicianTab {
   headerLabel?: string;
@@ -57,6 +58,10 @@ export class MusicComponent implements OnInit {
         this.fillMusicianTabs();
       }
     });
+  }
+
+  onNewMusician(musician: Musician) {
+    this.store.dispatch(new AttachMusician(musician));
   }
 
   private fillMusicianTabs() {

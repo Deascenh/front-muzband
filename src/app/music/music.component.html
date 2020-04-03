@@ -20,7 +20,9 @@
       </ng-template>
       <div class="add-musician-section">
         <h3 id="add-musician-title">Associer un nouvel Instrument</h3>
-        <app-musician-form [music]="music"></app-musician-form>
+        <app-musician-form [music]="music"
+                           [persistent]="false"
+                           (saveSuccess)="onNewMusician($event)"></app-musician-form>
       </div>
     </mat-tab>
   </mat-tab-group>

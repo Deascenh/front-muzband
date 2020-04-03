@@ -6,6 +6,8 @@ export enum EMusicActions {
   GetSidenavMusicsSuccess = '[Music] Get Sidenav Musics Success',
   GetFocusedMusic = '[Music] Get Focused Music',
   GetFocusedMusicSuccess = '[Music] Get Focused Music Success',
+  AttachMusician = '[Music] Attach Musician to the focused Music',
+  DetachMusician = '[Music] Detach Musician from the focused Music',
   AddMusic = '[Music] Add Music',
   AddMusicSuccess = '[Music] Add Music Success',
 }
@@ -32,6 +34,16 @@ export class GetFocusedMusicSuccess implements Action {
   }) {}
 }
 
+export class AttachMusician implements Action {
+  public readonly type = EMusicActions.AttachMusician;
+  constructor(public payload: Musician) {}
+}
+
+export class DetachMusician implements Action {
+  public readonly type = EMusicActions.DetachMusician;
+  constructor(public payload: Musician) {}
+}
+
 export class AddMusic implements Action {
   public readonly type = EMusicActions.AddMusic;
   constructor(public payload: Music) {}
@@ -48,4 +60,6 @@ export type MusicActions =
   | GetFocusedMusic
   | GetFocusedMusicSuccess
   | AddMusic
-  | AddMusicSuccess;
+  | AddMusicSuccess
+  | AttachMusician
+  | DetachMusician;
