@@ -111,7 +111,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const matches = state.url.match(/^\/?music\/\d+$/g);
 
         if (matches && state.path.includes('music/:id')) {
-          this.store.dispatch(new GetFocusedMusic(state.params.id));
+          this.store.dispatch(new GetFocusedMusic(parseInt(state.params.id, 10)));
         }
         if (!this.pagesWithoutAuthGuard.includes(state.url) && !this.authenticatedUser) {
           this.router.navigateByUrl('/');

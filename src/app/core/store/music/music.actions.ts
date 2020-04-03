@@ -8,8 +8,6 @@ export enum EMusicActions {
   GetFocusedMusicSuccess = '[Music] Get Focused Music Success',
   AddMusic = '[Music] Add Music',
   AddMusicSuccess = '[Music] Add Music Success',
-  FocusMusic = '[Music] Focus Music',
-  FocusMusicSuccess = '[Music] Focus Music Success',
 }
 
 export class GetSidenavMusics implements Action {
@@ -23,7 +21,7 @@ export class GetSidenavMusicsSuccess implements Action {
 
 export class GetFocusedMusic implements Action {
   public readonly type = EMusicActions.GetFocusedMusic;
-  constructor(public payload: number | string) {}
+  constructor(public payload: number) {}
 }
 
 export class GetFocusedMusicSuccess implements Action {

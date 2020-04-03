@@ -10,22 +10,25 @@ export const musicReducers = (
     case EMusicActions.GetSidenavMusicsSuccess: {
       return {
         ...state,
-        sidenavMusics: action.payload,
+        musics: action.payload,
       };
     }
     case EMusicActions.GetFocusedMusicSuccess: {
+      console.log(state.focus);
+      const previous = state.focus ? new Music(state.focus) : initialMusicState.previous;
       const focus = new Music(action.payload.music);
       focus.musicians = [...action.payload.musicians] as Musician[];
 
       return {
         ...state,
         focus,
+        previous,
       };
     }
     case EMusicActions.AddMusicSuccess: {
       return {
         ...state,
-        sidenavMusics: [...state.sidenavMusics, action.payload],
+        musics: [...state.musics, action.payload],
         focus: action.payload,
       };
     }

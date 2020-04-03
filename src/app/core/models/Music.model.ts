@@ -9,7 +9,7 @@ export class Music extends LdResource implements Serializable<Music> {
   title: string;
   artist: string;
   creator: string | User;
-  musicians?: string[] | Musician[];
+  musicians: string[] | Musician[] = [];
   createdAt?: Moment;
   updatedAt?: Moment;
 

@@ -6,11 +6,14 @@ import {
   GetFocusedMusicSuccess,
   GetSidenavMusics, GetSidenavMusicsSuccess,
 } from './music.actions';
-import {map, switchMap, tap} from 'rxjs/operators';
-import {forkJoin, of} from 'rxjs';
+import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {forkJoin, Observable, of} from 'rxjs';
 import {Music} from '../../models';
 import {MusicService} from '../../data/music.service';
 import {Router} from '@angular/router';
+import {select, Store} from '@ngrx/store';
+import {manipulatedMusics} from './music.selectors';
+import {IAppState} from '../App/App.state';
 
 @Injectable()
 export class MusicEffects {
@@ -27,14 +30,15 @@ export class MusicEffects {
   getFocusedMusic$ = this.actions$.pipe(
     ofType<GetFocusedMusic>(EMusicActions.GetFocusedMusic),
     map(action => action.payload),
-    switchMap(id => forkJoin(
-      this.musicService.get(id),
-      this.musicService.getMusicians(id),
-    )),
-    switchMap(([music, musicians]) => of(new GetFocusedMusicSuccess({
-      music,
-      musicians: musicians['hydra:member'],
-    }))),
+    withLatestFrom(this.store.pipe(select(manipulatedMusics))),
+    switchMap(([id, manipulated]) => this.handleManipulatedMusics(id as number, manipulated)),
+    switchMap(([music, musicians]) => {
+      console.log('To set as focused', [music, musicians]);
+      return of(new GetFocusedMusicSuccess({
+        music: music as Music,
+        musicians: musicians['hydra:member'] ? musicians['hydra:member'] : musicians,
+      }));
+    }),
   );
 
   @Effect()
@@ -56,5 +60,28 @@ export class MusicEffects {
     private musicService: MusicService,
     private router: Router,
     private actions$: Actions,
+    private store: Store<IAppState>,
   ) {}
+
+  /**
+   * Prevents overkill Server calls by checking if needed
+   * music reference is already in the Store.
+   *
+   * @param id
+   * @param manipulated
+   */
+  private handleManipulatedMusics(
+    id: number,
+    manipulated: { focus: Music, previous: Music }
+    ): Observable<any[]> {
+    const previous = manipulated.previous;
+    const focus = manipulated.focus;
+    if (focus && focus.id === id) {
+      return of([focus, [...focus.musicians]]);
+    } else if (previous && previous.id === id) {
+      return of([previous, [...previous.musicians]]);
+    } else {
+      return forkJoin(this.musicService.get(id), this.musicService.getMusicians(id));
+    }
+  }
 }

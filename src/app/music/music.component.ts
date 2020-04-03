@@ -3,7 +3,7 @@ import {IAppState} from '../core/store/App/App.state';
 import {Store} from '@ngrx/store';
 import {merge, Observable} from 'rxjs';
 import { Instrument, Music, Musician, User } from '../core/models';
-import {selectFocusedMusic} from '../core/store/music/music.selectors';
+import {focusedMusic} from '../core/store/music/music.selectors';
 import {selectInstrumentList} from '../core/store/instrument/instrument.selectors';
 import { tap } from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class MusicComponent implements OnInit {
   musicianTabs: MusicianTab[] = [];
 
   constructor(private store: Store<IAppState>) {
-    this.focusedMusicState$ = this.store.select(selectFocusedMusic);
+    this.focusedMusicState$ = this.store.select(focusedMusic);
     this.instrumentsListState$ = this.store.select(selectInstrumentList);
   }
 

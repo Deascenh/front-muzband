@@ -1,11 +1,13 @@
 import {Music} from '../../models';
 
 export interface IMusicState {
-  sidenavMusics: Music[];
+  musics: Music[];
   focus: Music;
+  previous: Music;
 }
 
 export const initialMusicState: IMusicState = {
-  sidenavMusics: [],
+  musics: [],
   focus: null,
+  previous: null,
 };

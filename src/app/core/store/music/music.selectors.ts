@@ -8,10 +8,25 @@ export const selectMusics = createFeatureSelector<IMusicState>('music');
 
 export const selectSidenavMusics = createSelector(
   musicsState,
-  (state: IMusicState) => state.sidenavMusics,
+  (state: IMusicState) => state.musics,
 );
 
-export const selectFocusedMusic = createSelector(
+export const focusedMusic = createSelector(
   musicsState,
   (state: IMusicState) => state.focus,
+);
+
+export const previousFocusedMusic = createSelector(
+  musicsState,
+  (state: IMusicState) => state.previous,
+);
+
+export const manipulatedMusics = createSelector(
+  musicsState,
+  (state: IMusicState) => {
+    return {
+      focus: state.focus,
+      previous: state.previous,
+    };
+  },
 );
