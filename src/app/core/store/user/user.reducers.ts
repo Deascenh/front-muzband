@@ -19,9 +19,12 @@ export const userReducers = (
       };
     }
     case EUserActions.AppendToUsers: {
+      const users = state.users.filter(user =>
+        user['@id'] !== action.payload['@id'],
+      );
       return {
         ...state,
-        users: [...state.users, action.payload],
+        users: [...users, action.payload],
       };
     }
     default: {
