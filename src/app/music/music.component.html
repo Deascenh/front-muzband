@@ -1,7 +1,7 @@
 <div class="music-piece-container">
   <mat-spinner *ngIf="!music" diameter="50" color="primary"></mat-spinner>
   <h1 id="music-title" [class.placeholder-mode--h1]="!music">{{ music?.title }}</h1>
-  <mat-tab-group>
+  <mat-tab-group dynamicHeight="true">
     <mat-tab>
       <ng-template mat-tab-label>
         Global
