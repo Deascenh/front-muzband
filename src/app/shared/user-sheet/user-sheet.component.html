@@ -1,5 +1,6 @@
 <div class="user-sheet-container">
   <form [formGroup]="userForm" class="user-form" (ngSubmit)="onSubmit()">
+    <h3>Nouveau Membre</h3>
     <mat-form-field [floatLabel]="member ? 'always' : 'auto'">
       <mat-label>Nom</mat-label>
       <input type="text" matInput

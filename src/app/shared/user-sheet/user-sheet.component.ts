@@ -101,7 +101,7 @@ export class UserSheetComponent implements OnInit {
 
   private patchUserForm(value: User) {
     this.userForm.patchValue({
-      name: value.name,
+      ...(value.name && {name: value.name}),
       email: value.email,
     });
   }
