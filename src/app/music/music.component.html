@@ -6,13 +6,13 @@
       <ng-template mat-tab-label>
         Global
       </ng-template>
-      <app-general-worksheet></app-general-worksheet>
+      <app-music-sheet></app-music-sheet>
     </mat-tab>
     <mat-tab *ngFor="let tab of musicianTabs">
       <ng-template mat-tab-label>
         {{ tab.headerLabel }}
       </ng-template>
-      <pre>{{ tab | json }}</pre>
+      <app-musician-worksheet [data]="tab.resources"></app-musician-worksheet>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>

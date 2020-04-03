@@ -21,18 +21,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SharedModule} from './shared/shared.module';
 import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import {GeneralWorksheetComponent} from './music/general-worksheet/general-worksheet.component';
-import { HeaderMenuComponent } from './layout/header-menu/header-menu.component';
+import {MusicSheetComponent} from './music/music-sheet/music-sheet.component';
+import {HeaderMenuComponent} from './layout/header-menu/header-menu.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {UserSheetComponent} from './shared/user-sheet/user-sheet.component';
 import {InstrumentSheetComponent} from './shared/instrument-sheet/instrument-sheet.component';
+import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-worksheet.component';
 
 @NgModule({
   declarations: [
     ROUTED_APP_COMPONENTS,
     AppComponent,
-    GeneralWorksheetComponent,
+    MusicSheetComponent,
     HeaderMenuComponent,
+    MusicianWorksheetComponent,
   ],
   imports: [
     BrowserModule,

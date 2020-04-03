@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralWorksheetComponent } from './general-worksheet.component';
+import { MusicianWorksheetComponent } from './musician-worksheet.component';
 
-describe('GeneralWorksheetComponent', () => {
-  let component: GeneralWorksheetComponent;
-  let fixture: ComponentFixture<GeneralWorksheetComponent>;
+describe('MusicianWorksheetComponent', () => {
+  let component: MusicianWorksheetComponent;
+  let fixture: ComponentFixture<MusicianWorksheetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneralWorksheetComponent ]
+      declarations: [ MusicianWorksheetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneralWorksheetComponent);
+    fixture = TestBed.createComponent(MusicianWorksheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,13 +5,13 @@ import {merge, Observable} from 'rxjs';
 import { Instrument, Music, Musician, User } from '../core/models';
 import {focusedMusic} from '../core/store/music/music.selectors';
 import {selectInstrumentList} from '../core/store/instrument/instrument.selectors';
-import { tap } from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {AttachMusician} from '../core/store/music/music.actions';
+import {MusicianWorksheetData} from './musician-worksheet/musician-worksheet.component';
 
 export interface MusicianTab {
   headerLabel?: string;
-  instrument: string | Instrument;
-  user: User;
+  resources: MusicianWorksheetData;
 }
 
 @Component({
@@ -68,8 +68,10 @@ export class MusicComponent implements OnInit {
     for (const musician of (this.music.musicians as Musician[])) {
       for (const mInstrument of (musician as Musician).instruments) {
         const musicianTabsLength =  this.musicianTabs.push({
-          instrument: mInstrument,
-          user: musician.user as User,
+          resources : {
+            instrument: mInstrument,
+            user: musician.user as User,
+          },
         });
         this.patchTabsLabel(musicianTabsLength - 1);
       }
@@ -81,10 +83,10 @@ export class MusicComponent implements OnInit {
     const newEntry = this.musicianTabs[newEntryPosition];
 
     const nestedInstrument: Instrument = this.instruments.find(
-      instrument => instrument['@id'] === (newEntry.instrument['@id'] || newEntry.instrument)
+      instrument => instrument['@id'] === (newEntry.resources.instrument['@id'] || newEntry.resources.instrument)
     );
     const tabsEqualInstrument = this.musicianTabs.filter(
-      tab => tab.instrument === (nestedInstrument['@id'] || nestedInstrument)
+      tab => tab.resources.instrument === (nestedInstrument['@id'] || nestedInstrument)
     );
 
     if (tabsEqualInstrument.length > 1) {
@@ -100,10 +102,10 @@ export class MusicComponent implements OnInit {
    * @param { Instrument } instrument Entity which gives its name to the tabs
    */
   private updateTabsLabel(toRetitle: MusicianTab[], instrument: Instrument) {
-    let theSameTotal = toRetitle.length;
+    let total = toRetitle.length;
     this.musicianTabs.forEach(tab => {
       if (toRetitle.includes(tab)) {
-        tab.headerLabel = `${instrument.name} ${theSameTotal--}`;
+        tab.headerLabel = `${instrument.name} ${total--}`;
       }
     });
   }
