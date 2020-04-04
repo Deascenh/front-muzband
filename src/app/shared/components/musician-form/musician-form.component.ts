@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Instrument, Music, Musician, User} from '../../core/models';
+import {Instrument, Music, Musician, User} from '../../../core/models';
 import {Store} from '@ngrx/store';
-import {IAppState} from '../../core/store/App/App.state';
+import {IAppState} from '../../../core/store/App/App.state';
 import {merge, Observable} from 'rxjs';
-import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
-import {selectUserList} from '../../core/store/user/user.selectors';
+import {selectInstrumentList} from '../../../core/store/instrument/instrument.selectors';
+import {selectUserList} from '../../../core/store/user/user.selectors';
 import {map, startWith} from 'rxjs/operators';
-import {isUser} from '../directives/validators/is-user.directive';
-import {isInstrument} from '../directives/validators/is-instrument.directive';
-import {MusicianService} from '../../core/data/musicians.service';
+import {isUser} from '../../directives/validators/is-user.directive';
+import {isInstrument} from '../../directives/validators/is-instrument.directive';
+import {MusicianService} from '../../../core/data/musicians.service';
 import {MusicianFormService} from './musician-form.service';
 
 /**
@@ -23,8 +23,6 @@ enum EMusicianFormActions {
   Remove = 'clear',
 }
 
-// TODO Idea: An HYDRATED form with its changed (dirty, touch?) can EDIT/PUT
-//  Icon/Color : blue pen
 @Component({
   selector: 'app-musician-form',
   templateUrl: './musician-form.component.html',

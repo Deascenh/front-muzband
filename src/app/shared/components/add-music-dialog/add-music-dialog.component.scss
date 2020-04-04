@@ -8,6 +8,17 @@
   }
 }
 
+mat-dialog-content {
+  padding: 0;
+}
+
+#music-form-content, #musician-forms-content, #confirm-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .saving-loader {
   margin: auto;
 }

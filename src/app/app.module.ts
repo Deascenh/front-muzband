@@ -19,13 +19,13 @@ import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {SharedModule} from './shared/shared.module';
-import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
+import {AddMusicDialogComponent} from './shared/components/add-music-dialog/add-music-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MusicSheetComponent} from './music/music-sheet/music-sheet.component';
 import {HeaderMenuComponent} from './layout/header-menu/header-menu.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {UserSheetComponent} from './shared/user-sheet/user-sheet.component';
-import {InstrumentSheetComponent} from './shared/instrument-sheet/instrument-sheet.component';
+import {UserSheetComponent} from './shared/components/user-sheet/user-sheet.component';
+import {InstrumentSheetComponent} from './shared/components/instrument-sheet/instrument-sheet.component';
 import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-worksheet.component';
 
 @NgModule({

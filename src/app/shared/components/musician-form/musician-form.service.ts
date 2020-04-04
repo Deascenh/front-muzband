@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {selectInstrumentList} from '../../core/store/instrument/instrument.selectors';
-import {selectUserList} from '../../core/store/user/user.selectors';
+import {selectInstrumentList} from '../../../core/store/instrument/instrument.selectors';
+import {selectUserList} from '../../../core/store/user/user.selectors';
 import {Store} from '@ngrx/store';
-import {IAppState} from '../../core/store/App/App.state';
-import {Instrument, Musician, User} from '../../core/models';
+import {IAppState} from '../../../core/store/App/App.state';
+import {Instrument, Musician, User} from '../../../core/models';
 
 @Injectable()
 export class MusicianFormService {

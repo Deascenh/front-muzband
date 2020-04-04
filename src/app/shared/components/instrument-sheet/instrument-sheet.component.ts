@@ -1,12 +1,12 @@
 import {Component, Inject} from '@angular/core';
-import {Instrument} from '../../core/models';
+import {Instrument} from '../../../core/models';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
-import {AppSnackbarService} from '../../core/utils/app-snackbar.service';
+import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 import {Store} from '@ngrx/store';
-import {IAppState} from '../../core/store/App/App.state';
-import {InstrumentService} from '../../core/data/instrument.service';
-import {AppendToInstruments} from '../../core/store/instrument/instrument.actions';
+import {IAppState} from '../../../core/store/App/App.state';
+import {InstrumentService} from '../../../core/data/instrument.service';
+import {AppendToInstruments} from '../../../core/store/instrument/instrument.actions';
 
 export interface InstrumentSheetData {
   instrument: Instrument | null;

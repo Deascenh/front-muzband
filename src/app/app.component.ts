@@ -11,7 +11,7 @@ import {Music, User} from './core/models';
 import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {AddMusicDialogComponent} from './shared/add-music-dialog/add-music-dialog.component';
+import {AddMusicDialogComponent} from './shared/components/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
 import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {GetUsers} from './core/store/user/user.actions';

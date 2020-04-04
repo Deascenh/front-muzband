@@ -5,8 +5,8 @@ import {Store} from '@ngrx/store';
 import {IAppState} from '../../core/store/App/App.state';
 import {Observable} from 'rxjs';
 import {Instrument, User} from '../../core/models';
-import {InstrumentSheetComponent, InstrumentSheetData} from '../../shared/instrument-sheet/instrument-sheet.component';
-import {UserSheetComponent, UserSheetData} from '../../shared/user-sheet/user-sheet.component';
+import {InstrumentSheetComponent, InstrumentSheetData} from '../../shared/components/instrument-sheet/instrument-sheet.component';
+import {UserSheetComponent, UserSheetData} from '../../shared/components/user-sheet/user-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 enum EMenuSections {

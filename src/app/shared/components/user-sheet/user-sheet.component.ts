@@ -1,15 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
-import {User} from '../../core/models';
+import {User} from '../../../core/models';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {IAppState} from '../../core/store/App/App.state';
-import {selectAuthenticatedUser} from '../../core/store/auth/auth.selectors';
+import {IAppState} from '../../../core/store/App/App.state';
+import {selectAuthenticatedUser} from '../../../core/store/auth/auth.selectors';
 import {Observable} from 'rxjs';
-import {UserService} from '../../core/data/user.service';
-import {AppSnackbarService} from '../../core/utils/app-snackbar.service';
-import {samePasswords, SamePasswordsErrorStateMatcher} from '../directives/validators/same-passwords.directive';
-import {AppendToUsers} from '../../core/store/user/user.actions';
+import {UserService} from '../../../core/data/user.service';
+import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
+import {samePasswords, SamePasswordsErrorStateMatcher} from '../../directives/validators/same-passwords.directive';
+import {AppendToUsers} from '../../../core/store/user/user.actions';
 
 export interface UserSheetData {
   member: User | null;
