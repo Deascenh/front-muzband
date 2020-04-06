@@ -1,63 +1,81 @@
-<div class="header">
-  <h1 mat-dialog-title>Créez une nouvelle Musique</h1>
-  <mat-icon aria-hidden="false"
-            aria-label="Fermer la fenêtre"
-            class="close-icon"
-            (click)="leave()">close</mat-icon>
+<div class="add-music-container">
+
+  <div class="header">
+    <h1 mat-dialog-title>
+      Créez une nouvelle Musique&nbsp;
+      <span class="mat-caption oblique">( {{ musicScore }}ème )</span>
+    </h1>
+    <mat-icon aria-hidden="false"
+              aria-label="Fermer la fenêtre"
+              class="close-icon"
+              (click)="leave()">close</mat-icon>
+  </div>
+
+  <mat-dialog-content>
+    <mat-horizontal-stepper labelPosition="bottom" #stepper linear>
+
+      <mat-step [stepControl]="pieceForm" state="music_note">
+        <form id="music-form-content"
+              [formGroup]="pieceForm">
+          <ng-template matStepLabel>Le Morceau</ng-template>
+          <mat-form-field>
+            <mat-label>Titre</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Artiste</mat-label>
+            <input matInput formControlName="artist">
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="musiciansForm"
+                state="group_add">
+        <ng-template matStepLabel>Instruments & Musiciens</ng-template>
+        <form id="musician-forms-content" [formGroup]="musiciansForm">
+          <app-musician-form *ngFor="let i of musicianFormsNumber | fill"
+                             (saveSuccess)="onSaveMusician($event)"
+                             (removeSuccess)="onRemoveMusician($event)"></app-musician-form>
+          <div>
+            <button mat-button matStepperPrevious>Précédent</button>
+            <button mat-button matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <ng-template matStepperIcon="valid">
+        <mat-icon>done</mat-icon>
+      </ng-template>
+      <mat-step state="valid" [stepControl]="musicForm">
+        <ng-template matStepLabel>Validez</ng-template>
+        <div id="confirm-content">
+          <h4>Cliquez sur "Ok" !</h4>
+          <div>
+            <button mat-button matStepperPrevious>Précédent</button>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="footer">
+    <button mat-button
+            type="reset"
+            cdkFocusInitial
+            (click)="leave(); stepper.reset()">Retour</button>
+    <button mat-button
+            type="submit"
+            [disabled]="!pieceForm.valid"
+            (click)="saveMusic(); stepper.reset()">
+      <span *ngIf="!saving">Ok</span>
+      <mat-spinner *ngIf="saving"
+                   class="saving-loader"
+                   diameter="24"></mat-spinner>
+    </button>
+  </mat-dialog-actions>
+
 </div>
-<p class="mat-caption">C'est le {{ musicScore }}ème, Bravo !</p>
-<mat-dialog-content>
-  <mat-horizontal-stepper labelPosition="bottom">
-
-    <mat-step [stepControl]="musicForm">
-      <ng-template matStepLabel>Morceau</ng-template>
-      <form id="music-form-content"
-            [formGroup]="musicForm"
-            (ngSubmit)="saveMusic()">
-        <mat-form-field>
-          <mat-label>Titre</mat-label>
-          <input matInput formControlName="title">
-        </mat-form-field>
-        <div>
-          <button mat-button type="button" matStepperPrevious>Back</button>
-          <button mat-button type="button" matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step>
-      <ng-template matStepLabel>Instruments & Musiciens</ng-template>
-      <div id="musician-forms-content">
-        <app-musician-form *ngFor="let i of musicianFormsNumber | fill"
-                           (saveSuccess)="onSaveMusician($event)"
-                           (removeSuccess)="onRemoveMusician($event)"></app-musician-form>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step>
-
-    <mat-step>
-      <ng-template matStepLabel>Validez</ng-template>
-      <div id="confirm-content">
-        <h4>Cliquez sur "Ok" !</h4>
-      </div>
-    </mat-step>
-
-  </mat-horizontal-stepper>
-</mat-dialog-content>
-<mat-dialog-actions class="footer">
-  <button mat-button
-          type="reset"
-          cdkFocusInitial
-          (click)="leave()">Retour</button>
-  <button mat-button
-          type="submit"
-          [disabled]="!musicForm.valid">
-    <span *ngIf="!saving">Ok</span>
-    <mat-spinner *ngIf="saving"
-                 class="saving-loader"
-                 diameter="24"></mat-spinner>
-  </button>
-</mat-dialog-actions>

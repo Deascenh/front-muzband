@@ -3,13 +3,43 @@
   flex-direction: row;
   justify-content: space-between;
 
+  .oblique {
+    font-style: oblique;
+  }
+
   .close-icon {
     cursor: pointer;
   }
 }
 
-mat-dialog-content {
-  padding: 0;
+.add-music-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    mat-horizontal-stepper {
+      display: flex;
+      flex-direction: column;
+      align-content: space-around;
+
+      ::ng-deep.mat-horizontal-content-container {
+        padding: 2rem 0 0 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    min-height: 100%;
+  }
+
+  @media screen and (min-width: 600px) {
+    min-height: 599px;
+  }
 }
 
 #music-form-content, #musician-forms-content, #confirm-content {
@@ -17,6 +47,11 @@ mat-dialog-content {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  mat-form-field {
+    width: 66%;
+    margin-bottom: 1rem;
+  }
 }
 
 .saving-loader {

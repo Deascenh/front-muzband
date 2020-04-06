@@ -12,6 +12,16 @@ button:focus {
   min-height: 50vh;
 }
 
+.app-dialog {
+  @media screen and (max-width: 599px) {
+    min-height: 100vh;
+  }
+
+  @media screen and (min-width: 600px) {
+    min-height: 50vh;
+  }
+}
+
 pre {
   color: whitesmoke;
 }

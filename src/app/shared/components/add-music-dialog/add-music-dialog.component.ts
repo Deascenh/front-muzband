@@ -8,6 +8,7 @@ import {Store} from '@ngrx/store';
 import {AddMusic} from '../../../core/store/music/music.actions';
 import {selectSidenavMusics} from '../../../core/store/music/music.selectors';
 import {takeWhile} from 'rxjs/operators';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 export interface DialogData {
   musicCount: number;
@@ -17,7 +18,11 @@ export interface DialogData {
 @Component({
   selector: 'app-add-music-dialog',
   templateUrl: './add-music-dialog.component.html',
-  styleUrls: ['./add-music-dialog.component.scss']
+  styleUrls: ['./add-music-dialog.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS,
+    useValue: { displayDefaultIndicatorType: false }
+  }]
 })
 export class AddMusicDialogComponent implements OnInit, OnDestroy {
   private alive = true;
@@ -25,7 +30,12 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
   musicScore = 0;
   musicianFormsNumber = 1;
   addedMusicians: Musician[] = [];
-  musicForm: FormGroup;
+  pieceForm: FormGroup;
+  musiciansForm: FormGroup;
+  musicForm: FormGroup = this.formBuilder.group({
+    piece: this.pieceForm,
+    musicians: this.musiciansForm,
+  });
   musicsState$: Observable<Music[]>;
 
   constructor(
@@ -39,15 +49,15 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchMusicScore();
-    this.initMusicForm();
+    this.initForms();
   }
 
   saveMusic() {
-    if (this.musicForm.valid) {
+    if (this.pieceForm.valid) {
       this.saving = true;
       timer(300).subscribe(
         () => {
-          this.store.dispatch(new AddMusic(this.musicForm.value));
+          this.store.dispatch(new AddMusic(this.pieceForm.value));
           this.dialogRef.close();
         },
       );
@@ -76,12 +86,17 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  private initMusicForm(): void {
-    this.musicForm = this.formBuilder.group({
+  private initForms(): void {
+    this.pieceForm = this.formBuilder.group({
       title: ['', Validators.required],
+      artist: ['', Validators.required],
       creator: ['', Validators.required],
     });
-    this.musicForm.get('creator').patchValue(this.data.creator['@id']);
+    this.pieceForm.get('creator').patchValue(this.data.creator['@id']);
+
+    this.musiciansForm = this.formBuilder.group({
+      musicians: this.formBuilder.array([]),
+    });
   }
 
   ngOnDestroy(): void {

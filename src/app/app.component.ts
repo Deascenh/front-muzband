@@ -148,6 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
   openAddMusicDialog(): void {
     this.dialog.open(AddMusicDialogComponent, {
       width: this.largeHandsetPortrait,
+      panelClass: 'app-dialog',
       data: { creator: this.authenticatedUser }
     });
   }
