@@ -24,7 +24,7 @@ export const musicReducers = (
         previous,
       };
     }
-    case EMusicActions.AddMusicSuccess: {
+    case EMusicActions.AddMusic: {
       return {
         ...state,
         musics: [...state.musics, action.payload],

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../utils/api.service';
 import {Observable} from 'rxjs';
-import {Instrument, Music} from '../models';
+import {Instrument} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()

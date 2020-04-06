@@ -27,7 +27,9 @@
             <input matInput formControlName="artist">
           </mat-form-field>
           <div>
-            <button mat-button matStepperNext>Suivant</button>
+            <button mat-button
+                    matStepperNext
+                    (click)="saveMusic()">Suivant</button>
           </div>
         </form>
       </mat-step>
@@ -36,7 +38,8 @@
                 state="group_add">
         <ng-template matStepLabel>Instruments & Musiciens</ng-template>
         <form id="musician-forms-content" [formGroup]="musiciansForm">
-          <app-musician-form *ngFor="let i of musicianFormsNumber | fill"
+          <app-musician-form *ngFor="let i of (musicians.length + 1) | fill"
+                             [music]="music"
                              (saveSuccess)="onSaveMusician($event)"
                              (removeSuccess)="onRemoveMusician($event)"></app-musician-form>
           <div>
@@ -70,7 +73,7 @@
     <button mat-button
             type="submit"
             [disabled]="!pieceForm.valid"
-            (click)="saveMusic(); stepper.reset()">
+            (click)="terminate(); stepper.reset()">
       <span *ngIf="!saving">Ok</span>
       <mat-spinner *ngIf="saving"
                    class="saving-loader"

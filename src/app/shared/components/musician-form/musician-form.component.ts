@@ -52,7 +52,7 @@ export class MusicianFormComponent implements OnInit {
 
   @Input() set musician(value: Musician) {
     const isMusician: boolean = value instanceof Musician;
-    this.pHydrated = (isMusician || value === null) ?  value : null;
+    this.pHydrated = (isMusician || value === null) ? value : null;
     if (isMusician) {
       this.patchMusicianForm(value);
     }
@@ -207,5 +207,6 @@ export class MusicianFormComponent implements OnInit {
         });
       });
     }
+    this.music = this.music;
   }
 }
