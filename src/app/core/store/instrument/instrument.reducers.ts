@@ -25,5 +25,4 @@ export function instrumentReducers(
       return state;
     }
   }
-};
-
+}

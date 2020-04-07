@@ -60,5 +60,4 @@ export function musicReducers(
       return state;
     }
   }
-};
-
+}
