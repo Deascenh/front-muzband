@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Music} from '../../core/models';
 
 @Component({
   selector: 'app-music-sheet',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./music-sheet.component.scss']
 })
 export class MusicSheetComponent implements OnInit {
+  @Input() music: Music;
 
   message = 'Ici seront affichées des informations spécifiques au morceau et communes à tous ses musiciens !';
   todos = [

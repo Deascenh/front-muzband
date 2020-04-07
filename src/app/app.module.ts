@@ -27,6 +27,9 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {UserSheetComponent} from './shared/components/user-sheet/user-sheet.component';
 import {InstrumentSheetComponent} from './shared/components/instrument-sheet/instrument-sheet.component';
 import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-worksheet.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MusicDataPanelComponent} from './music/music-sheet/music-data-panel/music-data-panel.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-wo
     MusicSheetComponent,
     HeaderMenuComponent,
     MusicianWorksheetComponent,
+    MusicDataPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,8 @@ import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-wo
     MatTooltipModule,
     MatTabsModule,
     MatBottomSheetModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
     CoreModule.forRoot(),
     SharedModule,
   ],

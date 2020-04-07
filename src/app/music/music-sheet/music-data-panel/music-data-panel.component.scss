@@ -1,0 +1,11 @@
+.data-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 36px;
+
+  button {
+    margin-right: 1rem;
+  }
+}

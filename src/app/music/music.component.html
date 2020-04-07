@@ -6,7 +6,7 @@
       <ng-template mat-tab-label>
         Global
       </ng-template>
-      <app-music-sheet></app-music-sheet>
+      <app-music-sheet [music]="music"></app-music-sheet>
     </mat-tab>
     <mat-tab *ngFor="let tab of musicianTabs">
       <ng-template mat-tab-label>

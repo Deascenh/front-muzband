@@ -17,6 +17,7 @@ import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.action
 import {GetUsers} from './core/store/user/user.actions';
 import {GetInstruments} from './core/store/instrument/instrument.actions';
 import {ClockCountdownService} from './core/utils/clock-countdown.service';
+import {MatSidenav} from '@angular/material/sidenav';
 
 export enum EWidthModes {
   Small = 'small',
@@ -34,7 +35,7 @@ export enum EOrientationModes {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @ViewChild('sidenav', { static: false }) sidenav;
+  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
   private alive = true;
   private authState: Observable<IAuthState>;
   private routerState: Observable<any>;
