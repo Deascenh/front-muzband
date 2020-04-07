@@ -1,10 +1,10 @@
 import {IAuthState, initialAuthState} from './auth.state';
 import {AuthActions, EAuthActions} from './auth.actions';
 
-export const authReducers = (
+export function authReducers(
   state: IAuthState = initialAuthState,
   action: AuthActions,
-): IAuthState => {
+): IAuthState {
   switch (action.type) {
     case EAuthActions.LoginSuccess: {
       return {
@@ -39,4 +39,4 @@ export const authReducers = (
       return state;
     }
   }
-};
+}

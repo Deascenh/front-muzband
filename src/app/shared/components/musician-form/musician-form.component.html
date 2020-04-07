@@ -26,8 +26,8 @@
           class="action"
           type="reset"
           [ngClass]="{
-            valid: musicianForm.valid && !pHydrated,
-            remove: musicianForm.valid && pHydrated,
+            valid: musicianForm.valid && !musician,
+            remove: musicianForm.valid && musician,
             invalid: musicianForm.invalid
           }"
           [disabled]="musicianForm.invalid"

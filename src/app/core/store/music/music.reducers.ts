@@ -2,10 +2,10 @@ import {IMusicState, initialMusicState} from './music.state';
 import {EMusicActions, MusicActions} from './music.actions';
 import {Music, Musician} from '../../models';
 
-export const musicReducers = (
+export function musicReducers(
   state: IMusicState = initialMusicState,
   action: MusicActions,
-): IMusicState => {
+): IMusicState {
   switch (action.type) {
     case EMusicActions.GetSidenavMusicsSuccess: {
       return {

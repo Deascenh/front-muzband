@@ -1,10 +1,10 @@
 import {IInstrumentState, initialInstrumentState} from './instrument.state';
 import {EInstrumentActions, InstrumentActions} from './instrument.actions';
 
-export const instrumentReducers = (
+export function instrumentReducers(
   state: IInstrumentState = initialInstrumentState,
   action: InstrumentActions,
-): IInstrumentState => {
+): IInstrumentState {
   switch (action.type) {
     case EInstrumentActions.GetInstrumentsSuccess: {
       return {

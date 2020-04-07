@@ -1,10 +1,10 @@
 import {initialUserState, IUserState} from './user.state';
 import {EUserActions, UserActions} from './user.actions';
 
-export const userReducers = (
+export function userReducers(
   state: IUserState = initialUserState,
   action: UserActions,
-): IUserState => {
+): IUserState {
   switch (action.type) {
     case EUserActions.GetUsersSuccess: {
       return {
@@ -31,5 +31,5 @@ export const userReducers = (
       return state;
     }
   }
-};
+}
 

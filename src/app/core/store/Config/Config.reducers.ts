@@ -1,10 +1,10 @@
 import {IConfigState, initialConfigState} from './Config.state';
 import {ConfigActions, EConfigActions} from './Config.actions';
 
-export const configReducers = (
+export function configReducers(
   state: IConfigState = initialConfigState,
   action: ConfigActions,
-): IConfigState => {
+): IConfigState {
   switch (action.type) {
     case EConfigActions.GetConfigSuccess: {
       return {
@@ -15,5 +15,4 @@ export const configReducers = (
     default:
       return state;
   }
-};
-
+}
