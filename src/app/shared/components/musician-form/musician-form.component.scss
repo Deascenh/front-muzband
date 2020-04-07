@@ -38,4 +38,13 @@ $action-size: 40px;
     border-color: $red;
     color: $red;
   }
+
+  &.valid, &.remove {
+    &:focus {
+      filter: brightness(120%);
+    }
+    &:hover {
+      filter: brightness(120%);
+    }
+  }
 }

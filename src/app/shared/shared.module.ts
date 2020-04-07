@@ -20,6 +20,7 @@ import {SamePasswordsDirective} from './directives/validators/same-passwords.dir
 import {MatStepperModule} from '@angular/material/stepper';
 import {FillPipe} from './pipes/fill.pipe';
 import {ConfirmOperationComponent} from './components/confirm-operation/confirm-operation.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
@@ -54,6 +55,7 @@ export const SHARED_PIPES = [
     MatAutocompleteModule,
     MatRippleModule,
     MatStepperModule,
+    MatTooltipModule,
   ],
   declarations: [
     SHARED_COMPONENTS,

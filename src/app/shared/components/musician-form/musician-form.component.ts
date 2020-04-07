@@ -43,6 +43,17 @@ export class MusicianFormComponent implements OnInit {
     return this.musician ? EMusicianFormActions.Remove : EMusicianFormActions.Add;
   });
 
+  toolTipMessage = (() => {
+    switch (this.action()) {
+      case EMusicianFormActions.Add: {
+        return 'Valider';
+      }
+      case EMusicianFormActions.Remove: {
+        return 'Retirer';
+      }
+    }
+  });
+
   private pHydrated: Musician | null;
   private pMusic: Music;
 
