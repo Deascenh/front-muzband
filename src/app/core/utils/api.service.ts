@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {catchError} from 'rxjs/operators';
 import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
 import {SimpleSnackBar} from '@angular/material/snack-bar/typings/simple-snack-bar';
+import {Router} from '@angular/router';
 
 export interface HttpOptions {
   headers?: HttpHeaders | {
@@ -32,6 +33,7 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -120,6 +122,9 @@ export class ApiService {
     const messageToShow = ApiService.getErrorMessageToShowOrNull(error);
 
     if (this.errorShown === null && messageToShow !== null) {
+      if (error.status === 404) {
+        this.router.navigateByUrl('/content-not-found-404');
+      }
       this.showError(messageToShow)
         .afterDismissed()
         .subscribe(() => this.errorShown = null);

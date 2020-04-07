@@ -21,6 +21,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {FillPipe} from './pipes/fill.pipe';
 import {ConfirmOperationComponent} from './components/confirm-operation/confirm-operation.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {ContentNotFoundComponent} from './components/content-not-found/content-not-found.component';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
@@ -29,6 +30,7 @@ export const SHARED_COMPONENTS = [
   InstrumentSheetComponent,
   WorkInProgressComponent,
   ConfirmOperationComponent,
+  ContentNotFoundComponent,
 ];
 
 export const SHARED_DIRECTIVES = [
