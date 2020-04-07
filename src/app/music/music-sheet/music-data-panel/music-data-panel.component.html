@@ -12,10 +12,16 @@
   <ng-template matExpansionPanelContent>
     <div class="data-controls">
       <div *ngIf="!readonly">
-        <button mat-button matTooltip="Mettre à jour">
+        <button mat-button
+                matTooltip="Mettre à jour"
+                matTooltipPosition="above"
+                [disabled]="musicForm.invalid || !musicForm.dirty">
           <mat-icon>done</mat-icon>
         </button>
-        <button mat-button color="warn" matTooltip="Supprimer la musique">
+        <button mat-button color="warn"
+                matTooltip="Supprimer la musique"
+                matTooltipPosition="above"
+                (click)="delete()">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </div>

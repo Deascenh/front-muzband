@@ -53,6 +53,12 @@ export class MusicService implements DataService<Music> {
     }
   }
 
+  delete(music: Music) {
+    if (music['@id']) {
+      return this.api.delete(music['@id'], music);
+    }
+  }
+
   deserializeHydraMember(data: any): Music[] {
     data['hydra:member'] = data['hydra:member'].map(music => new Music(music));
     return data;
