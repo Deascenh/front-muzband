@@ -19,6 +19,7 @@ import {WorkInProgressComponent} from './components/work-in-progress/work-in-pro
 import {SamePasswordsDirective} from './directives/validators/same-passwords.directive';
 import {MatStepperModule} from '@angular/material/stepper';
 import {FillPipe} from './pipes/fill.pipe';
+import {ConfirmOperationComponent} from './components/confirm-operation/confirm-operation.component';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
@@ -26,6 +27,7 @@ export const SHARED_COMPONENTS = [
   UserSheetComponent,
   InstrumentSheetComponent,
   WorkInProgressComponent,
+  ConfirmOperationComponent,
 ];
 
 export const SHARED_DIRECTIVES = [

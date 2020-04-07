@@ -12,7 +12,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MusicService} from '../../../core/data/music.service';
 import {Router} from '@angular/router';
 
-export interface DialogData {
+export interface AddMusicDialogData {
   musicCount: number;
   creator: User;
 }
@@ -50,7 +50,7 @@ export class AddMusicDialogComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: AddMusicDialogData,
     public dialogRef: MatDialogRef<AddMusicDialogComponent>,
     private musicService: MusicService,
     private formBuilder: FormBuilder,

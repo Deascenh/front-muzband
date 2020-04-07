@@ -30,6 +30,7 @@ import {MusicianWorksheetComponent} from './music/musician-worksheet/musician-wo
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MusicDataPanelComponent} from './music/music-sheet/music-data-panel/music-data-panel.component';
+import {ConfirmOperationComponent} from './shared/components/confirm-operation/confirm-operation.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import {MusicDataPanelComponent} from './music/music-sheet/music-data-panel/musi
     AddMusicDialogComponent,
     UserSheetComponent,
     InstrumentSheetComponent,
+    ConfirmOperationComponent,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,19 @@
+<mat-dialog-content>
+  {{ data.message }}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          mat-raised-button
+          (click)="abord()">
+    Annuler
+  </button>
+  <button *ngIf="!operate"
+          mat-button
+          class="confirm-button"
+          (click)="confirm()">
+    {{ data.confirmOverwrite || 'Oui' }}
+  </button>
+  <span *ngIf="operate" class="operate-spinner">
+    <mat-spinner class="saving-loader" diameter="24"></mat-spinner>
+  </span>
+</mat-dialog-actions>

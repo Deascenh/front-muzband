@@ -1,0 +1,18 @@
+@import "src/app/styles/variables";
+
+.saving-loader {
+  margin: auto;
+}
+
+.confirm-button {
+  background-color: $teal;
+}
+
+.operate-spinner {
+  display: inline-block;
+  min-width: 24px;
+}
+
+mat-dialog-actions {
+  justify-content: space-around;
+}
