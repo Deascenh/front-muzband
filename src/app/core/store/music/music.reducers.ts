@@ -42,7 +42,7 @@ export const musicReducers = (
     case EMusicActions.DetachMusician: {
       const focus = new Music(state.focus);
       focus.musicians = (focus.musicians as Musician[])
-        .filter((musician: Musician) => musician !== action.payload);
+        .filter((musician: Musician) => musician['@id'] !== action.payload['@id']);
       return {
         ...state,
         focus,

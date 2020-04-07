@@ -34,19 +34,21 @@
         </form>
       </mat-step>
 
-      <mat-step [stepControl]="musiciansForm"
-                state="group_add">
+      <mat-step state="group_add">
         <ng-template matStepLabel>Instruments & Musiciens</ng-template>
-        <form id="musician-forms-content" [formGroup]="musiciansForm">
-          <app-musician-form *ngFor="let i of (musicians.length + 1) | fill"
+        <div id="musician-forms-content">
+          <app-musician-form *ngFor="let musician of musicians"
                              [music]="music"
-                             (saveSuccess)="onSaveMusician($event)"
+                             [musician]="musician"
                              (removeSuccess)="onRemoveMusician($event)"></app-musician-form>
+          <app-musician-form [music]="music"
+                             [persistent]="false"
+                             (saveSuccess)="onSaveMusician($event)"></app-musician-form>
           <div>
             <button mat-button matStepperPrevious>Précédent</button>
             <button mat-button matStepperNext>Suivant</button>
           </div>
-        </form>
+        </div>
       </mat-step>
 
       <ng-template matStepperIcon="valid">
