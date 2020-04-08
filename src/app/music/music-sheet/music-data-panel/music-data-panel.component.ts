@@ -18,7 +18,6 @@ import {DatePipe} from '@angular/common';
   providers: [DatePipe],
 })
 export class MusicDataPanelComponent {
-  @ViewChild('dataMode', {static: false}) dataMode: MatSlideToggle;
 
   private pHydrated: Music;
 
@@ -34,7 +33,7 @@ export class MusicDataPanelComponent {
   }
 
   musicForm: FormGroup;
-  dataPanelOpen = true;
+  dataPanelOpen = false;
   readonly = true;
 
   constructor(
@@ -46,8 +45,8 @@ export class MusicDataPanelComponent {
     private datePipe: DatePipe,
   ) { }
 
-  toggleMode() {
-    this.readonly = !this.readonly;
+  toggleMode(event) {
+    this.readonly = !event.checked;
   }
 
   delete() {

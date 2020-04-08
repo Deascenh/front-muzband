@@ -1,4 +1,4 @@
-<mat-expansion-panel expanded="true"
+<mat-expansion-panel [expanded]="dataPanelOpen"
                      (opened)="dataPanelOpen = true"
                      (closed)="dataPanelOpen = false">
   <mat-expansion-panel-header>
@@ -25,9 +25,9 @@
           <mat-icon>delete_outline</mat-icon>
         </button>
       </div>
-      <mat-slide-toggle [ngModel]="readonly"
+      <mat-slide-toggle [checked]="!readonly"
                         [color]="'primary'"
-                        (click)="toggleMode()">
+                        (change)="toggleMode($event)">
         {{ readonly ? 'Lecture seule' : 'Modifiable' }}
       </mat-slide-toggle>
     </div>
