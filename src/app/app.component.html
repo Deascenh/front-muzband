@@ -10,21 +10,8 @@
     </button>
     <h1 class="app-name" (click)="goHome()">MuzBand</h1>
     <span class="spacer"></span>
-    <div *ngIf="authenticatedUser" class="authenticated-area">
-      <app-header-menu></app-header-menu>
-      <mat-icon aria-hidden="false"
-                aria-label="Icône utilisateur vérifié"
-                [matTooltip]="sessionCountDown">
-        verified_user
-      </mat-icon>
-      <span class="user-name">{{ authenticatedUser.useName() }}</span>
-      <button mat-icon-button mat-raised-button
-              class="logout-button"
-              matTooltip="Déconnexion"
-              (click)="logOut()">
-        <mat-icon aria-hidden="false" aria-label="Déconnexion">logout</mat-icon>
-      </button>
-    </div>
+    <app-header-menu *ngIf="authenticatedUser"
+                     [authenticatedUser]="authenticatedUser"></app-header-menu>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"

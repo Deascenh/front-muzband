@@ -5,3 +5,17 @@
     margin-right: 0;
   }
 }
+
+.authenticated-area {
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+  margin-left: 16px;
+
+  .user-name {
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0 24px 0 8px;
+    cursor: pointer;
+  }
+}

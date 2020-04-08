@@ -6,9 +6,8 @@ import {IAppState} from './core/store/App/App.state';
 import {selectAuthState} from './core/store/auth/auth.selectors';
 import {selectAppRouter} from './core/store/App/App.selectors';
 import {IAuthState} from './core/store/auth/auth.state';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Music, User} from './core/models';
-import {Logout} from './core/store/auth/auth.actions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/components/add-music-dialog/add-music-dialog.component';
@@ -16,7 +15,6 @@ import {selectSidenavMusics} from './core/store/music/music.selectors';
 import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
 import {GetUsers} from './core/store/user/user.actions';
 import {GetInstruments} from './core/store/instrument/instrument.actions';
-import {ClockCountdownService} from './core/utils/clock-countdown.service';
 import {MatSidenav} from '@angular/material/sidenav';
 
 export enum EWidthModes {
@@ -39,7 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private alive = true;
   private authState: Observable<IAuthState>;
   private routerState: Observable<any>;
-  private sessionCountdownSub: Subscription = null;
   /**
    * !! BreakPoints Reference Table :
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
@@ -53,14 +50,12 @@ export class AppComponent implements OnInit, OnDestroy {
   public sidenavMusicsState$: Observable<Music[]>;
   public isAuthenticated = false;
   public authenticatedUser: User = null;
-  public sessionCountDown: string;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     private store: Store<IAppState>,
     private router: Router,
     private dialog: MatDialog,
-    private clockCountdown: ClockCountdownService,
   ) {
     this.mediaWidthObserver();
     this.mediaOrientationObserver();
@@ -98,10 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
         } else {
           this.authenticatedUser = state.user;
         }
-
-        if (state.sessionTimeout !== null) {
-          this.startSessionCountdown(state.sessionTimeout);
-        }
       })
     );
   }
@@ -128,18 +119,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(new GetSidenavMusics());
     this.store.dispatch(new GetUsers());
     this.store.dispatch(new GetInstruments());
-  }
-
-  private startSessionCountdown(untilTimeString: string): void {
-    if (this.sessionCountdownSub === null) {
-      this.sessionCountdownSub = this.clockCountdown.startUntil(untilTimeString)
-        .pipe(takeWhile(() => this.alive))
-        .subscribe(formattedTime => this.sessionCountDown = formattedTime);
-    }
-  }
-
-  logOut(): void {
-    this.store.dispatch(new Logout());
   }
 
   goHome(): void {

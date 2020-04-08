@@ -10,3 +10,8 @@ export const selectAuthenticatedUser = createSelector(
   authState,
   (state: IAuthState) => state.user,
 );
+
+export const selectSessionTimeout = createSelector(
+  authState,
+  (state: IAuthState) => state.sessionTimeout
+);

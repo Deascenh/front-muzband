@@ -1,34 +1,52 @@
-<button mat-button [matMenuTriggerFor]="instrumentMenu">Instruments</button>
-<mat-menu #instrumentMenu="matMenu">
-  <button *ngFor="let instrument of (menuInstrumentsState$ | async)"
-          (click)="openItemSheet(menuSections.Instruments, instrument)"
-          mat-menu-item>
-    {{ instrument.name  }}
+<div class="authenticated-area">
+  <button mat-button [matMenuTriggerFor]="instrumentMenu">Instruments</button>
+  <mat-menu #instrumentMenu="matMenu">
+    <button *ngFor="let instrument of (menuInstrumentsState$ | async)"
+            (click)="openItemSheet(menuSections.Instruments, instrument)"
+            mat-menu-item>
+      {{ instrument.name  }}
+    </button>
+    <button mat-menu-item
+            class="add-item"
+            matTooltip="Ajouter un nouvel instrument"
+            (click)="openItemSheet(menuSections.Instruments)">
+      <mat-icon aria-hidden="false"
+                aria-label="Ajouter un nouvel instrument">
+        add_circle_outline
+      </mat-icon>
+    </button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="membersMenu">Membres</button>
+  <mat-menu #membersMenu="matMenu">
+    <button *ngFor="let member of (menuMembersState$ | async)"
+            (click)="openItemSheet(menuSections.Users, member)"
+            mat-menu-item>
+      {{ member.useName() }}
+    </button>
+    <button mat-menu-item
+            class="add-item"
+            matTooltip="Créer un nouveau membre"
+            (click)="openItemSheet(menuSections.Users)">
+      <mat-icon aria-hidden="false"
+                aria-label="Créer un nouveau membre">
+        add_circle_outline
+      </mat-icon>
+    </button>
+  </mat-menu>
+  <!-- Authentication details -->
+  <mat-icon aria-hidden="false"
+            aria-label="Icône utilisateur vérifié"
+            [matTooltip]="sessionCountDown">
+    verified_user
+  </mat-icon>
+  <span class="user-name"
+        (click)="openItemSheet(menuSections.Users, authenticatedUser)">
+    {{ authenticatedUser?.useName() }}
+  </span>
+  <button mat-icon-button mat-raised-button
+          class="logout-button"
+          matTooltip="Déconnexion"
+          (click)="logOut()">
+    <mat-icon aria-hidden="false" aria-label="Déconnexion">logout</mat-icon>
   </button>
-  <button mat-menu-item
-          class="add-item"
-          matTooltip="Ajouter un nouvel instrument"
-          (click)="openItemSheet(menuSections.Instruments)">
-    <mat-icon aria-hidden="false"
-              aria-label="Ajouter un nouvel instrument">
-      add_circle_outline
-    </mat-icon>
-  </button>
-</mat-menu>
-<button mat-button [matMenuTriggerFor]="membersMenu">Membres</button>
-<mat-menu #membersMenu="matMenu">
-  <button *ngFor="let member of (menuMembersState$ | async)"
-          (click)="openItemSheet(menuSections.Users, member)"
-          mat-menu-item>
-    {{ member.useName() }}
-  </button>
-  <button mat-menu-item
-          class="add-item"
-          matTooltip="Créer un nouveau membre"
-          (click)="openItemSheet(menuSections.Users)">
-    <mat-icon aria-hidden="false"
-              aria-label="Créer un nouveau membre">
-      add_circle_outline
-    </mat-icon>
-  </button>
-</mat-menu>
+</div>

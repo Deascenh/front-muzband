@@ -8,7 +8,6 @@ import {IAppState} from '../../../core/store/App/App.state';
 import {InstrumentService} from '../../../core/data/instrument.service';
 import {AppendToInstruments, RemoveInstrument} from '../../../core/store/instrument/instrument.actions';
 import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
-import {RemoveMusic} from '../../../core/store/music/music.actions';
 
 export interface InstrumentSheetData {
   instrument: Instrument | null;
