@@ -1,5 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {Component, Input} from '@angular/core';
 import {Music} from '../../../core/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MusicService} from '../../../core/data/music.service';
@@ -51,7 +50,9 @@ export class MusicDataPanelComponent {
 
   delete() {
     const deleteOperation = this.musicService.delete(this.music);
-    const message = `Souhaitez vous vraiment supprimer "${this.music.title}" ?`;
+    const message = `Souhaitez vous vraiment supprimer "${this.music.title}" ? \
+      Toutes les informations et feuilles de travail associées ne seront plus visibles.`;
+
     this.confirmOperation.confirmDelete(message, deleteOperation)
       .subscribe(result => {
         if (result.success && result.payload === null) {

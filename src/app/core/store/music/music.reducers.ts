@@ -35,8 +35,8 @@ export function musicReducers(
       return {
         ...state,
         musics: state.musics.filter(music => music['@id'] !== action.payload['@id']),
-        focus: state.focus['@id'] === action.payload['@id'] ? null : state.focus,
-        previous: state.previous['@id'] === action.payload['@id'] ? null : state.previous,
+        focus: (state.focus && state.focus['@id'] === action.payload['@id']) ? null : state.focus,
+        previous: (state.previous && state.previous['@id'] === action.payload['@id']) ? null : state.previous,
       };
     }
     case EMusicActions.AttachMusician: {

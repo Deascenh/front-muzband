@@ -18,7 +18,7 @@ export interface ConfirmOperationDialogData {
 export class ConfirmOperationComponent implements OnInit, OnDestroy {
   alive = true;
   operate = false;
-  confirmedOperation: ConfirmedOperationStatus = { success: true };
+  confirmedOperation: ConfirmedOperationStatus = { success: undefined };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ConfirmOperationDialogData,
@@ -29,7 +29,7 @@ export class ConfirmOperationComponent implements OnInit, OnDestroy {
   }
 
   abord() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.confirmedOperation);
   }
 
   confirm() {
@@ -37,7 +37,10 @@ export class ConfirmOperationComponent implements OnInit, OnDestroy {
     this.data.operation.pipe(
       takeWhile(() => this.alive)
     ).subscribe(
-      result => this.confirmedOperation.payload = result,
+      result => {
+        this.confirmedOperation.success = true;
+        this.confirmedOperation.payload = result;
+      },
       (err) => {
         this.confirmedOperation.success = false;
         this.confirmedOperation.payload = err;

@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConfirmOperationComponent} from '../../shared/components/confirm-operation/confirm-operation.component';
 
 export interface ConfirmedOperationStatus {
-  success: boolean;
+  success: boolean | undefined;
   payload?: any | undefined;
 }
 

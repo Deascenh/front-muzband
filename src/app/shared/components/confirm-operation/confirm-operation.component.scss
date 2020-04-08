@@ -13,6 +13,12 @@
   min-width: 24px;
 }
 
+mat-dialog-content {
+  max-width: 300px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
 mat-dialog-actions {
   justify-content: space-around;
 }
