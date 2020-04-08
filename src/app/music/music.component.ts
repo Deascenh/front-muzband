@@ -65,6 +65,7 @@ export class MusicComponent implements OnInit {
   }
 
   private fillMusicianTabs() {
+    this.musicianTabs = [];
     for (const musician of (this.music.musicians as Musician[])) {
       for (const mInstrument of (musician as Musician).instruments) {
         const musicianTabsLength =  this.musicianTabs.push({

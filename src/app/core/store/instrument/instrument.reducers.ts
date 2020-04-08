@@ -21,6 +21,12 @@ export function instrumentReducers(
         instruments: [...instruments, action.payload],
       };
     }
+    case EInstrumentActions.RemoveInstrument: {
+      return {
+        ...state,
+        instruments: state.instruments.filter(instrument => instrument['@id'] !== action.payload['@id']),
+      };
+    }
     default: {
       return state;
     }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../utils/api.service';
 import {Observable} from 'rxjs';
-import {Instrument} from '../models';
+import {Instrument, Musician} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
@@ -33,6 +33,12 @@ export class InstrumentService implements DataService<Instrument> {
     } else {
       return this.api.post(InstrumentService.path, instrument)
         .pipe(map(data => new Instrument(data)));
+    }
+  }
+
+  delete(instrument: Instrument) {
+    if (instrument['@id']) {
+      return this.api.delete(instrument['@id'], instrument);
     }
   }
 

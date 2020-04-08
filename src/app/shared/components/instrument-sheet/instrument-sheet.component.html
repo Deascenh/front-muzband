@@ -12,9 +12,11 @@
               [disabled]="instrumentForm.invalid || !instrumentForm.dirty"
               mat-raised-button>Sauvegarder</button>
       <button *ngIf="instrument"
+              type="button"
               mat-button color="warn"
               matTooltip="Supprimer l'instrument"
-              matTooltipPosition="above">
+              matTooltipPosition="above"
+              (click)="delete()">
         <mat-icon>delete_outline</mat-icon>
       </button>
     </div>

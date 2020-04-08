@@ -6,7 +6,9 @@ import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../../core/store/App/App.state';
 import {InstrumentService} from '../../../core/data/instrument.service';
-import {AppendToInstruments} from '../../../core/store/instrument/instrument.actions';
+import {AppendToInstruments, RemoveInstrument} from '../../../core/store/instrument/instrument.actions';
+import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
+import {RemoveMusic} from '../../../core/store/music/music.actions';
 
 export interface InstrumentSheetData {
   instrument: Instrument | null;
@@ -41,6 +43,7 @@ export class InstrumentSheetComponent {
     private snackBar: AppSnackbarService,
     private store: Store<IAppState>,
     private instrumentService: InstrumentService,
+    private confirmOperation: ConfirmOperationService,
   ) {
     if (data.instrument !== null) {
       this.instrument = data.instrument;
@@ -62,6 +65,20 @@ export class InstrumentSheetComponent {
         this.snackBar.displaySaveSuccess(result);
       }
     });
+  }
+
+  delete() {
+    const deleteOperation = this.instrumentService.delete(this.instrument);
+    const message = `Souhaitez vous vraiment supprimer "${this.instrument.name}" ? \
+      Il ne sera plus visible ni utilisable dans l'application.`;
+
+    this.confirmOperation.confirmDelete(message, deleteOperation)
+      .subscribe(result => {
+        if (result.success && result.payload === null) {
+          this.store.dispatch(new RemoveInstrument(this.instrument));
+          this.bottomSheetRef.dismiss();
+        }
+      });
   }
 
   private patchInstrumentForm(value: Instrument) {
