@@ -27,6 +27,12 @@ export function userReducers(
         users: [...users, action.payload],
       };
     }
+    case EUserActions.RemoveUser: {
+      return {
+        ...state,
+        users: state.users.filter(user => user['@id'] !== action.payload['@id']),
+      };
+    }
     default: {
       return state;
     }

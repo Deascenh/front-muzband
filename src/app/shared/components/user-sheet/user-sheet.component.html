@@ -50,8 +50,10 @@
               [disabled]="userForm.invalid || !userForm.dirty"
               mat-raised-button>Sauvegarder</button>
       <button mat-button color="warn"
+              type="button"
               matTooltip="Se retirer de l'application"
-              matTooltipPosition="above">
+              matTooltipPosition="above"
+              (click)="delete()">
         <mat-icon>delete_outline</mat-icon>
       </button>
     </div>

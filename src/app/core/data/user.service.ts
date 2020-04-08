@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../utils/api.service';
 import {Observable} from 'rxjs';
-import {User} from '../models';
+import {Instrument, User} from '../models';
 import {map} from 'rxjs/operators';
 
 @Injectable()
@@ -33,6 +33,12 @@ export class UserService implements DataService<User> {
     } else {
       return this.api.post(UserService.path, user)
         .pipe(map(data => new User(data)));
+    }
+  }
+
+  delete(user: User) {
+    if (user['@id']) {
+      return this.api.delete(user['@id'], user);
     }
   }
 

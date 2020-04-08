@@ -9,7 +9,9 @@ import {Observable} from 'rxjs';
 import {UserService} from '../../../core/data/user.service';
 import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 import {samePasswords, SamePasswordsErrorStateMatcher} from '../../directives/validators/same-passwords.directive';
-import {AppendToUsers} from '../../../core/store/user/user.actions';
+import {AppendToUsers, RemoveUser} from '../../../core/store/user/user.actions';
+import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
+import {Logout} from '../../../core/store/auth/auth.actions';
 
 export interface UserSheetData {
   member: User | null;
@@ -59,6 +61,7 @@ export class UserSheetComponent implements OnInit {
     private snackBar: AppSnackbarService,
     private store: Store<IAppState>,
     private userService: UserService,
+    private confirmOperation: ConfirmOperationService,
   ) {
     if (data.member !== null) {
       this.member = data.member;
@@ -87,6 +90,21 @@ export class UserSheetComponent implements OnInit {
         this.snackBar.displaySaveSuccess(result);
       }
     });
+  }
+
+  delete() {
+    const deleteOperation = this.userService.delete(this.member);
+    const message = `${this.member.useName()}, souhaitez vous vraiment vous désinscrire ? \
+     Vous ne pourrez plus accéder à l'application et vos données n'apparaitront plus.`;
+
+    this.confirmOperation.confirmDelete(message, deleteOperation)
+      .subscribe(result => {
+        if (result.success && result.payload === null) {
+          this.bottomSheetRef.dismiss();
+          this.store.dispatch(new RemoveUser(this.member));
+          this.store.dispatch(new Logout());
+        }
+      });
   }
 
   private setReadonly() {
