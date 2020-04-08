@@ -7,8 +7,16 @@
              placeholder="Ex: Guitare, Steel-drum, Saxophone..."
              formControlName="name">
     </mat-form-field>
-    <button type="submit"
-            [disabled]="instrumentForm.invalid || !instrumentForm.dirty"
-            mat-raised-button>Sauvegarder</button>
+    <div>
+      <button type="submit"
+              [disabled]="instrumentForm.invalid || !instrumentForm.dirty"
+              mat-raised-button>Sauvegarder</button>
+      <button *ngIf="instrument"
+              mat-button color="warn"
+              matTooltip="Supprimer l'instrument"
+              matTooltipPosition="above">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
   </form>
 </div>
