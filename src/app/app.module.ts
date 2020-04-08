@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -11,8 +11,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {CommonModule, registerLocaleData} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
@@ -31,6 +31,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MusicDataPanelComponent} from './music/music-sheet/music-data-panel/music-data-panel.component';
 import {ConfirmOperationComponent} from './shared/components/confirm-operation/confirm-operation.component';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -44,9 +47,10 @@ import {ConfirmOperationComponent} from './shared/components/confirm-operation/c
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
+    AppRoutingModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
@@ -66,7 +70,7 @@ import {ConfirmOperationComponent} from './shared/components/confirm-operation/c
     CoreModule.forRoot(),
     SharedModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
   entryComponents: [
     AddMusicDialogComponent,
     UserSheetComponent,

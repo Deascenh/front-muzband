@@ -30,7 +30,7 @@ export class Music extends LdResource implements Serializable<Music> {
         : input.musicians.map(musician => new Musician(musician));
       }
       if (input.createdAt) { this.createdAt = moment(input.createdAt); }
-      if (input.updateAt) { this.updatedAt = moment(input.updatedAt); }
+      if (input.updatedAt) { this.updatedAt = moment(input.updatedAt); }
     }
 
     return this;

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {Music} from '../../../core/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -8,13 +8,16 @@ import {IAppState} from '../../../core/store/App/App.state';
 import {Store} from '@ngrx/store';
 import {RemoveMusic} from '../../../core/store/music/music.actions';
 import {Router} from '@angular/router';
+import {selectUserList} from '../../../core/store/user/user.selectors';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-music-data-panel',
   templateUrl: './music-data-panel.component.html',
-  styleUrls: ['./music-data-panel.component.scss']
+  styleUrls: ['./music-data-panel.component.scss'],
+  providers: [DatePipe],
 })
-export class MusicDataPanelComponent implements OnChanges {
+export class MusicDataPanelComponent {
   @ViewChild('dataMode', {static: false}) dataMode: MatSlideToggle;
 
   private pHydrated: Music;
@@ -22,6 +25,7 @@ export class MusicDataPanelComponent implements OnChanges {
   @Input() set music(music: Music) {
     if (music instanceof Music) {
       this.pHydrated = music;
+      this.initForm();
     }
   }
 
@@ -39,12 +43,11 @@ export class MusicDataPanelComponent implements OnChanges {
     private confirmOperation: ConfirmOperationService,
     private store: Store<IAppState>,
     private router: Router,
-  ) {
-  }
+    private datePipe: DatePipe,
+  ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
-    this.watchDataMode();
+  toggleMode() {
+    this.readonly = !this.readonly;
   }
 
   delete() {
@@ -61,16 +64,17 @@ export class MusicDataPanelComponent implements OnChanges {
 
   private initForm() {
     this.musicForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      artiste: [''],
+      title: [this.music.title, Validators.required],
+      artist: [this.music.artist || ''],
+      creator: [''],
+      createdAt: [this.datePipe.transform(this.music.createdAt, 'medium')],
+      updatedAt: [this.datePipe.transform(this.music.updatedAt, 'medium')],
     });
-  }
 
-  private watchDataMode() {
-    if (this.dataMode) {
-      this.dataMode.change.subscribe(editMode => {
-        this.readonly = !editMode.checked;
+    this.store.select(selectUserList)
+      .subscribe(users => {
+        const nestedCreator = users.find(item => item['@id'] === this.music.creator);
+        this.musicForm.patchValue({ creator: nestedCreator.useName() });
       });
-    }
   }
 }
