@@ -56,6 +56,17 @@ export function musicReducers(
         focus,
       };
     }
+    case EMusicActions.AppendToMusics: {
+      const musics = state.musics.filter(user =>
+        user['@id'] !== action.payload['@id'],
+      );
+      return {
+        ...state,
+        musics: [...musics, action.payload],
+        focus: (state.focus && state.focus['@id'] === action.payload['@id']) ? action.payload : state.focus,
+        previous: (state.previous && state.previous['@id'] === action.payload['@id']) ? action.payload : state.previous,
+      };
+    }
     default: {
       return state;
     }

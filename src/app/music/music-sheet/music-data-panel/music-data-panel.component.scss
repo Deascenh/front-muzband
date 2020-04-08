@@ -1,3 +1,5 @@
+@import "src/app/styles/variables";
+
 .data-controls {
   display: flex;
   flex-direction: row;
@@ -5,7 +7,22 @@
   align-items: center;
   min-height: 28px;
   font-size: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+
+  .block-legend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 12px;
+    color: $red;
+  }
+
+  .block {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    color: $red !important;
+  }
 
   .mat-button {
     padding: 0;
@@ -13,6 +30,12 @@
     min-width: 42px;
     line-height: 28px;
   }
+}
+
+.divider {
+  flex: 1 1 auto;
+  min-height: 1px;
+  margin-bottom: 1.5rem;
 }
 
 .music-data-form {

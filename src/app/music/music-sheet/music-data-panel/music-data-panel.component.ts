@@ -5,10 +5,11 @@ import {MusicService} from '../../../core/data/music.service';
 import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
 import {IAppState} from '../../../core/store/App/App.state';
 import {Store} from '@ngrx/store';
-import {RemoveMusic} from '../../../core/store/music/music.actions';
+import {AppendToMusics, RemoveMusic} from '../../../core/store/music/music.actions';
 import {Router} from '@angular/router';
 import {selectUserList} from '../../../core/store/user/user.selectors';
 import {DatePipe} from '@angular/common';
+import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 
 @Component({
   selector: 'app-music-data-panel',
@@ -42,6 +43,7 @@ export class MusicDataPanelComponent {
     private store: Store<IAppState>,
     private router: Router,
     private datePipe: DatePipe,
+    private snackBar: AppSnackbarService,
   ) { }
 
   toggleMode(event) {
@@ -60,6 +62,23 @@ export class MusicDataPanelComponent {
           this.router.navigateByUrl('/home');
         }
       });
+  }
+
+  update() {
+    if (this.musicForm.valid) {
+      const submittedMusic = this.musicForm.value as Music;
+      submittedMusic.id = this.music.id;
+      delete submittedMusic.creator;
+      delete submittedMusic.createdAt;
+      delete submittedMusic.updatedAt;
+
+      this.musicService.save(submittedMusic).subscribe(result => {
+        if (result['@id']) {
+          this.store.dispatch(new AppendToMusics(result));
+          this.snackBar.displaySaveSuccess(result);
+        }
+      });
+    }
   }
 
   private initForm() {

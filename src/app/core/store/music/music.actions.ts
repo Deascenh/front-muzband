@@ -10,6 +10,7 @@ export enum EMusicActions {
   DetachMusician = '[Music] Detach Musician from the focused Music',
   AddMusic = '[Music] Add Music',
   RemoveMusic = '[Music] Remove Music',
+  AppendToMusics = '[Music] Append Music to musics',
 }
 
 export class GetSidenavMusics implements Action {
@@ -54,6 +55,11 @@ export class RemoveMusic implements Action {
   constructor(public payload: Music) {}
 }
 
+export class AppendToMusics implements Action {
+  public readonly type = EMusicActions.AppendToMusics;
+  constructor(public payload: Music) {}
+}
+
 export type MusicActions =
   | GetSidenavMusics
   | GetSidenavMusicsSuccess
@@ -62,4 +68,5 @@ export type MusicActions =
   | AddMusic
   | AttachMusician
   | DetachMusician
-  | RemoveMusic;
+  | RemoveMusic
+  | AppendToMusics;

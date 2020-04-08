@@ -10,12 +10,17 @@
   </mat-expansion-panel-header>
 
   <ng-template matExpansionPanelContent>
-
     <div class="data-controls">
+      <div *ngIf="!readonly" class="block-legend">
+        <mat-icon class="block">block</mat-icon>
+        &nbsp;: Infos non modifiables
+      </div>
+      <span class="spacer"></span>
       <div *ngIf="!readonly">
         <button mat-button matTooltip="Mettre à jour"
                 matTooltipPosition="above"
-                [disabled]="musicForm.invalid || !musicForm.dirty">
+                [disabled]="musicForm.invalid || !musicForm.dirty"
+                (click)="update()">
           <mat-icon>done</mat-icon>
         </button>
         <button mat-button color="warn"
@@ -31,7 +36,9 @@
         {{ readonly ? 'Lecture seule' : 'Modifiable' }}
       </mat-slide-toggle>
     </div>
-
+    <div class="divider">
+      <mat-divider *ngIf="!readonly"></mat-divider>
+    </div>
     <form class="music-data-form"
           *ngIf="musicForm"
           [formGroup]="musicForm">
@@ -49,15 +56,24 @@
                formControlName="artist">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Dernière modification le :</mat-label>
+        <mat-label>
+          Dernière modification le :&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
         <input type="text" matInput [readonly]="true" formControlName="updatedAt">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Créée le :</mat-label>
+        <mat-label>
+          Créée le :&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
         <input type="text" matInput [readonly]="true" formControlName="createdAt">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Créée par :</mat-label>
+        <mat-label>
+          Créée par :&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
         <input type="text" matInput [readonly]="true" formControlName="creator">
       </mat-form-field>
     </form>
