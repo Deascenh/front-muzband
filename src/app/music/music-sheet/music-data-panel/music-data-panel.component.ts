@@ -74,6 +74,7 @@ export class MusicDataPanelComponent {
 
       this.musicService.save(submittedMusic).subscribe(result => {
         if (result['@id']) {
+          result.musicians = this.music.musicians;
           this.store.dispatch(new AppendToMusics(result));
           this.toggleMode({ checked: false });
           this.snackBar.displaySaveSuccess(result);
