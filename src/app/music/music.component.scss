@@ -10,6 +10,18 @@ mat-spinner {
   transform: translate(-50%, -50%);
 }
 
+.musician-tab-header {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+
+  .subtitle {
+    font-style: oblique;
+    font-size: 11px;
+    color: rgba(255,255,255,.7);
+  }
+}
+
 .music-piece-container {
   #music-title {
     margin: $small-margin 0;

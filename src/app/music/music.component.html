@@ -10,7 +10,10 @@
     </mat-tab>
     <mat-tab *ngFor="let tab of musicianTabs">
       <ng-template mat-tab-label>
-        {{ tab.headerLabel }}
+        <div class="musician-tab-header">
+          {{ tab.headerLabel }}
+          <span class="subtitle">{{ tab.resources.user?.useName() }}</span>
+        </div>
       </ng-template>
       <app-musician-worksheet [data]="tab.resources"></app-musician-worksheet>
     </mat-tab>
