@@ -11,7 +11,7 @@ import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 import {samePasswords, SamePasswordsErrorStateMatcher} from '../../directives/validators/same-passwords.directive';
 import {AppendToUsers, RemoveUser} from '../../../core/store/user/user.actions';
 import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
-import {Logout} from '../../../core/store/auth/auth.actions';
+import {FetchAuthenticatedUserSuccess, Logout} from '../../../core/store/auth/auth.actions';
 
 export interface UserSheetData {
   member: User | null;
@@ -88,6 +88,7 @@ export class UserSheetComponent implements OnInit {
       }
       if (this.member) {
         this.snackBar.displaySaveSuccess(result);
+        this.store.dispatch(new FetchAuthenticatedUserSuccess(result));
       }
     });
   }
