@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IAppState} from '../core/store/App/App.state';
 import {Store} from '@ngrx/store';
 import {merge, Observable} from 'rxjs';
-import { Instrument, Music, Musician, User } from '../core/models';
+import {Instrument, Music, Musician, User} from '../core/models';
 import {focusedMusic} from '../core/store/music/music.selectors';
 import {selectInstrumentList} from '../core/store/instrument/instrument.selectors';
 import {tap} from 'rxjs/operators';
@@ -68,32 +68,28 @@ export class MusicComponent implements OnInit {
     this.musicianTabs = [];
     for (const musician of (this.music.musicians as Musician[])) {
       for (const mInstrument of (musician as Musician).instruments) {
+        const nestedInstrument = this.instruments.find(instrument => instrument['@id'] === mInstrument);
         const musicianTabsLength =  this.musicianTabs.push({
           resources : {
-            instrument: mInstrument,
-            user: musician.user as User,
+            instrument: nestedInstrument,
+            member: musician.user as User,
+            musician,
           },
         });
-        this.patchTabsLabel(musicianTabsLength - 1);
+        this.patchTabsLabel(musicianTabsLength - 1, nestedInstrument);
       }
     }
     this.musicianTabs.sort(MusicComponent.byHeaderLabel);
   }
 
-  private patchTabsLabel(newEntryPosition: number) {
+  private patchTabsLabel(newEntryPosition: number, instrument: Instrument) {
     const newEntry = this.musicianTabs[newEntryPosition];
-
-    const nestedInstrument: Instrument = this.instruments.find(
-      instrument => instrument['@id'] === (newEntry.resources.instrument['@id'] || newEntry.resources.instrument)
-    );
-    const tabsEqualInstrument = this.musicianTabs.filter(
-      tab => tab.resources.instrument === (nestedInstrument['@id'] || nestedInstrument)
-    );
+    const tabsEqualInstrument = this.musicianTabs.filter(tab => tab.resources.instrument['@id'] === instrument['@id']);
 
     if (tabsEqualInstrument.length > 1) {
-      this.updateTabsLabel(tabsEqualInstrument, nestedInstrument);
+      this.updateTabsLabel(tabsEqualInstrument, instrument);
     } else {
-      newEntry.headerLabel = nestedInstrument.name;
+      newEntry.headerLabel = instrument.name;
     }
   }
   /**

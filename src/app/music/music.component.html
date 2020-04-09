@@ -12,7 +12,7 @@
       <ng-template mat-tab-label>
         <div class="musician-tab-header">
           {{ tab.headerLabel }}
-          <span class="subtitle">{{ tab.resources.user?.useName() }}</span>
+          <span class="subtitle">{{ tab.resources.member?.useName() }}</span>
         </div>
       </ng-template>
       <app-musician-worksheet [data]="tab.resources"></app-musician-worksheet>

@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Instrument, User} from '../../core/models';
+import {Instrument, Musician, User} from '../../core/models';
 
 export interface MusicianWorksheetData {
-  instrument: string | Instrument;
-  user: User | undefined;
+  instrument: Instrument | undefined;
+  member: User | undefined;
+  musician: Musician;
 }
 
 @Component({
