@@ -4,17 +4,30 @@ import {selectUserList} from '../../../core/store/user/user.selectors';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../../core/store/App/App.state';
 import {Instrument, Musician, User} from '../../../core/models';
+import {AbstractControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Injectable()
 export class MusicianFormService {
   private instruments: Instrument[];
   private members: User[];
 
-  constructor(private store: Store<IAppState>) {
+  constructor(
+    private store: Store<IAppState>,
+  ) {
     this.store.select(selectInstrumentList)
       .subscribe(instruments => this.instruments = instruments);
     this.store.select(selectUserList)
       .subscribe(users => this.members = users);
+  }
+
+  public static instrumentDisplayFn(instrument: Instrument): string {
+    return instrument ? instrument.name : null;
+  }
+
+  public static memberDisplayFn(member: User): string {
+    return member ? member.useName() : null;
   }
 
   /**
@@ -34,6 +47,30 @@ export class MusicianFormService {
       newMusician.user = formValue.user['@id'];
     }
     return newMusician;
+  }
+
+  initInstrumentAutocomplete(instrumentControl: AbstractControl): Observable<Instrument[]> {
+    return instrumentControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => {
+          return value
+            ? this.instrumentFilter(value)
+            : this.instruments;
+        })
+      );
+  }
+
+  initUserAutocomplete(userControl: AbstractControl): Observable<User[]> {
+    return userControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => {
+          return value
+            ? this.memberFilter(value)
+            : this.members;
+        })
+      );
   }
 
   /**

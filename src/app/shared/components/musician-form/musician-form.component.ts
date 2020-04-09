@@ -6,7 +6,6 @@ import {IAppState} from '../../../core/store/App/App.state';
 import {merge, Observable} from 'rxjs';
 import {selectInstrumentList} from '../../../core/store/instrument/instrument.selectors';
 import {selectUserList} from '../../../core/store/user/user.selectors';
-import {map, startWith} from 'rxjs/operators';
 import {isUser} from '../../directives/validators/is-user.directive';
 import {isInstrument} from '../../directives/validators/is-instrument.directive';
 import {MusicianService} from '../../../core/data/musicians.service';
@@ -94,8 +93,9 @@ export class MusicianFormComponent implements OnInit {
 
   filteredInstruments$: Observable<Instrument[]>;
   filteredMembers$: Observable<User[]>;
-  instruments: Instrument[] = [];
-  members: User[] = [];
+
+  instrumentDisplayFn = MusicianFormService.instrumentDisplayFn;
+  memberDisplayFn = MusicianFormService.memberDisplayFn;
 
   constructor(
     private store: Store<IAppState>,
@@ -123,24 +123,18 @@ export class MusicianFormComponent implements OnInit {
     }
   }
 
-  instrumentDisplayFn(instrument: Instrument): string {
-    return instrument ? instrument.name : null;
-  }
-
-  memberDisplayFn(member: User): string {
-    return member ? member.useName() : null;
-  }
-
   private initFieldsAutocomplete() {
     merge(this.instruments$, this.members$)
       .subscribe((collection: Instrument[] | User[]) => {
         const first = collection[0];
         if (first instanceof Instrument) {
-          this.instruments = collection as Instrument[];
-          this.initInstrumentAutocomplete();
+          this.filteredInstruments$ = this.musicianFormService.initInstrumentAutocomplete(
+            this.musicianForm.get('instrument')
+          );
         } else if (first instanceof User) {
-          this.members = collection as User[];
-          this.initUserAutocomplete();
+          this.filteredMembers$ = this.musicianFormService.initUserAutocomplete(
+            this.musicianForm.get('user')
+          );
         }
       });
   }
@@ -172,30 +166,6 @@ export class MusicianFormComponent implements OnInit {
       },
       err => console.error(err)
     );
-  }
-
-  private initInstrumentAutocomplete(): void {
-    this.filteredInstruments$ = this.musicianForm.get('instrument').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => {
-          return value
-            ? this.musicianFormService.instrumentFilter(value)
-            : this.instruments;
-        })
-      );
-  }
-
-  private initUserAutocomplete(): void {
-    this.filteredMembers$ = this.musicianForm.get('user').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => {
-          return value
-            ? this.musicianFormService.memberFilter(value)
-            : this.members;
-        })
-      );
   }
 
   private reset() {

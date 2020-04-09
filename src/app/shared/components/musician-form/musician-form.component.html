@@ -5,7 +5,7 @@
     <mat-autocomplete #autoInstr="matAutocomplete"
                       autoActiveFirstOption
                       [displayWith]="instrumentDisplayFn">
-      <mat-option *ngFor="let instrument of (filteredInstruments$ | async) || instruments" [value]="instrument">
+      <mat-option *ngFor="let instrument of (filteredInstruments$ | async)" [value]="instrument">
         {{instrument.name}}
       </mat-option>
     </mat-autocomplete>
@@ -17,7 +17,7 @@
     <mat-autocomplete #autoMemb="matAutocomplete"
                       autoActiveFirstOption
                       [displayWith]="memberDisplayFn">
-      <mat-option *ngFor="let member of (filteredMembers$ | async) || members" [value]="member">
+      <mat-option *ngFor="let member of (filteredMembers$ | async)" [value]="member">
         {{ member.useName() }}
       </mat-option>
     </mat-autocomplete>
