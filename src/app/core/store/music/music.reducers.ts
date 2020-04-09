@@ -40,8 +40,9 @@ export function musicReducers(
       };
     }
     case EMusicActions.AttachMusician: {
+      const musicians = (state.focus.musicians as Musician[]).filter(musician => musician['@id'] !== action.payload['@id']);
       const focus = new Music(state.focus);
-      (focus.musicians as Musician[]).push(action.payload);
+      focus.musicians = [...musicians, action.payload];
       return {
         ...state,
         focus,

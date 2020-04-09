@@ -27,8 +27,8 @@ export class MusicianService implements DataService<Musician> {
   }
 
   save(musician: Musician): Observable<Musician> {
-    if (musician['@id']) {
-      return this.api.put(musician['@id'], musician)
+    if (musician.id) {
+      return this.api.put(MusicianService.makePath(musician.id), musician)
         .pipe(map(data => new Musician(data)));
     } else {
       return this.api.post(MusicianService.path, musician)
