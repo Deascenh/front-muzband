@@ -32,6 +32,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MusicDataPanelComponent} from './music/music-sheet/music-data-panel/music-data-panel.component';
 import {ConfirmOperationComponent} from './shared/components/confirm-operation/confirm-operation.component';
 import localeFr from '@angular/common/locales/fr';
+import {MusicianDataPanelComponent} from './music/musician-worksheet/musician-data-panel/musician-data-panel.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 registerLocaleData(localeFr);
 
@@ -43,6 +45,7 @@ registerLocaleData(localeFr);
     HeaderMenuComponent,
     MusicianWorksheetComponent,
     MusicDataPanelComponent,
+    MusicianDataPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ registerLocaleData(localeFr);
     MatBottomSheetModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    MatAutocompleteModule,
     CoreModule.forRoot(),
     SharedModule,
   ],

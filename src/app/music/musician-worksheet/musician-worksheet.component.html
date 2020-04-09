@@ -1,2 +1,10 @@
-<app-work-in-progress [message]="message" [todos]="todos"></app-work-in-progress>
-<pre>{{ data | json }}</pre>
+<div class="musician-worksheet-container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <app-work-in-progress [message]="message" [todos]="todos"></app-work-in-progress>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <app-musician-data-panel [worksheetData]="data"></app-musician-data-panel>
+    </div>
+  </div>
+</div>
