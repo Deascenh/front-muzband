@@ -68,6 +68,7 @@ export class MusicDataPanelComponent {
     if (this.musicForm.valid) {
       const submittedMusic = this.musicForm.value as Music;
       submittedMusic.id = this.music.id;
+
       delete submittedMusic.creator;
       delete submittedMusic.createdAt;
       delete submittedMusic.updatedAt;

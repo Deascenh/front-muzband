@@ -22,6 +22,7 @@ import {FillPipe} from './pipes/fill.pipe';
 import {ConfirmOperationComponent} from './components/confirm-operation/confirm-operation.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ContentNotFoundComponent} from './components/content-not-found/content-not-found.component';
+import {BlockedFieldLegendComponent} from './components/blocked-field-legend/blocked-field-legend.component';
 
 export const SHARED_COMPONENTS = [
   AddMusicDialogComponent,
@@ -31,6 +32,7 @@ export const SHARED_COMPONENTS = [
   WorkInProgressComponent,
   ConfirmOperationComponent,
   ContentNotFoundComponent,
+  BlockedFieldLegendComponent,
 ];
 
 export const SHARED_DIRECTIVES = [

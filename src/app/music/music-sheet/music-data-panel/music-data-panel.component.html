@@ -10,31 +10,30 @@
   </mat-expansion-panel-header>
 
   <ng-template matExpansionPanelContent>
-    <div class="data-controls">
-      <div *ngIf="!readonly" class="block-legend">
-        <mat-icon class="block">block</mat-icon>
-        &nbsp;: Infos non modifiables
-      </div>
+    <div class="app-data-controls">
+      <app-blocked-field-legend *ngIf="!readonly"></app-blocked-field-legend>
       <span class="spacer"></span>
-      <div *ngIf="!readonly">
-        <button mat-button matTooltip="Mettre à jour"
-                matTooltipPosition="above"
-                [disabled]="musicForm.invalid || !musicForm.dirty"
-                (click)="update()">
-          <mat-icon>done</mat-icon>
-        </button>
-        <button mat-button color="warn"
-                matTooltip="Supprimer la musique"
-                matTooltipPosition="above"
-                (click)="delete()">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
+      <div class="actions">
+        <div *ngIf="!readonly" class="buttons">
+          <button mat-button matTooltip="Mettre à jour"
+                  matTooltipPosition="above"
+                  [disabled]="musicForm.invalid || !musicForm.dirty"
+                  (click)="update()">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button mat-button color="warn"
+                  matTooltip="Supprimer la musique"
+                  matTooltipPosition="above"
+                  (click)="delete()">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+        <mat-slide-toggle [checked]="!readonly"
+                          [color]="'primary'"
+                          (change)="toggleMode($event)">
+          {{ readonly ? 'Lecture seule' : 'Modifiable' }}
+        </mat-slide-toggle>
       </div>
-      <mat-slide-toggle [checked]="!readonly"
-                        [color]="'primary'"
-                        (change)="toggleMode($event)">
-        {{ readonly ? 'Lecture seule' : 'Modifiable' }}
-      </mat-slide-toggle>
     </div>
     <div class="divider">
       <mat-divider *ngIf="!readonly"></mat-divider>
