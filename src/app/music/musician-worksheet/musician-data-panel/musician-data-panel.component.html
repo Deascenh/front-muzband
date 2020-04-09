@@ -1,0 +1,84 @@
+<mat-expansion-panel [expanded]="dataPanelOpen"
+                     (opened)="dataPanelOpen = true"
+                     (closed)="dataPanelOpen = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Informations de la feuille
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <ng-template matExpansionPanelContent>
+    <div class="app-data-controls">
+      <app-blocked-field-legend *ngIf="!readonly"></app-blocked-field-legend>
+      <span class="spacer"></span>
+      <div class="actions">
+        <div *ngIf="!readonly" class="buttons">
+          <button mat-button matTooltip="Mettre à jour"
+                  matTooltipPosition="above"
+                  [disabled]="musicianForm.invalid || !musicianForm.dirty"
+                  (click)="update()">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button mat-button color="warn"
+                  matTooltip="Supprimer la musique"
+                  matTooltipPosition="above"
+                  (click)="delete()">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+        <mat-slide-toggle [checked]="!readonly"
+                          [color]="'primary'"
+                          (change)="toggleMode($event)">
+          {{ readonly ? 'Lecture seule' : 'Modifiable' }}
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="divider">
+      <mat-divider *ngIf="!readonly"></mat-divider>
+    </div>
+    <form class="musician-data-form"
+          *ngIf="musicianForm"
+          [formGroup]="musicianForm">
+      <mat-form-field floatLabel="always">
+        <mat-label>Joueur</mat-label>
+        <input type="text" matInput
+               [readonly]="readonly"
+               placeholder="Pas de joueur"
+               formControlName="user"
+               [matAutocomplete]="autoMemb">
+        <mat-autocomplete #autoMemb="matAutocomplete"
+                          autoActiveFirstOption
+                          [displayWith]="memberDisplayFn">
+          <mat-option *ngFor="let member of (filteredMembers$ | async)" [value]="member">
+            {{ member.useName() }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Instrument&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
+        <input type="text" matInput
+               [readonly]="true"
+               formControlName="instrument">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Dernière modification le :&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
+        <input type="text" matInput [readonly]="true" formControlName="updatedAt">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Créée le :&nbsp;
+          <mat-icon *ngIf="!readonly">block</mat-icon>
+        </mat-label>
+        <input type="text" matInput [readonly]="true" formControlName="createdAt">
+      </mat-form-field>
+    </form>
+  </ng-template>
+</mat-expansion-panel>
