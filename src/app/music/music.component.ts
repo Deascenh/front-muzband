@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {IAppState} from '../core/store/App/App.state';
 import {Store} from '@ngrx/store';
 import {merge, Observable} from 'rxjs';
@@ -8,6 +8,7 @@ import {selectInstrumentList} from '../core/store/instrument/instrument.selector
 import {tap} from 'rxjs/operators';
 import {AttachMusician} from '../core/store/music/music.actions';
 import {MusicianWorksheetData} from './musician-worksheet/musician-worksheet.component';
+import {MatTabGroup} from '@angular/material/tabs';
 
 export interface MusicianTab {
   headerLabel?: string;
@@ -32,19 +33,26 @@ export class MusicComponent implements OnInit {
   instruments: Instrument[] = [];
   musicianTabs: MusicianTab[] = [];
 
-  constructor(private store: Store<IAppState>) {
+  @ViewChild('sheets', { static: false }) sheets: MatTabGroup;
+
+  constructor(
+    private store: Store<IAppState>
+  ) {
     this.focusedMusicState$ = this.store.select(focusedMusic);
     this.instrumentsListState$ = this.store.select(selectInstrumentList);
   }
 
   ngOnInit() {
+    // TODO Change this!
     merge(
       this.focusedMusicState$,
       this.instrumentsListState$,
     ).pipe(
       tap((result: Music | Instrument[]) => {
         if (result instanceof Music) {
-          this.musicianTabs = [];
+          if (this.music && this.musicLostMusician(result)) {
+            this.sheets.selectedIndex = 0;
+          }
           this.music = result;
         }
         if (result instanceof Array) {
@@ -62,6 +70,12 @@ export class MusicComponent implements OnInit {
 
   onNewMusician(musician: Musician) {
     this.store.dispatch(new AttachMusician(musician));
+    this.sheets.selectedIndex = 0;
+  }
+
+  musicLostMusician(music: Music) {
+    return music['@id'] === this.music['@id']
+      && music.musicians.length < this.music.musicians.length;
   }
 
   private fillMusicianTabs() {

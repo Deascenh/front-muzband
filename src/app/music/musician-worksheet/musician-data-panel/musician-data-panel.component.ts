@@ -86,7 +86,6 @@ export class MusicianDataPanelComponent implements OnInit {
       .subscribe(result => {
         if (result.success && result.payload === null) {
           this.store.dispatch(new DetachMusician(this.musician));
-          this.router.navigateByUrl('/home');
         }
       });
   }
