@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "base-front": {
+    "muzband": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/base-front",
+            "outputPath": "dist/muzband",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,12 +69,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "base-front:build",
+            "browserTarget": "muzband:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "base-front:build:production",
+              "browserTarget": "muzband:build:production",
               "proxyConfig": "src/proxy.conf.json"
             }
           }
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "base-front:build"
+            "browserTarget": "muzband:build"
           }
         },
         "test": {
@@ -120,16 +120,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "base-front:serve"
+            "devServerTarget": "muzband:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "base-front:serve:production"
+              "devServerTarget": "muzband:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "base-front"
+  "defaultProject": "muzband"
 }
