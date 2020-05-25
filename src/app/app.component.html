@@ -24,6 +24,8 @@
                  [fixedTopGap]="TOOLBAR_HEIGHT">
       <mat-nav-list>
         <mat-list-item *ngFor="let music of (sidenavMusicsState$ | async)"
+                       [matTooltip]="music.artist"
+                       [matTooltipPosition]="'right'"
                        [routerLink]="['/music', music.id]">
           {{ music.title }}
         </mat-list-item>

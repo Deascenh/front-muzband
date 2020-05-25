@@ -25,6 +25,12 @@ mat-spinner {
 .music-piece-container {
   #music-title {
     margin: $small-margin 0;
+
+    .artist {
+      font-style: oblique;
+      color: rgba(255,255,255,.7);
+      font-size: 16px;
+    }
   }
 
   .add-musician-section {
