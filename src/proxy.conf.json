@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://https://muzband-api.deascenh.fr/",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
