@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, share} from 'rxjs/operators';
+import {map, share, takeWhile} from 'rxjs/operators';
 import {interval, Observable} from 'rxjs';
 import {Moment} from 'moment';
 import * as moment from 'moment';
@@ -12,6 +12,10 @@ export enum EMilliseconds {
 
 @Injectable()
 export class ClockCountdownService {
+
+  private static readonly endClockFormat: string = '00:00';
+  private static readonly period: number = 1000;
+
   /**
    * The function returns the result of the Euclidean division
    * of the timestamp received in the unit of time passed as
@@ -39,7 +43,7 @@ export class ClockCountdownService {
     let clock = '';
 
     if (timestamp <= 0) {
-      return '00:00';
+      return ClockCountdownService.endClockFormat;
     }
 
     if (timestamp > EMilliseconds.Hour) {
@@ -64,11 +68,11 @@ export class ClockCountdownService {
    */
   startUntil(time: any): Observable<string> {
     const toMoment: Moment = moment(time);
-    return interval(1000).pipe(
-      map(() => {
-        return ClockCountdownService.inClockFormat(toMoment.diff(moment()));
-      }),
-      share()
+
+    return interval(ClockCountdownService.period).pipe(
+      map(() => ClockCountdownService.inClockFormat(toMoment.diff(moment()))),
+      takeWhile((clockFormat: string) => clockFormat !== ClockCountdownService.endClockFormat),
+      share(),
     );
   }
 }
