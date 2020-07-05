@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {ConfirmOperationService} from '../../../core/utils/confirm-operation.service';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../../core/store/App/App.state';
-import {Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {AppSnackbarService} from '../../../core/utils/app-snackbar.service';
 import {MusicianService} from '../../../core/data/musicians.service';
@@ -58,7 +57,6 @@ export class MusicianDataPanelComponent implements OnInit {
     private musicianService: MusicianService,
     private confirmOperation: ConfirmOperationService,
     private store: Store<IAppState>,
-    private router: Router,
     private datePipe: DatePipe,
     private snackBar: AppSnackbarService,
     private musicianFormService: MusicianFormService,

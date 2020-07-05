@@ -28,8 +28,14 @@ export function authReducers(
     case EAuthActions.FetchAuthenticatedUserSuccess: {
       return {
         ...state,
-        isAuthenticated: true,
         user: action.payload
+      };
+    }
+    case EAuthActions.PurgeAuth: {
+      return {
+        ...state,
+        isAuthenticated: false,
+        sessionTimeout: null,
       };
     }
     case EAuthActions.Logout: {
