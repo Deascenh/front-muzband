@@ -12,9 +12,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {AddMusicDialogComponent} from './shared/components/add-music-dialog/add-music-dialog.component';
 import {selectSidenavMusics} from './core/store/music/music.selectors';
-import {GetFocusedMusic, GetSidenavMusics} from './core/store/music/music.actions';
-import {GetUsers} from './core/store/user/user.actions';
-import {GetInstruments} from './core/store/instrument/instrument.actions';
+import {GetFocusedMusic} from './core/store/music/music.actions';
 import {MatSidenav} from '@angular/material/sidenav';
 
 export enum EWidthModes {
@@ -26,7 +24,6 @@ export enum EOrientationModes {
   Landscape = 'landscape',
 }
 
-// TODO Most part of the sidnav logic can be transfer in a new component
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -42,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
    * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
    */
   private readonly largeHandsetPortrait = '599px';
-  private readonly pagesWithoutAuthGuard = ['', '/', '/login'];
   public readonly TOOLBAR_HEIGHT: number = 50;
   public widthMode: EWidthModes = null;
   public orientationMode: EOrientationModes = null;
@@ -67,12 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initRouterStream();
-    this.initAuthStream()
-      .subscribe(() => {
-        if (this.authenticatedUser) {
-          this.loadAppGlobalData();
-        }
-      });
+    this.initAuthStream().subscribe();
   }
 
   private initAuthStream(): Observable<IAuthState> {
@@ -80,19 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       tap(state => {
         this.isAuthenticated = state.isAuthenticated;
-
-        // /!\ Temporary fix /!\
-        // TODO Debug ngrx-store-localstorage which
-        //  don't want to deserialize authState.user in type User
-        //  causes bug when sync in done between Ngrx Store and the LocalStorage.
-        //  This sync is done when user lands on the app or at browser refreshes.
-        // The following treatment prevent this bug when state.user a generic object
-        if (!(state.user instanceof User) && state.user) {
-          console.warn('Current User was instantiate outsite data service');
-          this.authenticatedUser = new User(state.user);
-        } else {
-          this.authenticatedUser = state.user;
-        }
+        this.authenticatedUser = state.user;
       })
     );
   }
@@ -100,25 +79,13 @@ export class AppComponent implements OnInit, OnDestroy {
   private initRouterStream(): void {
     this.routerState.subscribe(state => {
       if (state) {
-        const matches = state.url.match(/^\/?music\/\d+$/g);
+        const musicPageAsking = state.url.match(/^\/?music\/\d+$/g) && state.path.includes('music/:id');
 
-        if (matches && state.path.includes('music/:id')) {
+        if (this.isAuthenticated && musicPageAsking) {
           this.store.dispatch(new GetFocusedMusic(parseInt(state.params.id, 10)));
-        }
-        if (!this.pagesWithoutAuthGuard.includes(state.url) && !this.authenticatedUser) {
-          this.router.navigateByUrl('/');
         }
       }
     });
-  }
-
-  /**
-   * Loads and stores global data shared between several components
-   */
-  private loadAppGlobalData(): void {
-    this.store.dispatch(new GetSidenavMusics());
-    this.store.dispatch(new GetUsers());
-    this.store.dispatch(new GetInstruments());
   }
 
   goHome(): void {

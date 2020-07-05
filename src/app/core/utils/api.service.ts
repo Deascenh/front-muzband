@@ -48,6 +48,19 @@ export class ApiService {
       message = 'Erreur serveur';
     } else if (error.status === 404) {
       message = 'Ressource introuvable';
+    } else if (error.status === 401) {
+      message = ApiService.get401PreciseMessage(error);
+    }
+
+    return message;
+  }
+
+  private static get401PreciseMessage(error): string | null {
+    let message = null;
+    error = error.error;
+
+    if (error.message === 'Invalid credentials.') {
+      message = 'Oups, adresse email ou mot de passe invalides !';
     }
 
     return message;

@@ -10,13 +10,13 @@
     </button>
     <h1 class="app-name" (click)="goHome()">MuzBand</h1>
     <span class="spacer"></span>
-    <app-header-menu *ngIf="authenticatedUser"
+    <app-header-menu *ngIf="isAuthenticated"
                      [authenticatedUser]="authenticatedUser"></app-header-menu>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="TOOLBAR_HEIGHT">
-    <mat-sidenav *ngIf="authenticatedUser" #sidenav
+    <mat-sidenav *ngIf="isAuthenticated" #sidenav
                  [mode]="widthMode === 'small' ? 'over' : 'side'"
                  position="start"
                  class="sidenav"

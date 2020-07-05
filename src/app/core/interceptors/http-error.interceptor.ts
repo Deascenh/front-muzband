@@ -10,7 +10,7 @@ import {tap} from 'rxjs/operators';
 import {IAppState} from '../store/App/App.state';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {Logout} from '../store/auth/auth.actions';
+import {PurgeAuth} from '../store/auth/auth.actions';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -27,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   private handleErrors(err: any) {
     if (err instanceof HttpErrorResponse && err.status === 401) {
-      this.store.dispatch(new Logout());
+      this.store.dispatch(new PurgeAuth());
     }
   }
 }

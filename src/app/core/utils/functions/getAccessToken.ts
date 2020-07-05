@@ -2,5 +2,5 @@
  * Used in app/app.module
  */
 export function getAccessToken() {
-  return localStorage.getItem('access_token');
+  return sessionStorage.getItem('access_token');
 }
